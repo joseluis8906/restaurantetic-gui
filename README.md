@@ -1,2 +1,2 @@
 # restauratic-gui-administracion
-Aplicación web de servicio
+Aplicación web para administracion
