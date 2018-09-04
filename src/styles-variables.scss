@@ -5,3 +5,16 @@ $grid-breakpoints: (
   lg: 992px,
   xl: 1200px
 );
+
+@import "~@angular/material/theming";
+
+@include mat-core();
+
+
+$app-primary: mat-palette($mat-teal);
+$app-accent: mat-palette($mat-grey);
+$app-warn:   mat-palette($mat-amber);
+
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+
+@include angular-material-theme($app-theme);
