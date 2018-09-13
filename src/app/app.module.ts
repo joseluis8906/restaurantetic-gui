@@ -10,12 +10,18 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TitlebarComponent } from './titlebar/titlebar.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { ProductoitemComponent } from './productoitem/productoitem.component';
+import { ProductotableComponent } from './productotable/productotable.component';
  
 
 @NgModule({
   declarations: [
     AppComponent,
-    TitlebarComponent
+    TitlebarComponent,
+    NavbarComponent,
+    ProductoitemComponent,
+    ProductotableComponent
   ],
   imports: [
     BrowserModule,
