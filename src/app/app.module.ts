@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -13,6 +14,9 @@ import { TitlebarComponent } from './titlebar/titlebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProductoitemComponent } from './productoitem/productoitem.component';
 import { ProductotableComponent } from './productotable/productotable.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { SidebaritemComponent } from './sidebaritem/sidebaritem.component';
+import { NavbaritemComponent } from './navbaritem/navbaritem.component';
  
 
 @NgModule({
@@ -21,12 +25,16 @@ import { ProductotableComponent } from './productotable/productotable.component'
     TitlebarComponent,
     NavbarComponent,
     ProductoitemComponent,
-    ProductotableComponent
+    ProductotableComponent,
+    SidebarComponent,
+    SidebaritemComponent,
+    NavbaritemComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    AngularFontAwesomeModule,
     MatToolbarModule,
     MatCardModule,
     MatButtonModule,
