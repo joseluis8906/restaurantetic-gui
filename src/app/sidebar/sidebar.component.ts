@@ -9,8 +9,8 @@ import { SideBarItem } from '../utils/SideBarItem';
 export class SidebarComponent implements OnInit {
 
   items: SideBarItem[] = [
-    {active: true, href: '#1', icon: 'fa fa-home'},
-    {active: false, href: '#2', icon: 'fa fa-search'}
+    {active: true, href: '/', icon: 'fa fa-home'},
+    {active: false, href: '/productos', icon: 'fa fa-search'}
   ];
   
   constructor() { }
