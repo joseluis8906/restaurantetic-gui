@@ -1,11 +1,11 @@
 <div class="sidebar">
-  <nav>
-      <app-sidebaritem 
-      *ngFor="let item of items" 
-      [active]="item.active" 
-      href="{{item.href}}"
-      icon="{{item.icon}}"
-      (click)="changeItem(item)"></app-sidebaritem>
-  </nav>
-</div>
+    <nav>
+        <app-sidebaritem 
+        *ngFor="let item of items" 
+        [active]="item.active" 
+        href="{{item.href}}"
+        icon="{{item.icon}}"
+        (click)="changeItem(item)"></app-sidebaritem>
+    </nav>
+</div>  
 

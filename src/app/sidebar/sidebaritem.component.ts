@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SideBarItem } from '../utils/SideBarItem';
+import { SideBarItem } from './SideBarItem';
 
 @Component({
   selector: 'app-sidebaritem',
