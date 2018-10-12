@@ -11,15 +11,17 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { TitlebarComponent } from './titlebar/titlebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { ProductoitemComponent } from './productos/productoitem.component';
-import { ProductotableComponent } from './productos/productotable.component';
+import { ProductoitemComponent } from './producto/productoitem.component';
+import { ProductoViewComponent } from './producto/producto-view.component';
+import { ProductoEditComponent } from './producto/producto-edit.component';
+import { ProductotableComponent } from './producto/productotable.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SidebaritemComponent } from './sidebar/sidebaritem.component';
 import { NavbaritemComponent } from './navbar/navbaritem.component';
-import { HomeComponent } from './home/home.component';
- 
+import { HomeComponent } from './home/home.component'; 
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { HomeComponent } from './home/home.component';
     TitlebarComponent,
     NavbarComponent,
     ProductoitemComponent,
+    ProductoViewComponent,
+    ProductoEditComponent,
     ProductotableComponent,
     SidebarComponent,
     SidebaritemComponent,
@@ -42,7 +46,8 @@ import { HomeComponent } from './home/home.component';
     MatSidenavModule,
     MatCardModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

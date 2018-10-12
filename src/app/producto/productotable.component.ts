@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../utils/config.service';
+import { ProductoitemComponent } from './productoitem.component';
 
 @Component({
   selector: 'app-productotable',
@@ -8,7 +9,9 @@ import { ConfigService } from '../utils/config.service';
 })
 export class ProductotableComponent implements OnInit {
 
-  productos: Number[] = [];
+  productos: ProductoitemComponent[] = [
+    new ProductoitemComponent(),
+  ];
 
   constructor(public configService: ConfigService) { }
 

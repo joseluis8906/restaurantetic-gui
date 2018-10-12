@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
-import { ProductotableComponent } from './productos/productotable.component';
+import { ProductotableComponent } from './producto/productotable.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
