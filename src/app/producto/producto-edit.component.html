@@ -1,3 +1,29 @@
-<p>
-  producto-edit works!
-</p>
+<mat-card class="producto-card">
+  <mat-card-header>
+    <div mat-card-avatar class="producto-header-image"></div>
+    <div>
+      <mat-form-field class="header-input">
+        <input matInput placeholder="Nombre" [(ngModel)]="producto.nombre" >
+      </mat-form-field>
+      <mat-form-field class="header-input">
+        <input matInput placeholder="Código" [(ngModel)]="producto.codigo">
+      </mat-form-field>
+    </div>
+  </mat-card-header>
+  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+  <mat-card-content>
+    <mat-form-field>
+      <textarea matInput placeholder="Descripción" [(ngModel)]="producto.descripcion"></textarea>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput placeholder="Ingredientes" [(ngModel)]="producto.ingredientes"></textarea>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Precio" [(ngModel)]="producto.precio">
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="onGuardar($event)">GUARDAR</button>
+    <button mat-raised-button color="warn" (click)="onCancelar($event)">CANCELAR</button>
+  </mat-card-actions>
+</mat-card>
