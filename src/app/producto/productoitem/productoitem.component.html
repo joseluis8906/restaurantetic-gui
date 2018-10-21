@@ -1,11 +1,7 @@
 <div>
   <app-producto-view
     *ngIf="!edit"
-    [codigo]="producto.codigo"
-    [nombre]="producto.nombre"
-    [descripcion]="producto.descripcion"
-    [ingredientes]="producto.ingredientes"
-    [precio]="producto.precio"
+    [producto] = "producto"
     (editEvent)="changeEdit($event)"></app-producto-view>
   <app-producto-edit
     *ngIf="edit"

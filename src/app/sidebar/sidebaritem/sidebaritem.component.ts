@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SideBarItem } from './SideBarItem';
 
 @Component({
   selector: 'app-sidebaritem',
@@ -8,9 +7,9 @@ import { SideBarItem } from './SideBarItem';
 })
 export class SidebaritemComponent implements OnInit {
 
-  @Input() active: Boolean = false;
-  @Input() href: String = '#';
-  @Input() icon: String = "fa fa-home";
+  @Input() active: Boolean;
+  @Input() href: String;
+  @Input() icon: String;
 
   constructor() { }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService } from '../utils/config.service';
-import { Producto } from './producto';
+import { Producto, ProductoBuilder } from './producto';
+import { ProductoService } from './producto.service';
 
 @Component({
   selector: 'app-productotable',
@@ -9,16 +9,30 @@ import { Producto } from './producto';
 })
 export class ProductotableComponent implements OnInit {
 
-  productos: Producto[] = [
-    new Producto('HAM001', 'Hamburguesa De Res', 'Hamburgesa de carne de res', 'Carne,Tomate,Cebolla,Ketchup,Pan,Mayonesa,Queso', 14000),
-    new Producto('HAM002', 'Hamburguesa De Pollo', 'Hamburgesa de pollo', 'Carne,Tomate,Cebolla,Ketchup,Pan,Mayonesa,Queso', 13000),
-    new Producto('HAM002', 'Hamburguesa De Pollo', 'Hamburgesa de pollo', 'Carne,Tomate,Cebolla,Ketchup,Pan,Mayonesa,Queso', 13000),
-    new Producto('HAM002', 'Hamburguesa De Pollo', 'Hamburgesa de pollo', 'Carne,Tomate,Cebolla,Ketchup,Pan,Mayonesa,Queso', 13000)
-  ];
-
-  constructor(public configService: ConfigService) { }
+  productos: Producto[] = [];
+  
+  constructor(private productoService: ProductoService) { }
 
   ngOnInit() {
+    this.getProductos();
   }
 
+  getProductos (): void {
+    let tmpProductos: Producto[] = this.productoService.getProductos();
+    for (let tmpProducto of tmpProductos) {
+      let tmp = new ProductoBuilder()
+        .withCodigo(tmpProducto.codigo)
+        .withNombre(tmpProducto.nombre)
+        .withDescripcion(tmpProducto.descripcion)
+        .withIngredientes(tmpProducto.ingredientes)
+        .withPrecio(tmpProducto.precio)
+        .withImageTitle(tmpProducto.imageTitle)
+        .withImageBanner(tmpProducto.imageBanner)
+        .build();
+
+      this.productos.push(tmp);
+    };
+  }
 }
+
+

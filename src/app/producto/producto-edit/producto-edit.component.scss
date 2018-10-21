@@ -1,0 +1,30 @@
+.producto-card {
+  max-width: 256px;
+}
+
+.producto-header-image {
+  background-size: cover;
+}
+
+.producto-nombre-field, .producto-codigo-field {
+  width: 160px;
+  display: inline-block;
+  font-size: 0.8em;
+}
+
+.producto-header-image {
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: 0%;
+}
+
+.producto-image-banner {
+  min-height: 148px;
+  max-height: 148px;
+  background-size: 100%;
+  background-position: 0%;
+}
+
+.producto-descripcion-field, .producto-ingredientes-field, .producto-precio-field {
+  width: 100%;
+}

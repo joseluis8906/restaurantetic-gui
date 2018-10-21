@@ -1,0 +1,41 @@
+.producto-card {
+  max-width: 256px;
+  margin-bottom: 24px;
+}
+
+.producto-view-title {
+  height: 96px;
+}
+
+.producto-descripcion-label, .producto-ingredientes-label {
+  display: block;
+}
+
+.producto-precio, .producto-descripcion-label, .producto-ingredientes-label {
+  font-size: 16px;
+}
+
+.producto-precio {
+  display: block;
+  text-align: center;
+}
+
+.producto-header-image {
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: 0%;
+}
+
+.producto-image-banner {
+  min-height: 148px;
+  max-height: 148px;
+  background-size: 100%;
+  background-position: 0%;
+}
+
+.producto-descripcion, .producto-ingredientes {
+  text-align: left; 
+  min-height: 64px; 
+  max-height: 64px; 
+  margin-bottom: 12px;
+}

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SideBarItem } from './SideBarItem';
+import { SideBarItem } from './sidebaritem/SideBarItem';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,16 +9,19 @@ import { SideBarItem } from './SideBarItem';
 export class SidebarComponent implements OnInit {
 
   items: SideBarItem[] = [
-    {active: true, href: '/', icon: 'fa fa-home'},
-    {active: false, href: '/productos', icon: 'fa fa-search'}
+    {active: false, href: '/', icon: 'home'},
+    {active: false, href: '/usuarios', icon: 'people'},
+    {active: false, href: '/productos', icon: 'restaurant_menu'},
+    {active: false, href: '/pedidos', icon: 'shopping_cart'},
+    {active: false, href: '/cocina', icon: 'kitchen'},
+    {active: false, href: '/caja', icon: 'monetization_on'}
   ];
   
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  changeItem (item: SideBarItem) {
+  changeActive (item: SideBarItem) {
     for(let i=0; i<this.items.length; i++){
       if(this.items[i].href === item.href){
         this.items[i].active = true;

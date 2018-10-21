@@ -1,0 +1,29 @@
+<mat-card class="producto-card">
+  <mat-card-header>
+    <div mat-card-avatar [ngStyle]="{'background-image': producto.imageTitle}" class="producto-header-image" ></div>
+    <div class="producto-view-title">
+        <mat-card-title><b>{{producto.nombre}}</b></mat-card-title>
+        <mat-card-subtitle>{{producto.codigo}}</mat-card-subtitle>
+    </div>
+  </mat-card-header>
+  <img mat-card-image [ngStyle]="{'background-image': producto.imageBanner}" class="producto-image-banner">
+  <mat-card-content>
+    <label class="producto-descripcion-label"><b>Descripción</b></label>
+    <perfect-scrollbar class="producto-descripcion" [config]="config">
+      <div>{{producto.descripcion}}</div>
+    </perfect-scrollbar>
+    <label class="producto-ingredientes-label"><b>Ingredientes</b></label>
+    <perfect-scrollbar class="producto-ingredientes" [config]="config">
+      <div>
+        <ul class="producto-ul-ingredientes">
+          <li *ngFor="let ingrediente of ingredientes">{{ingrediente}}</li>
+        </ul>
+      </div>
+    </perfect-scrollbar>
+    <label class="producto-precio"><b>Precio:</b>{{producto.precio | currency: 'USD' : 'symbol' : '1.0'}}</label>
+  </mat-card-content>
+  <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="onEdit($event)">EDITAR</button>
+      <button mat-raised-button color="warn" (click)="onEliminar($event)">ELIMINAR</button>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,18 @@
+@import '../../../variables.scss';
+
+a {
+    display: block; 
+    text-align: center; 
+    padding: 8px; 
+    transition: all 0.3s ease; 
+    color: white; 
+    font-size: 22px;
+}
+
+a:hover {
+    background-color: $thirt-color;
+}
+
+.active {
+    background-color: $primary-color;
+}

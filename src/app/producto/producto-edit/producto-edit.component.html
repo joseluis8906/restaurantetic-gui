@@ -1,24 +1,24 @@
 <mat-card class="producto-card">
   <mat-card-header>
-    <div mat-card-avatar class="producto-header-image"></div>
+    <div mat-card-avatar class="producto-header-image" [ngStyle]="{'background-image': producto.imageTitle}"></div>
     <div>
-      <mat-form-field class="header-input">
+      <mat-form-field class="producto-nombre-field">
         <input matInput placeholder="Nombre" [(ngModel)]="producto.nombre" >
       </mat-form-field>
-      <mat-form-field class="header-input">
+      <mat-form-field class="producto-codigo-field">
         <input matInput placeholder="Código" [(ngModel)]="producto.codigo">
       </mat-form-field>
     </div>
   </mat-card-header>
-  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+  <img mat-card-image class="producto-image-banner" [ngStyle]="{'background-image': producto.imageBanner}">
   <mat-card-content>
-    <mat-form-field>
+    <mat-form-field class="producto-descripcion-field">
       <textarea matInput placeholder="Descripción" [(ngModel)]="producto.descripcion"></textarea>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field class="producto-ingredientes-field">
       <textarea matInput placeholder="Ingredientes" [(ngModel)]="producto.ingredientes"></textarea>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field class="producto-precio-field">
       <input matInput placeholder="Precio" [(ngModel)]="producto.precio">
     </mat-form-field>
   </mat-card-content>
