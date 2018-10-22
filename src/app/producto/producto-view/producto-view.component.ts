@@ -23,6 +23,10 @@ export class ProductoViewComponent implements OnInit {
     this.editEvent.emit(true);
   }
 
+  onEliminar(event) {
+    console.log('eliminar');
+  }
+
   trimIngredientes () :void {
     let tmpIngredientes = this.producto.ingredientes.split(",");
     for(let ingrediente of tmpIngredientes) {

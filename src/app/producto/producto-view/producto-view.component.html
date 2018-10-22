@@ -9,11 +9,11 @@
   <img mat-card-image [ngStyle]="{'background-image': producto.imageBanner}" class="producto-image-banner">
   <mat-card-content>
     <label class="producto-descripcion-label"><b>Descripción</b></label>
-    <perfect-scrollbar class="producto-descripcion" [config]="config">
+    <perfect-scrollbar class="producto-descripcion">
       <div>{{producto.descripcion}}</div>
     </perfect-scrollbar>
     <label class="producto-ingredientes-label"><b>Ingredientes</b></label>
-    <perfect-scrollbar class="producto-ingredientes" [config]="config">
+    <perfect-scrollbar class="producto-ingredientes">
       <div>
         <ul class="producto-ul-ingredientes">
           <li *ngFor="let ingrediente of ingredientes">{{ingrediente}}</li>

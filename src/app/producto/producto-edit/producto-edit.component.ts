@@ -15,6 +15,10 @@ export class ProductoEditComponent implements OnInit {
 
   ngOnInit() {  }
 
+  onGuardar (event) {
+    console.log('guardar');
+  }
+
   onCancelar (event) : void {
     this.editEvent.emit(false);
   }
