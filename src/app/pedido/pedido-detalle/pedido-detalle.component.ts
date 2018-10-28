@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, HostListener } from '@angular/core';
+import { Item } from '../item';
+import { Pedido } from '../pedido';
 
 @Component({
   selector: 'app-pedido-detalle',
@@ -6,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pedido-detalle.component.scss']
 })
 export class PedidoDetalleComponent implements OnInit {
+
+  @Output() checkPedido: EventEmitter<string> = new EventEmitter<string>();
 
   mesas: Mesa[] = [
     {numero: '01', active: false},
@@ -22,19 +26,33 @@ export class PedidoDetalleComponent implements OnInit {
     {numero: '12', active: false},
   ];
 
+  @Input() items: Item[] = [];
+  screenHeight: number;
+
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.calculateHeight();
+  }
 
-  changeMesa(mesa:Mesa) :void {
+  onChangeMesa(mesa:Mesa) :void {
     for(let _mesa of this.mesas){
       _mesa.active = false;
       if(_mesa.numero === mesa.numero) {
         _mesa.active = true;
       }
     }
+    this.checkPedido.emit(mesa.numero);
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResizedDisplay(event?) {
+    this.calculateHeight();
+  }
+
+  calculateHeight() :void {
+    this.screenHeight = window.innerHeight - 54;
+  }
 }
 
 class Mesa {

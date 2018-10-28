@@ -1,14 +1,16 @@
-<div class="container">
-  <div class="row no-gutters justify-content-center">
-      <div class="d-flex col-sm-12 col-md-6 align-self-center justify-content-center">
-          <button mat-raised-button color="primary">AGREGAR</button>
+<perfect-scrollbar>
+  <div class="container-fluid">
+    <div class="row no-gutters justify-content-center">
+        <div class="d-flex col-sm-12 col-md-6 align-self-center justify-content-center">
+            <button mat-raised-button color="primary">AGREGAR</button>
+        </div>
+    </div>
+  
+    <div class="row no-gutters justify-content-beetwen">
+      <div class="col-sm-4 col-md-3 justify-content-center" *ngFor="let producto of productos">
+        <app-producto-item [producto]="producto" ></app-producto-item>
       </div>
-  </div>
-
-  <div class="row no-gutters justify-content-beetwen">
-    <div class="col-sm-3 col-md-3" *ngFor="let producto of productos">
-      <app-productoitem [producto]="producto" ></app-productoitem>
     </div>
   </div>
-</div>
+</perfect-scrollbar>
 

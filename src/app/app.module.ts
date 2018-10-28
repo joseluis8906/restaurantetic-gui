@@ -16,12 +16,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TitlebarComponent } from './titlebar/titlebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { ProductoitemComponent } from './producto/productoitem/productoitem.component';
+import { ProductoItemComponent } from './producto/producto-item/producto-item.component';
 import { ProductoViewComponent } from './producto/producto-view/producto-view.component';
+import { ProductoViewMiniComponent } from './producto/producto-view-mini/producto-view-mini.component'; 
 import { ProductoEditComponent } from './producto/producto-edit/producto-edit.component';
 import { ProductotableComponent } from './producto/productotable.component';
+import { ProductoIngredienteDialogComponent } from './producto/producto-ingrediente-dialog/producto-ingrediente-dialog.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SidebaritemComponent } from './sidebar/sidebaritem/sidebaritem.component';
 import { NavbaritemComponent } from './navbar/navbaritem.component';
@@ -31,7 +37,9 @@ import { UsuarioComponent } from './usuario/usuario.component';
 import { CocinaComponent } from './cocina/cocina.component';
 import { CajaComponent } from './caja/caja.component';
 import { PedidoProductosComponent } from './pedido/pedido-productos/pedido-productos.component';
-import { PedidoDetalleComponent } from './pedido/pedido-detalle/pedido-detalle.component'; 
+import { PedidoDetalleComponent } from './pedido/pedido-detalle/pedido-detalle.component';
+import { PedidoItemDetalleComponent } from './pedido/pedido-item-detalle/pedido-item-detalle.component';
+
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -42,7 +50,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AppComponent,
     TitlebarComponent,
     NavbarComponent,
-    ProductoitemComponent,
+    ProductoItemComponent,
     ProductoViewComponent,
     ProductoEditComponent,
     ProductotableComponent,
@@ -55,7 +63,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CocinaComponent,
     CajaComponent,
     PedidoProductosComponent,
-    PedidoDetalleComponent
+    PedidoDetalleComponent,
+    ProductoViewMiniComponent,
+    PedidoItemDetalleComponent,
+    ProductoIngredienteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -71,13 +82,18 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatIconModule,
     MatInputModule,
     MatSelectModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDividerModule,
+    MatListModule,
+    MatDialogModule,
+    MatCheckboxModule
+  ],
+  entryComponents: [
+    ProductoIngredienteDialogComponent
   ],
   providers: [
-    {
-      provide: PERFECT_SCROLLBAR_CONFIG,
-      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    }
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
+    {provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG}
   ],
   bootstrap: [AppComponent]
 })

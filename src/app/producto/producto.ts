@@ -2,7 +2,7 @@ export class Producto {
     codigo: string;
     nombre: string;
     descripcion: string;
-    ingredientes: string;
+    ingredientes: string[];
     precio: number;
     imageTitle: string;
     imageBanner: string;
@@ -30,7 +30,7 @@ export class ProductoBuilder {
         return this;
     }
 
-    withIngredientes (ingredientes: string) :ProductoBuilder {
+    withIngredientes (ingredientes: string[]) :ProductoBuilder {
         this.producto.ingredientes = ingredientes;
         return this;
     }

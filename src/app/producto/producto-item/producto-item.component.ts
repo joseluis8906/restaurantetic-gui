@@ -2,12 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Producto } from '../producto';
 
 @Component({
-  selector: 'app-productoitem',
-  templateUrl: './productoitem.component.html',
-  styleUrls: ['./productoitem.component.scss']
+  selector: 'app-producto-item',
+  templateUrl: './producto-item.component.html',
+  styleUrls: ['./producto-item.component.scss']
 })
-export class ProductoitemComponent implements OnInit {
-
+export class ProductoItemComponent implements OnInit {
   @Input() producto: Producto;
   edit: boolean = false;
 

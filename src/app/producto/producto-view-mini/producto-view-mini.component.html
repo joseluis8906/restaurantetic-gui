@@ -1,0 +1,10 @@
+<mat-card class="producto-view-mini" (click)="onOpenDialog()">
+  <img mat-card-image [ngStyle]="{'background-image': producto.imageBanner}" class="producto-image-banner">
+  <mat-card-header>
+      <mat-card-title><b>{{producto.nombre}}</b></mat-card-title>
+      <mat-card-subtitle>{{producto.codigo}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+      <p><b>Precio:</b> {{producto.precio | currency: 'USD' : 'symbol' : '1.0'}}</p>
+  </mat-card-content>
+</mat-card>

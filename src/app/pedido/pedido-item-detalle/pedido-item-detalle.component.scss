@@ -1,0 +1,16 @@
+.producto-cantidad{
+  display: inline;
+  width: 24px;
+  text-align: center;
+}
+
+.producto-numero{
+  display: inline;
+  width: 24px;
+  text-align: right;
+  border-color: transparent;
+}
+
+.pedido-item-detalle /deep/ .mat-list-item-content {
+  padding: 0!important;
+}

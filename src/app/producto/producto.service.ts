@@ -10,8 +10,11 @@ export class ProductoService {
   constructor() { }
 
   getProductos () : Producto[] {
-    console.log(PRODUCTOS);
     return PRODUCTOS;
+  }
+
+  addProducto(producto:Producto):void{
+    PRODUCTOS.push(producto);
   }
 
 }

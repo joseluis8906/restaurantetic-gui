@@ -9,15 +9,12 @@ import { Producto } from '../producto';
 export class ProductoViewComponent implements OnInit {
 
   @Input() producto: Producto;
-  ingredientes: string[] = [];
 
   @Output() editEvent: EventEmitter<boolean> = new EventEmitter();
 
   constructor() { }
 
-  ngOnInit() { 
-    this.trimIngredientes();
-  }
+  ngOnInit() { }
 
   onEdit(event) {
     this.editEvent.emit(true);
@@ -25,12 +22,5 @@ export class ProductoViewComponent implements OnInit {
 
   onEliminar(event) {
     console.log('eliminar');
-  }
-
-  trimIngredientes () :void {
-    let tmpIngredientes = this.producto.ingredientes.split(",");
-    for(let ingrediente of tmpIngredientes) {
-      this.ingredientes.push(ingrediente.trim());
-    }
   }
 }

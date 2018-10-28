@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Ingredientes</h1>
+<div mat-dialog-content>
+  <perfect-scrollbar class="producto-ingrediente-dialog-ingredientes">
+    <div *ngFor="let ingrediente of data.ingredientes">
+      <mat-checkbox [(ngModel)]="ingrediente.activo">{{ingrediente.nombre}}</mat-checkbox>
+    </div>
+  </perfect-scrollbar>
+  
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="data.ingredientes" cdkFocusInitial>Confirmar</button>
+</div>

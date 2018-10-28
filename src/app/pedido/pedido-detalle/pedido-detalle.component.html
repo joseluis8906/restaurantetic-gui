@@ -1,17 +1,27 @@
-<mat-card class="pedido-detalle">
-  <mat-card-header>
-    <div class="container">
-        <div class="row justify-content-center no-gutters">
-        <label><b>Mesa</b></label>
-        <mat-grid-list class="col-sm-12" cols="6" rowHeight="1:1">
-            <mat-grid-tile *ngFor="let mesa of mesas" (click)="changeMesa(mesa)" [ngClass]="{'active': mesa.active}">{{mesa.numero}}</mat-grid-tile>
-        </mat-grid-list>
-      </div>
+<mat-card class="pedido-detalle" [ngStyle]="{'max-height': screenHeight + 'px'}">
+  <div class="container-fluid">
+    <div class="row justify-content-center no-gutters">
+      <label><b>Mesa</b></label>
+      <mat-grid-list class="col-sm-12" cols="6" rowHeight="1:1">
+          <mat-grid-tile *ngFor="let mesa of mesas" (click)="onChangeMesa(mesa)" [ngClass]="{'active': mesa.active}">{{mesa.numero}}</mat-grid-tile>
+      </mat-grid-list>
     </div>
-  </mat-card-header>
+  </div>
+  <br>
   <mat-card-content>
-    <perfect-scrollbar>
-        
+    <perfect-scrollbar  [ngStyle]="{'max-height': screenHeight*0.55 + 'px'}">
+      <div class="container-fluid">
+        <div class="row no-gutters">
+          <div class="col-sm-12">
+            <mat-list>
+              <div *ngFor="let item of items">
+                <app-pedido-item-detalle [item]="item"></app-pedido-item-detalle>
+                <mat-divider></mat-divider>
+              </div>
+            </mat-list>
+          </div>
+        </div>
+      </div>
     </perfect-scrollbar>
   </mat-card-content>
 </mat-card>
