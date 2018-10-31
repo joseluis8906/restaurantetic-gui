@@ -1,0 +1,15 @@
+@import '~src/variables.scss';
+
+mat-grid-tile {
+  color: white;
+  background-color: $secondary-color;
+}
+
+mat-grid-tile:hover {
+  cursor: pointer;
+  background-color: $thirt-color;
+}
+
+.active {
+  background-color: $primary-color;
+}

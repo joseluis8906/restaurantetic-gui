@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SideBarItem } from './sidebaritem/SideBarItem';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,7 +10,7 @@ import { SideBarItem } from './sidebaritem/SideBarItem';
 export class SidebarComponent implements OnInit {
 
   items: SideBarItem[] = [
-    {active: false, href: '/', icon: 'home'},
+    {active: false, href: '/home', icon: 'home'},
     {active: false, href: '/usuarios', icon: 'people'},
     {active: false, href: '/productos', icon: 'restaurant_menu'},
     {active: false, href: '/pedidos', icon: 'shopping_cart'},
@@ -17,16 +18,32 @@ export class SidebarComponent implements OnInit {
     {active: false, href: '/caja', icon: 'monetization_on'}
   ];
   
-  constructor() {}
+  constructor(private router: Router) { 
+    this.router.events.subscribe(evt => {
+      if(evt instanceof NavigationEnd) {
+        this.setActiveUrl(evt.urlAfterRedirects);
+      }
+    });
+  }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  changeActive (item: SideBarItem) {
-    for(let i=0; i<this.items.length; i++){
-      if(this.items[i].href === item.href){
-        this.items[i].active = true;
+  setActiveUrl(url: string) :void {
+    for(let item of this.items){
+      if(item.href === url){
+        item.active = true;
       } else {
-        this.items[i].active = false;
+        item.active = false;
+      }
+    }
+  }
+
+  changeActive (item_: SideBarItem) :void {
+    for(let item of this.items){
+      if(item.href === item_.href){
+        item.active = true;
+      } else {
+        item.active = false;
       }
     }
   }

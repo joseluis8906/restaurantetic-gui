@@ -1,20 +1,10 @@
-@import '../../../variables.scss';
+@import '~src/variables';
 
 .pedido-detalle {
   min-height: 100%;
-  padding: 1em 0%;
+  padding: 0;
 }
 
-mat-grid-tile {
-  color: white;
-  background-color: $secondary-color;
-}
-
-mat-grid-tile:hover {
-  cursor: pointer;
-  background-color: $thirt-color;
-}
-
-.active {
-  background-color: $primary-color;
+.pedido-detalle::ng-deep .mat-card-content{
+  margin-bottom: 0;
 }

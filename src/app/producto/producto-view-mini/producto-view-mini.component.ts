@@ -12,7 +12,6 @@ import { Ingrediente } from '../ingrediente';
 export class ProductoViewMiniComponent implements OnInit {
 
   @Input() producto: Producto;
-
   @Output() addProducto: EventEmitter<Producto> = new EventEmitter<Producto>();
 
   constructor(public dialog: MatDialog) { }

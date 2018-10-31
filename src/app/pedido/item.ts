@@ -1,4 +1,4 @@
-import { Producto } from "../producto/producto";
+import { Producto } from "src/app/producto/producto";
 
 export class Item {
   numero: number;

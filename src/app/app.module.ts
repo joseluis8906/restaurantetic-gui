@@ -20,6 +20,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTabsModule } from '@angular/material/tabs';
 import { TitlebarComponent } from './titlebar/titlebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProductoItemComponent } from './producto/producto-item/producto-item.component';
@@ -33,13 +34,18 @@ import { SidebaritemComponent } from './sidebar/sidebaritem/sidebaritem.componen
 import { NavbaritemComponent } from './navbar/navbaritem.component';
 import { HomeComponent } from './home/home.component';
 import { PedidoComponent } from './pedido/pedido.component';
+import { PedidoProductosComponent } from './pedido/pedido-productos/pedido-productos.component';
+import { PedidoDetalleComponent } from './pedido/pedido-detalle/pedido-detalle.component';
+import { PedidoDetalleItemComponent } from './pedido/pedido-detalle/pedido-detalle-item/pedido-detalle-item.component';
+import { PedidoDetalleTotalesComponent } from './pedido/pedido-detalle/pedido-detalle-totales/pedido-detalle-totales.component';
+import { PedidoDetalleItemsComponent } from './pedido/pedido-detalle/pedido-detalle-items/pedido-detalle-items.component';
+import { PedidoDetalleMesaComponent } from './pedido/pedido-detalle/pedido-detalle-mesa/pedido-detalle-mesa.component';
+import { PedidoDetalleTipoComponent } from './pedido/pedido-detalle/pedido-detalle-tipo/pedido-detalle-tipo.component';
+import { PedidoDetalleCajaComponent } from './pedido/pedido-detalle/pedido-detalle-caja/pedido-detalle-caja.component';
+import { PedidoDetalleCajaItemComponent } from './pedido/pedido-detalle/pedido-detalle-caja-item/pedido-detalle-caja-item.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { CocinaComponent } from './cocina/cocina.component';
 import { CajaComponent } from './caja/caja.component';
-import { PedidoProductosComponent } from './pedido/pedido-productos/pedido-productos.component';
-import { PedidoDetalleComponent } from './pedido/pedido-detalle/pedido-detalle.component';
-import { PedidoItemDetalleComponent } from './pedido/pedido-item-detalle/pedido-item-detalle.component';
-
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -65,8 +71,14 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PedidoProductosComponent,
     PedidoDetalleComponent,
     ProductoViewMiniComponent,
-    PedidoItemDetalleComponent,
-    ProductoIngredienteDialogComponent
+    PedidoDetalleItemComponent,
+    ProductoIngredienteDialogComponent,
+    PedidoDetalleTotalesComponent,
+    PedidoDetalleItemsComponent,
+    PedidoDetalleMesaComponent,
+    PedidoDetalleTipoComponent,
+    PedidoDetalleCajaComponent,
+    PedidoDetalleCajaItemComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +98,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatDividerModule,
     MatListModule,
     MatDialogModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTabsModule
   ],
   entryComponents: [
     ProductoIngredienteDialogComponent

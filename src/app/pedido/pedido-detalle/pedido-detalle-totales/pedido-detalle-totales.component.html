@@ -1,0 +1,17 @@
+<mat-list>
+  <mat-list-item>
+    <div class="container-fluid" [ngStyle]="{'padding': 0}">
+      <div class="row no-gutters" [ngStyle]="{'font-size': '14px'}">
+        <div class="col-sm-4" [ngStyle]="{'text-align': 'left'}">
+          <p>subtotal: {{pedido.subtotal | currency: 'USD' : 'symbol' : '1.0'}}</p>
+        </div>
+        <div class="col-sm-4" [ngStyle]="{'text-align': 'center'}">
+          <p>iva: {{pedido.iva | currency: 'USD' : 'symbol' : '1.0'}}</p>
+        </div>
+        <div class="col-sm-4" [ngStyle]="{'text-align': 'right'}">
+            <p>total: {{pedido.total | currency: 'USD' : 'symbol' : '1.0'}}</p>
+          </div>
+      </div>
+    </div>
+  </mat-list-item>
+</mat-list>

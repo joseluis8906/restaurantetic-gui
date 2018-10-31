@@ -1,0 +1,21 @@
+<div class="container-fluid" 
+  [ngStyle]="{'min-height': screenHeight*0.25 + 'px'}">
+  <div class="row no-gutters justify-content-center">
+    <div class="d-flex col-sm-12 align-self-center justify-content-center">
+      <button mat-raised-button color="primary" 
+        [ngStyle]="{'margin-top': '6px', 'margin-bottom': '6px'}" 
+        (click)="onCreatePedido()">NUEVO</button>
+    </div>
+    <div class="col-sm-12">
+        <perfect-scrollbar 
+          [ngStyle]="{'min-height': screenHeight*0.2 + 'px', 'max-height': screenHeight*0.2 + 'px'}">
+          <mat-list>
+            <div *ngFor="let pedido of pedidos">
+              <app-pedido-detalle-caja-item (click)="onChangePedido(pedido)" [pedido]="pedido"></app-pedido-detalle-caja-item>
+            </div>
+          </mat-list>
+        </perfect-scrollbar>
+    </div>
+  </div>
+</div>
+

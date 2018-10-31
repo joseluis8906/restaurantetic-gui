@@ -1,27 +1,19 @@
 <mat-card class="pedido-detalle" [ngStyle]="{'max-height': screenHeight + 'px'}">
-  <div class="container-fluid">
-    <div class="row justify-content-center no-gutters">
-      <label><b>Mesa</b></label>
-      <mat-grid-list class="col-sm-12" cols="6" rowHeight="1:1">
-          <mat-grid-tile *ngFor="let mesa of mesas" (click)="onChangeMesa(mesa)" [ngClass]="{'active': mesa.active}">{{mesa.numero}}</mat-grid-tile>
-      </mat-grid-list>
+  <app-pedido-detalle-tipo></app-pedido-detalle-tipo>
+  <mat-card-content>
+    <app-pedido-detalle-items></app-pedido-detalle-items>
+    <app-pedido-detalle-totales></app-pedido-detalle-totales>
+  </mat-card-content>
+  <div class="container">
+    <div class="row no-gutters">
+      <div class="col-sm-4" [ngStyle]="{'color': 'red'}">
+          <button mat-icon-button (click)="deletePedido()">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+      </div>
+      <div class="col-sm-8" [ngStyle]="{'text-align': 'right'}">
+        <button mat-raised-button color="primary">PAGAR</button>
+      </div>
     </div>
   </div>
-  <br>
-  <mat-card-content>
-    <perfect-scrollbar  [ngStyle]="{'max-height': screenHeight*0.55 + 'px'}">
-      <div class="container-fluid">
-        <div class="row no-gutters">
-          <div class="col-sm-12">
-            <mat-list>
-              <div *ngFor="let item of items">
-                <app-pedido-item-detalle [item]="item"></app-pedido-item-detalle>
-                <mat-divider></mat-divider>
-              </div>
-            </mat-list>
-          </div>
-        </div>
-      </div>
-    </perfect-scrollbar>
-  </mat-card-content>
 </mat-card>

@@ -2,6 +2,8 @@ import { Component, OnInit, HostListener, EventEmitter, Output } from '@angular/
 import { Producto, ProductoBuilder } from 'src/app/producto/producto';
 import { ProductoService } from 'src/app/producto/producto.service';
 import { Item, ItemBuilder } from '../item';
+import { PedidoService } from '../pedido.service';
+import { Pedido, PedidoBuilder } from '../pedido';
 
 @Component({
   selector: 'app-pedido-productos',
@@ -10,12 +12,15 @@ import { Item, ItemBuilder } from '../item';
 })
 export class PedidoProductosComponent implements OnInit {
 
+  pedido :Pedido;
   productos: Producto[] = [];
-  screenHeight: number = 1024;
+  screenHeight: number = 1024; 
 
-  @Output() addItem: EventEmitter<Item> = new EventEmitter();
-
-  constructor(private productoService: ProductoService) { }
+  constructor(private productoService: ProductoService, private pedidoService :PedidoService) {
+    this.pedidoService.pedido$.subscribe(pedido => {
+      this.pedido = pedido;
+    });
+  }
 
   ngOnInit() { 
     this.getProductos();
@@ -50,12 +55,12 @@ export class PedidoProductosComponent implements OnInit {
 
   onAgregarProducto(producto: Producto) :void {
     let tmpItem = new ItemBuilder()
-      .withNumero(0)
+      .withNumero(this.pedido.items.length+1)
       .withCantidad(1)
       .withProduto(producto)
       .withPrecioUnitario(producto.precio)
       .withPrecioTotal(producto.precio * 1)
       .build();
-    this.addItem.emit(tmpItem);
+    this.pedidoService.addItem(tmpItem);
   }
 }

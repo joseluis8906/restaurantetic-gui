@@ -1,0 +1,15 @@
+<perfect-scrollbar  
+  [ngStyle]="{'max-height': screenHeight*0.4 + 'px', 'min-height': screenHeight*0.4 + 'px', 'padding-top': 0}">
+  <div class="container-fluid">
+    <div class="row no-gutters">
+      <div class="col-sm-12">
+        <mat-list [ngStyle]="{'margin-top': '12px', 'padding-top': 0}">
+          <div *ngFor="let item of pedido.items">
+            <app-pedido-detalle-item [item]="item"></app-pedido-detalle-item>
+            <mat-divider></mat-divider>
+          </div>
+        </mat-list>
+      </div>
+    </div>
+  </div>
+</perfect-scrollbar>
