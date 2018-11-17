@@ -99,7 +99,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatListModule,
     MatDialogModule,
     MatCheckboxModule,
-    MatTabsModule
+    MatTabsModule,
+    BrowserModule.withServerTransition({appId: 'my-app'})
   ],
   entryComponents: [
     ProductoIngredienteDialogComponent
