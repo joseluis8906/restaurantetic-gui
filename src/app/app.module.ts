@@ -46,6 +46,8 @@ import { PedidoDetalleCajaItemComponent } from './pedido/pedido-detalle/pedido-d
 import { UsuarioComponent } from './usuario/usuario.component';
 import { CocinaComponent } from './cocina/cocina.component';
 import { CajaComponent } from './caja/caja.component';
+import { PedidoViewComponent } from './cocina/pedido-view/pedido-view.component';
+import { PedidoItemViewComponent } from './cocina/pedido-item-view/pedido-item-view.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -78,7 +80,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PedidoDetalleMesaComponent,
     PedidoDetalleTipoComponent,
     PedidoDetalleCajaComponent,
-    PedidoDetalleCajaItemComponent
+    PedidoDetalleCajaItemComponent,
+    PedidoViewComponent,
+    PedidoItemViewComponent
   ],
   imports: [
     BrowserModule,
