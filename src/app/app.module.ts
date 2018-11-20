@@ -21,6 +21,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { TitlebarComponent } from './titlebar/titlebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProductoItemComponent } from './producto/producto-item/producto-item.component';
@@ -104,6 +105,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatDialogModule,
     MatCheckboxModule,
     MatTabsModule,
+    MatExpansionModule,
     BrowserModule.withServerTransition({appId: 'my-app'})
   ],
   entryComponents: [

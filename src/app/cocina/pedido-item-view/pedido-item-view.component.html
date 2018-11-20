@@ -1,5 +1,28 @@
-<mat-card [ngStyle]="{'max-height': screenHeight + 'px', 'min-height': screenHeight + 'px'}">
-  pedido-item-view works!
+<mat-card [ngStyle]="{'max-height': screenHeight + 'px', 'min-height': screenHeight + 'px', 'padding': '0px'}">
+  <perfect-scrollbar [ngStyle]="{'max-height': screenHeight + 'px', 'min-height': screenHeight + 'px'}">
+    <mat-card>
+      <mat-accordion>  
+        <mat-expansion-panel *ngFor="let producto of productos" (click)="getSinIngredientes(producto)">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ producto.codigo }}
+            </mat-panel-title>
+            <mat-panel-description>
+              {{ producto.nombre }}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p *ngIf="sinIngredientes.length !== 0">Sin:</p>
+          <ul>
+            <li *ngFor="let sinIngrediente of sinIngredientes">{{sinIngrediente}}</li>
+          </ul>
+          <p>Con:</p>
+          <ul>
+            <li *ngFor="let ingrediente of producto.ingredientes">{{ingrediente}}</li>
+          </ul>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card>
+  </perfect-scrollbar>
 </mat-card>
   
 
