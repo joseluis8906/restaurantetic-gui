@@ -1,21 +1,21 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ConfigService {
 
-  mediaHost: String = 'http://localhost:1337/media';
-  images: String = this.mediaHost + '/images';
-  videos: String = this.mediaHost + '/videos';
+  mediaHost: string = "http://localhost:1337/media";
+  images: string = this.mediaHost + "/images";
+  videos: string = this.mediaHost + "/videos";
 
   constructor() { }
 
-  getImages (): String {
+  getImages(): string {
     return this.images;
   }
 
-  getVideos (): String {
+  getVideos(): string {
     return this.videos;
   }
 }

@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+    restaurantetic-postgres:
+        image: postgres:9.6
+        container_name: restaurantetic-postgres
+        ports: 
+            - 5432:5432
+        environment:
+            - POSTGRES_PASSWORD="K3J9 8LMN 02F3 B3LW"
+        restart: always
+
+    restaurantetic-nginx:
+        image: joseluis8906/restaurantetic-nginx:1.0.0
+        container_name: restaurantetic-nginx
+        ports:
+            - 80:80
+        restart: always
+
+networks: 
+    default:
+        external:
+            name: restaurantetic
+
+    

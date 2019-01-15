@@ -1,13 +1,19 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Producto } from '../producto';
-import { MatDialog } from '@angular/material/dialog';
-import { ProductoIngredienteDialogComponent } from '../producto-ingrediente-dialog/producto-ingrediente-dialog.component';
-import { Ingrediente } from '../ingrediente';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { Ingrediente } from "src/app/producto/ingrediente";
+import { Producto } from "src/app/producto/producto";
+import { ProductoIngredienteDialogComponent } from "src/app/producto/producto-ingrediente-dialog/producto-ingrediente-dialog.component";
 
 @Component({
-  selector: 'app-producto-view-mini',
-  templateUrl: './producto-view-mini.component.html',
-  styleUrls: ['./producto-view-mini.component.scss']
+  selector: "app-producto-view-mini",
+  templateUrl: "./producto-view-mini.component.html",
+  styleUrls: ["./producto-view-mini.component.scss"],
 })
 export class ProductoViewMiniComponent implements OnInit {
 
@@ -19,25 +25,29 @@ export class ProductoViewMiniComponent implements OnInit {
   ngOnInit() { }
 
   onOpenDialog(): void {
-    let ingredientesList: Ingrediente[] = [];
-    
-    for(let ingrediente of this.producto.ingredientes){      
-      ingredientesList.push(new Ingrediente(ingrediente, true));      
+    const ingredientesList: Ingrediente[] = [];
+
+    for (const ingrediente of this.producto.ingredientes) {
+      ingredientesList.push(new Ingrediente(ingrediente, true));
     }
 
     const dialogRef = this.dialog.open(
-      ProductoIngredienteDialogComponent, 
-      { width: '256px',
-        height: '256px',
+      ProductoIngredienteDialogComponent,
+      { width: "256px",
+        height: "256px",
         data: {ingredientes: ingredientesList}});
 
-    dialogRef.afterClosed().subscribe(result => {
-      if(!result)return;
-      let ingredientesFinales :string[] = [];
-      for(let ingrediente of result){
-        if(ingrediente.activo) ingredientesFinales.push(ingrediente.nombre);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) {
+        return;
       }
-      let tmpProducto = this.producto;
+      const ingredientesFinales: string[] = [];
+      for (const ingrediente of result) {
+        if (ingrediente.activo) {
+          ingredientesFinales.push(ingrediente.nombre);
+        }
+      }
+      const tmpProducto = this.producto;
       tmpProducto.ingredientes = ingredientesFinales;
       this.addProducto.emit(tmpProducto);
     });

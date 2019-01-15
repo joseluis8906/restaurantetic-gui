@@ -1,6 +1,6 @@
 export class Ingrediente {
   nombre: string;
-  activo: boolean
+  activo: boolean;
 
   constructor(nombre: string, activo: boolean) {
     this.nombre = nombre;

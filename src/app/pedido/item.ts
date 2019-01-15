@@ -15,32 +15,32 @@ export class ItemBuilder {
     this.item = new Item();
   }
 
-  withNumero(numero:number) :ItemBuilder {
+  withNumero(numero: number): ItemBuilder {
     this.item.numero = numero;
     return this;
   }
 
-  withCantidad(cantidad:number) :ItemBuilder {
+  withCantidad(cantidad: number): ItemBuilder {
     this.item.cantidad = cantidad;
     return this;
   }
 
-  withProduto(producto:Producto) :ItemBuilder {
+  withProduto(producto: Producto): ItemBuilder {
     this.item.producto = producto;
     return this;
   }
 
-  withPrecioUnitario(precioUnitario:number) :ItemBuilder {
+  withPrecioUnitario(precioUnitario: number): ItemBuilder {
     this.item.precioUnitario = precioUnitario;
     return this;
   }
 
-  withPrecioTotal(precioTotal:number) :ItemBuilder {
+  withPrecioTotal(precioTotal: number): ItemBuilder {
     this.item.precioTotal = precioTotal;
     return this;
   }
 
-  build() :Item {
+  build(): Item {
     return this.item;
   }
 }

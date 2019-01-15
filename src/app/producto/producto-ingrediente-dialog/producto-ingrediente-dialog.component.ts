@@ -1,16 +1,16 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ProductoViewMiniComponent } from '../producto-view-mini/producto-view-mini.component';
-import { Ingrediente } from '../ingrediente';
+import { Component, Inject, OnInit } from "@angular/core";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { Ingrediente } from "src/app/producto/ingrediente";
+import { ProductoViewMiniComponent } from "src/app/producto/producto-view-mini/producto-view-mini.component";
 
-export interface DialogData{
+export interface DialogData {
   ingredientes: Ingrediente[];
 }
 
 @Component({
-  selector: 'app-producto-ingrediente-dialog',
-  templateUrl: './producto-ingrediente-dialog.component.html',
-  styleUrls: ['./producto-ingrediente-dialog.component.scss']
+  selector: "app-producto-ingrediente-dialog",
+  templateUrl: "./producto-ingrediente-dialog.component.html",
+  styleUrls: ["./producto-ingrediente-dialog.component.scss"]
 })
 export class ProductoIngredienteDialogComponent implements OnInit {
 

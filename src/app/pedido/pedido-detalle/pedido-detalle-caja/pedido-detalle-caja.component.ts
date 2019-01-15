@@ -1,11 +1,11 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { Pedido } from '../../pedido';
-import { PedidoService } from '../../pedido.service';
+import { Component, HostListener, OnInit } from "@angular/core";
+import { Pedido } from "src/app/pedido/pedido";
+import { PedidoService } from "src/app/pedido/pedido.service";
 
 @Component({
-  selector: 'app-pedido-detalle-caja',
-  templateUrl: './pedido-detalle-caja.component.html',
-  styleUrls: ['./pedido-detalle-caja.component.scss']
+  selector: "app-pedido-detalle-caja",
+  templateUrl: "./pedido-detalle-caja.component.html",
+  styleUrls: ["./pedido-detalle-caja.component.scss"],
 })
 export class PedidoDetalleCajaComponent implements OnInit {
 
@@ -15,38 +15,38 @@ export class PedidoDetalleCajaComponent implements OnInit {
 
   constructor(private pedidoService: PedidoService) {
     this.pedidoService.pedido$.subscribe(() => {
-      this.pedidoService.getPedidosCaja().subscribe(pedidos => {
+      this.pedidoService.getPedidosCaja().subscribe((pedidos) => {
         this.pedidos = pedidos;
-      })
+      });
     });
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.calculateHeight();
     this.getPedidos();
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener("window:resize", ["$event"])
   onResizedDisplay(event?) {
     this.calculateHeight();
   }
 
-  calculateHeight() :void {
+  calculateHeight(): void {
     this.screenHeight = window.innerHeight - 54;
   }
 
-  onCreatePedido() :void {
+  onCreatePedido(): void {
     this.pedidoService.createPedidoCaja();
   }
 
-  onChangePedido(pedido:Pedido){
+  onChangePedido(pedido: Pedido) {
     this.pedidoService.changePedidoCaja(pedido.codigo);
   }
 
   getPedidos() {
     this.pedidoService.getPedidosCaja()
-      .subscribe(pedidos => {
+      .subscribe((pedidos) => {
         this.pedidos = pedidos;
-      })
+      });
   }
 }

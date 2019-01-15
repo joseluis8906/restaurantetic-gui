@@ -1,5 +1,5 @@
 export class SideBarItem {
-    active: Boolean;
-    href: String;
-    icon: String;
+    active: boolean;
+    href: string;
+    icon: string;
 }

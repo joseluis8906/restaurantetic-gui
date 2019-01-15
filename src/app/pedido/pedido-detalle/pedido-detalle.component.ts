@@ -1,32 +1,31 @@
-import { Component, OnInit, Output, EventEmitter, Input, HostListener } from '@angular/core';
-import { Pedido } from 'src/app/pedido/pedido';
-import { PedidoService } from '../pedido.service';
+import { Component, HostListener, OnInit } from "@angular/core";
+import { PedidoService } from "src/app/pedido/pedido.service";
 
 @Component({
-  selector: 'app-pedido-detalle',
-  templateUrl: './pedido-detalle.component.html',
-  styleUrls: ['./pedido-detalle.component.scss']
+  selector: "app-pedido-detalle",
+  templateUrl: "./pedido-detalle.component.html",
+  styleUrls: ["./pedido-detalle.component.scss"],
 })
 export class PedidoDetalleComponent implements OnInit {
 
   screenHeight: number;
 
-  constructor(private pedidoService :PedidoService) {}
+  constructor(private pedidoService: PedidoService) {}
 
-  ngOnInit() { 
+  ngOnInit() {
     this.calculateHeight();
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener("window:resize", ["$event"])
   onResizedDisplay(event?) {
     this.calculateHeight();
   }
 
-  calculateHeight() :void {
+  calculateHeight(): void {
     this.screenHeight = window.innerHeight - 54;
   }
 
-  deletePedido(){
+  deletePedido() {
     this.pedidoService.deletePedido();
   }
 }

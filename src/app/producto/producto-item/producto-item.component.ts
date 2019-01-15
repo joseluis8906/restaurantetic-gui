@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Producto } from '../producto';
+import { Component, Input, OnInit } from "@angular/core";
+import { Producto } from "src/app/producto/producto";
 
 @Component({
-  selector: 'app-producto-item',
-  templateUrl: './producto-item.component.html',
-  styleUrls: ['./producto-item.component.scss']
+  selector: "app-producto-item",
+  templateUrl: "./producto-item.component.html",
+  styleUrls: ["./producto-item.component.scss"],
 })
 export class ProductoItemComponent implements OnInit {
   @Input() producto: Producto;
@@ -14,8 +14,7 @@ export class ProductoItemComponent implements OnInit {
 
   ngOnInit() { }
 
-  changeEdit (event) :void {
+  changeEdit(event): void {
     this.edit = event;
   }
-
 }

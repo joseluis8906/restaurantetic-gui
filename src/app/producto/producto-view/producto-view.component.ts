@@ -1,10 +1,16 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Producto } from '../producto';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  } from "@angular/core";
+import { Producto } from "src/app/producto/producto";
 
 @Component({
-  selector: 'app-producto-view',
-  templateUrl: './producto-view.component.html',
-  styleUrls: ['./producto-view.component.scss']
+  selector: "app-producto-view",
+  templateUrl: "./producto-view.component.html",
+  styleUrls: ["./producto-view.component.scss"],
 })
 export class ProductoViewComponent implements OnInit {
 
@@ -21,6 +27,6 @@ export class ProductoViewComponent implements OnInit {
   }
 
   onEliminar(event) {
-    console.log('eliminar');
+    console.log("eliminar");
   }
 }

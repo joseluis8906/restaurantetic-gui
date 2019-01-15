@@ -1,26 +1,26 @@
-import { Injectable } from '@angular/core';
-import { PRODUCTOS } from './mock-productos';
-import { Producto } from './producto';
-import { Observable, of } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Observable, of } from "rxjs";
+import { PRODUCTOS } from "src/app/producto/mock-productos";
+import { Producto } from "src/app/producto/producto";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ProductoService {
 
   constructor() { }
 
-  getProductos () : Producto[] {
+  getProductos(): Producto[] {
     return PRODUCTOS;
   }
 
-  addProducto(producto:Producto):void{
+  addProducto(producto: Producto): void {
     PRODUCTOS.push(producto);
   }
 
-  getProducto(codigo:string) :Observable<Producto> {
-    for(let producto of PRODUCTOS){
-      if(producto.codigo === codigo){
+  getProducto(codigo: string): Observable<Producto> {
+    for (const producto of PRODUCTOS) {
+      if (producto.codigo === codigo) {
         return of(producto);
       }
     }
