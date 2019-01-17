@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 import { Producto, ProductoBuilder } from "src/app/producto/producto";
+import { ProductoNewEditDialogComponent } from "src/app/producto/producto-new-edit-dialog/producto-new-edit-dialog.component";
 import { ProductoService } from "src/app/producto/producto.service";
 
 @Component({
@@ -9,16 +11,21 @@ import { ProductoService } from "src/app/producto/producto.service";
 })
 export class ProductotableComponent implements OnInit {
 
+  newProducto: Producto;
   productos: Producto[] = [];
 
-  constructor(private productoService: ProductoService) { }
+  constructor(private productoService: ProductoService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getProductos();
   }
 
-  public agregar(): void {
-    console.log("agregar producto");
+  public onOpenDialogAgregar(): void {
+    const dialogRef = this.dialog.open(
+      ProductoNewEditDialogComponent,
+      { width: "256px",
+        height: "256px",
+        data: {producto: this.newProducto}});
   }
 
   public getProductos(): void {

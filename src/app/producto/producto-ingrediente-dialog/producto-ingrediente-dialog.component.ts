@@ -13,14 +13,13 @@ export interface DialogData {
   styleUrls: ["./producto-ingrediente-dialog.component.scss"]
 })
 export class ProductoIngredienteDialogComponent implements OnInit {
-
   constructor(
     public dialogRef: MatDialogRef<ProductoViewMiniComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   ngOnInit() { }
 
-  onNoClick(): void {
+  onCancelar(): void {
     this.dialogRef.close();
   }
 }
