@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Ingrediente } from "src/app/producto/ingrediente";
-import { ProductoViewMiniComponent } from "src/app/producto/producto-view-mini/producto-view-mini.component";
+import { AppComponent } from "src/app/app.component";
 
 export interface DialogData {
   ingredientes: Ingrediente[];
@@ -14,7 +14,7 @@ export interface DialogData {
 })
 export class ProductoIngredienteDialogComponent implements OnInit {
   constructor(
-    public dialogRef: MatDialogRef<ProductoViewMiniComponent>,
+    public dialogRef: MatDialogRef<AppComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   ngOnInit() { }
