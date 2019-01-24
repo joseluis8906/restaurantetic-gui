@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Producto</h1>
+<div mat-dialog-content>
+    <perfect-scrollbar class="producto-ingrediente-dialog-ingredientes">
+    </perfect-scrollbar>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="warn" (click)="onCancelar()">Cancelar</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="data.producto" cdkFocusInitial>Confirmar</button>
+</div>

@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from "@angular/core";
-import { Item, ItemBuilder } from "src/app/pedido/item";
+import { ItemBuilder } from "src/app/pedido/item";
 import { Pedido } from "src/app/pedido/pedido";
 import { PedidoService } from "src/app/pedido/pedido.service";
 import { Producto, ProductoBuilder } from "src/app/producto/producto";

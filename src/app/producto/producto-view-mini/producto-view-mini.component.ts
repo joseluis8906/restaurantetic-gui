@@ -6,6 +6,8 @@ import {
   Output,
   } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
+import { Pedido } from "src/app/pedido/pedido";
+import { PedidoService } from "src/app/pedido/pedido.service";
 import { Ingrediente } from "src/app/producto/ingrediente";
 import { Producto } from "src/app/producto/producto";
 import { ProductoIngredienteDialogComponent } from "src/app/producto/producto-ingrediente-dialog/producto-ingrediente-dialog.component";
@@ -17,14 +19,22 @@ import { ProductoIngredienteDialogComponent } from "src/app/producto/producto-in
 })
 export class ProductoViewMiniComponent implements OnInit {
 
+  pedido: Pedido;
   @Input() producto: Producto;
   @Output() addProducto: EventEmitter<Producto> = new EventEmitter<Producto>();
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public pedidoService: PedidoService) {
+    this.pedidoService.pedido$.subscribe((pedido) => {
+      this.pedido = pedido;
+    });
+  }
 
   ngOnInit() { }
 
   onOpenDialog(): void {
+    if (!this.pedido) {
+      return null;
+    }
     const ingredientesList: Ingrediente[] = [];
 
     for (const ingrediente of this.producto.ingredientes) {
@@ -47,7 +57,7 @@ export class ProductoViewMiniComponent implements OnInit {
           ingredientesFinales.push(ingrediente.nombre);
         }
       }
-      const tmpProducto = this.producto;
+      const tmpProducto = Object.assign({}, this.producto);
       tmpProducto.ingredientes = ingredientesFinales;
       this.addProducto.emit(tmpProducto);
     });
