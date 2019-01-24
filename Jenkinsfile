@@ -7,13 +7,13 @@ pipeline {
   }
   stages {
     stage ("Build") {
-      steeps {
+      steps {
         sh "npm install @angular/cli@6.1.3"
         sh "npm install"
       }
     }
     stage ("Run") {
-      steeps {
+      steps {
         sh "npm run build:ssr"
         sh "npm run serve:ssr"
       }
