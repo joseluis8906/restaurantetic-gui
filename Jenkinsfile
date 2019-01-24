@@ -8,14 +8,15 @@ pipeline {
   stages {
     stage ("Build") {
       steps {
-        sh "npm install -g @angular/cli@6.1.3"
         sh "npm install"
       }
     }
     stage ("Run") {
       steps {
+        sh "npm install -g @angular/cli@6.1.3"
         sh "npm run build:ssr"
-        sh "npm run serve:ssr"
+        sh "npm run serve:ssr&"
+        input message: "Finished using the web site? (Click \"Proceed\" to continue)"
       }
     }
   }
