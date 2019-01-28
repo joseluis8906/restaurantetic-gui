@@ -1,7 +1,21 @@
 <h1 mat-dialog-title>Producto</h1>
 <div mat-dialog-content>
-    <perfect-scrollbar class="producto-ingrediente-dialog-ingredientes">
-    </perfect-scrollbar>
+  <perfect-scrollbar class="producto-dialog-body">
+    <div mat-card-avatar [ngStyle]="{'background-image': 'url('+ 'https://icons-for-free.com/free-icons/png/512/1785207.png' +')'}" class="producto-header-image"></div>
+    <mat-form-field class="input-nombre">
+      <input matInput placeholder="Nombre" value="">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Código" value="">
+    </mat-form-field>
+    <div class="upload-image-big"></div>
+    <mat-form-field class="full-width">
+      <textarea matInput cdkTextareaAutosize placeholder="Descripción"></textarea>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Precio" value="">
+    </mat-form-field>
+  </perfect-scrollbar>
 </div>
 <div mat-dialog-actions>
     <button mat-raised-button color="warn" (click)="onCancelar()">Cancelar</button>

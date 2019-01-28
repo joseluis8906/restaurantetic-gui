@@ -1,0 +1,37 @@
+.producto-header-image {
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: 0%;
+  vertical-align: middle;
+  display: inline-block
+}
+
+.producto-dialog-body {
+  text-align: left; 
+  min-height: 320px; 
+  max-height: 320px; 
+  margin-bottom: 12px;
+}
+
+.input-nombre {
+  width: 80%;
+  margin-left: 12px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.upload-image-big {
+  min-width: 100%;
+  min-height: 128px;
+  background-image: url("https://png2.kisspng.com/sh/6deaba0f8025c74f8932fe6cdf0469ba/L0KzQYm3VMIzN6hoj5H0aYP2gLBuTfNtd6ZpRdV4bYD4hLr1h71kdJD6fJ98dHB1cbjsTfNwdaF6jNd7LXnmf7B6TfNwdaF6RadqZHO6QLWBgBQ4apU9RqUBNUi7Q4GBUcUzPGQATqQ9OEi3QYi1kP5o/kisspng-cloud-computing-cloud-storage-computer-icons-compu-5adc70d8cd7bd8.3658830815243962488417.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-style: dashed;
+  border-width: 1px;
+  border-radius: 12px;
+  border-color: darkgrey;
+  margin-bottom: 12px;
+}
