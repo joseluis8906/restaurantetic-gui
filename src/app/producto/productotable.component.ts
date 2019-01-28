@@ -23,8 +23,8 @@ export class ProductotableComponent implements OnInit {
   public onOpenDialogAgregar(): void {
     const dialogRef = this.dialog.open(
       ProductoNewEditDialogComponent,
-      { width: "256px",
-        height: "256px",
+      { width: "320px",
+        height: "480px",
         data: {producto: this.newProducto}});
   }
 
