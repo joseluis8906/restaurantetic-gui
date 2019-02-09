@@ -110,7 +110,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   ],
   entryComponents: [
     ProductoIngredienteDialogComponent,
-    ProductoNewEditDialogComponent
+    ProductoNewEditDialogComponent,
   ],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true,}},
