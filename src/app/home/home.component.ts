@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { Message } from "paho-mqtt";
+import { MqttService, Topic } from "src/app/mqtt.service";
 
 @Component({
   selector: "app-home",
@@ -7,9 +9,24 @@ import { Component, OnInit } from "@angular/core";
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  message: string;
+  text: string;
 
-  ngOnInit() {
+  constructor(private mqttService: MqttService) {
+    this.mqttService.message$.subscribe(this.onMessageArrived.bind(this));
   }
 
+  ngOnInit() {
+    this.mqttService.subscribe(Topic.Servicio);
+  }
+
+  private onMessageArrived(message: Message) {
+    if (message.destinationName === Topic.Servicio) {
+      this.text = message.payloadString;
+    }
+  }
+
+  public onPublish() {
+    this.mqttService.publish(Topic.Cocina, this.message);
+  }
 }
