@@ -23,11 +23,11 @@ export class MqttService implements OnDestroy {
     this.messageSubject = new Subject<Paho.Message>();
     this.message$ = this.messageSubject.asObservable();
 
-    this.mqttClient = new Paho.Client("restaurantetic.com", 880, "/mqtt", Date.now().toString());
+    this.mqttClient = new Paho.Client("restaurantetic.com", 443, "/mqtt", Date.now().toString());
     // tslint:disable-next-line:max-line-length
-    this.mqttClient.onConnectionLost = (responseObject: object) => this.mqttClient.connect({onSuccess: this.onConnected.bind(this), userName: "vernemquser", password: "vernemq12345"});
+    this.mqttClient.onConnectionLost = (responseObject: object) => this.mqttClient.connect({onSuccess: this.onConnected.bind(this), userName: "vmquser", password: "vmq12345"});
     this.mqttClient.onMessageArrived = this.onMessageArrived.bind(this);
-    this.mqttClient.connect({onSuccess: this.onConnected.bind(this), userName: "vernemquser", password: "vernemq12345"});
+    this.mqttClient.connect({onSuccess: this.onConnected.bind(this), userName: "vmquser", password: "vmq12345"});
   }
 
   public ngOnDestroy() {
