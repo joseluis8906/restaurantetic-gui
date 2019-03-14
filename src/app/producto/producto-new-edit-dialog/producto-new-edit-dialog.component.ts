@@ -18,8 +18,7 @@ export class ProductoNewEditDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<AppComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   onCancelar(): void {
     this.dialogRef.close();

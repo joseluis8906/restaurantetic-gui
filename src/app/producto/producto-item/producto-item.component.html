@@ -1,10 +1,5 @@
 <div>
   <app-producto-view
-    *ngIf="!edit"
     [producto] = "producto"
     (editEvent)="changeEdit($event)"></app-producto-view>
-  <app-producto-edit
-    *ngIf="edit"
-    [producto] = "producto"
-    (editEvent)="changeEdit($event)"></app-producto-edit>
 </div>
