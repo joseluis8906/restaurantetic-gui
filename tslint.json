@@ -17,6 +17,7 @@
       "severity": "warn"
     },
     "eofline": true,
+    "experimentalDecorators": true,
     "forin": true,
     "import-blacklist": [
       true,

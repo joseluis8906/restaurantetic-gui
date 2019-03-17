@@ -1,3 +1,4 @@
+import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
@@ -90,6 +91,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     BrowserModule,
     BrowserModule.withServerTransition({appId: "my-app"}),
     FormsModule,
+    HttpClientModule,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
@@ -111,8 +113,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ProductoNewEditDialogComponent,
   ],
   providers: [
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true,}},
-    {provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG},
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true }},
+    { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
   ],
   bootstrap: [AppComponent],
 })

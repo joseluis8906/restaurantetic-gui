@@ -5,25 +5,27 @@
   <perfect-scrollbar class="producto-dialog-body">
    
     <mat-form-field class="full-width">
-      <input matInput placeholder="Nombre" value="">
+      <input matInput placeholder="Nombre" value="" [ngModel]="producto.nombre">
     </mat-form-field>
     
     <mat-form-field class="full-width">
-      <input matInput placeholder="Código" value="">
+      <input matInput placeholder="Código" value="" [ngModel]="producto.codigo">
     </mat-form-field>
     
-    <div class="upload-image-big"></div>
+    <div class="upload-image-big" (click)="fileInput.click()">
+      <input type="file" [ngStyle]="{display: 'none'}" #fileInput (change)="onUploadPicture($event.srcElement.files[0])">
+    </div>
     
     <mat-form-field class="full-width">
-      <textarea matInput cdkTextareaAutosize placeholder="Ingredientes"></textarea>
-    </mat-form-field>
-    
-    <mat-form-field class="full-width">
-      <textarea matInput cdkTextareaAutosize placeholder="Descripción"></textarea>
+      <textarea matInput cdkTextareaAutosize placeholder="Ingredientes" [ngModel]="ingredientesStr"></textarea>
     </mat-form-field>
     
     <mat-form-field class="full-width">
-      <input matInput placeholder="Precio" value="">
+      <textarea matInput cdkTextareaAutosize placeholder="Descripción" [ngModel]="producto.descripcion"></textarea>
+    </mat-form-field>
+    
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Precio" value="" [ngModel]="producto.precio">
     </mat-form-field>
 
   </perfect-scrollbar>
