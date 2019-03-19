@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Message } from "paho-mqtt";
-import { MqttService, Topic } from "src/app/mqtt.service";
+import { MqttService, Topic } from "src/app/utils/mqtt.service";
 
 @Component({
   selector: "app-home",

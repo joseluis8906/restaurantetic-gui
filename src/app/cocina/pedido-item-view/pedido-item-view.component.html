@@ -17,7 +17,7 @@
           </ul>
           <p>Ingredientes:</p>
           <ul>
-            <li *ngFor="let ingrediente of producto.ingredientes">{{ingrediente}}</li>
+            <li *ngFor="let ingrediente of producto.ingredientes.split(',')">{{ingrediente}}</li>
           </ul>
         </mat-expansion-panel>
       </mat-accordion>

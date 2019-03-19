@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AppComponent } from "src/app/app.component";
-import { MediaService } from "src/app/media.service";
 import { Producto } from "src/app/producto/producto";
+import { ProductoService } from "src/app/producto/producto.service";
+import { MediaService } from "src/app/utils/media.service";
 
 @Component({
   selector: "app-producto-new-edit-dialog",
@@ -12,11 +13,11 @@ import { Producto } from "src/app/producto/producto";
 export class ProductoNewEditDialogComponent implements OnInit {
 
   producto: Producto;
-  ingredientesStr: string;
 
   constructor(
     public dialogRef: MatDialogRef<AppComponent>,
-    private mediaService: MediaService) {
+    private mediaService: MediaService,
+    private productoService: ProductoService) {
 
     this.producto = new Producto();
   }
@@ -29,15 +30,12 @@ export class ProductoNewEditDialogComponent implements OnInit {
 
   onUploadPicture(file: File) {
     this.mediaService.upload(file).subscribe((imageName: string) => {
-      this.producto.imageBanner = imageName;
+      this.producto.imagen = imageName;
       console.log(this.producto);
     });
   }
 
   onConfirmar(evt) {
-    this.producto.ingredientes = this.ingredientesStr.split(",");
-    this.producto.ingredientes = this.producto.ingredientes.map((elm) => elm.trim());
-    console.log(this.producto);
-    this.dialogRef.close();
+    this.productoService.addProducto(this.producto).subscribe((_: any) => this.dialogRef.close());
   }
 }

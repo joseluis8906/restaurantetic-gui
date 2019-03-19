@@ -31,19 +31,8 @@ export class ProductotableComponent implements OnInit {
   }
 
   public getProductos(): void {
-    const tmpProductos: Producto[] = this.productoService.getProductos();
-    for (const tmpProducto of tmpProductos) {
-      const tmp = new ProductoBuilder()
-        .withCodigo(tmpProducto.codigo)
-        .withNombre(tmpProducto.nombre)
-        .withDescripcion(tmpProducto.descripcion)
-        .withIngredientes(tmpProducto.ingredientes)
-        .withPrecio(tmpProducto.precio)
-        .withImageTitle(tmpProducto.imageTitle)
-        .withImageBanner(tmpProducto.imageBanner)
-        .build();
-
-      this.productos.push(tmp);
-    }
+    this.productoService.getProductos().subscribe((productos: Producto[]) => {
+      this.productos = productos;
+    });
   }
 }

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { Ingrediente } from "src/app/producto/ingrediente";
 import { AppComponent } from "src/app/app.component";
+import { Ingrediente } from "src/app/producto/ingrediente";
 
 export interface DialogData {
   ingredientes: Ingrediente[];
@@ -10,7 +10,7 @@ export interface DialogData {
 @Component({
   selector: "app-producto-ingrediente-dialog",
   templateUrl: "./producto-ingrediente-dialog.component.html",
-  styleUrls: ["./producto-ingrediente-dialog.component.scss"]
+  styleUrls: ["./producto-ingrediente-dialog.component.scss"],
 })
 export class ProductoIngredienteDialogComponent implements OnInit {
   constructor(

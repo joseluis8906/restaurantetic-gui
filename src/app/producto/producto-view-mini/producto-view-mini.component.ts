@@ -37,7 +37,7 @@ export class ProductoViewMiniComponent implements OnInit {
     }
     const ingredientesList: Ingrediente[] = [];
 
-    for (const ingrediente of this.producto.ingredientes) {
+    for (const ingrediente of this.producto.ingredientes.split(",")) {
       ingredientesList.push(new Ingrediente(ingrediente, true));
     }
 
@@ -58,7 +58,7 @@ export class ProductoViewMiniComponent implements OnInit {
         }
       }
       const tmpProducto = Object.assign({}, this.producto);
-      tmpProducto.ingredientes = ingredientesFinales;
+      tmpProducto.ingredientes = ingredientesFinales.join(",");
       this.addProducto.emit(tmpProducto);
     });
   }

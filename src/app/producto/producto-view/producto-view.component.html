@@ -5,7 +5,7 @@
         <mat-card-subtitle>{{producto.codigo}}</mat-card-subtitle>
     </div>
   </mat-card-header>
-  <img mat-card-image [ngStyle]="{'background-image': producto.imageBanner}" class="producto-image-banner">
+  <img mat-card-image [ngStyle]="{'background-image': 'url(https://media.restaurantetic.com/files/' + producto.imagen + ')'}" class="producto-image-banner">
   <mat-card-content>
     <label class="producto-descripcion-label"><b>Descripción</b></label>
     <perfect-scrollbar class="producto-descripcion">
@@ -15,7 +15,7 @@
     <perfect-scrollbar class="producto-ingredientes">
       <div>
         <ul class="producto-ul-ingredientes">
-          <li *ngFor="let ingrediente of producto.ingredientes">{{ingrediente}}</li>
+          <li *ngFor="let ingrediente of producto.ingredientes.split(',')">{{ingrediente}}</li>
         </ul>
       </div>
     </perfect-scrollbar>

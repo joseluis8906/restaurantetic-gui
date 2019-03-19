@@ -7,7 +7,7 @@ import { ProductoService } from "src/app/producto/producto.service";
 @Component({
   selector: "app-pedido-item-view",
   templateUrl: "./pedido-item-view.component.html",
-  styleUrls: ["./pedido-item-view.component.scss"]
+  styleUrls: ["./pedido-item-view.component.scss"],
 })
 export class PedidoItemViewComponent implements OnInit {
 
@@ -31,7 +31,7 @@ export class PedidoItemViewComponent implements OnInit {
 
   getSinIngredientes(productoIn: Producto): void {
     this.productoService.getProducto(productoIn.codigo).subscribe((producto: Producto) => {
-      this.sinIngredientes = producto.ingredientes.filter((x) => !productoIn.ingredientes.includes(x));
+      this.sinIngredientes = producto.ingredientes.split(",").filter((x) => !productoIn.ingredientes.includes(x));
     });
   }
 
