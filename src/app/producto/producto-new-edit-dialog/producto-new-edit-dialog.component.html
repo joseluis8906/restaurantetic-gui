@@ -8,8 +8,9 @@
       <input matInput placeholder="Nombre" value="" [(ngModel)]="producto.nombre">
     </mat-form-field>
     
-    <mat-form-field class="full-width">
-      <input matInput placeholder="Código" value="" [(ngModel)]="producto.codigo">
+    <mat-form-field class="full-width" [color]="validationError.color">
+      <input matInput placeholder="Código" value="" [(ngModel)]="producto.codigo" (change)="onValidate()">
+      <mat-hint *ngIf="validationError.status" [ngStyle]="{'color': 'red'}">{{ validationError.message }}</mat-hint>
     </mat-form-field>
     
     <div class="upload-image-big" (click)="fileInput.click()" [ngStyle]="{'background-image': 'url(https://media.restaurantetic.com/files/' + (producto.imagen || '201903130002.png') + ')', 'background-size': (producto.imagen ? 'cover' : '')}">
@@ -33,5 +34,5 @@
 </div>
 <div mat-dialog-actions>
     <button mat-raised-button color="warn" (click)="onCancelar()">Cancelar</button>
-    <button mat-raised-button color="primary" cdkFocusInitial (click)="onConfirmar($event)">Confirmar</button>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="onConfirmar($event)" [disabled]="validationError.status">Confirmar</button>
 </div>

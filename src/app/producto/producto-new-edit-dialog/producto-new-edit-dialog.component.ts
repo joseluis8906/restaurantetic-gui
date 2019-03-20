@@ -12,6 +12,7 @@ import { MediaService } from "src/app/utils/media.service";
 })
 export class ProductoNewEditDialogComponent implements OnInit {
 
+  validationError: ValidateError;
   producto: Producto;
 
   constructor(
@@ -19,10 +20,21 @@ export class ProductoNewEditDialogComponent implements OnInit {
     private mediaService: MediaService,
     private productoService: ProductoService) {
 
+    this.validationError = { status: false, message: "", color: "primary" };
     this.producto = new Producto();
   }
 
   ngOnInit() { }
+
+  onValidate() {
+    this.productoService.getProducto(this.producto.codigo).subscribe((producto_: Producto) => {
+      if (producto_ !== null) {
+        this.validationError = { status: true, message: "Código no disponible.", color: "warn" };
+      } else {
+        this.validationError = { status: false, message: "", color: "primary" };
+      }
+    });
+  }
 
   onCancelar(): void {
     this.dialogRef.close();
@@ -41,4 +53,10 @@ export class ProductoNewEditDialogComponent implements OnInit {
       this.dialogRef.close()
     });
   }
+}
+
+class ValidateError {
+  public status: boolean;
+  public message: string;
+  public color: string;
 }
