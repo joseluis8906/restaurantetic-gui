@@ -5,7 +5,7 @@
         <mat-card-subtitle>{{producto.codigo}}</mat-card-subtitle>
     </div>
   </mat-card-header>
-  <img mat-card-image [ngStyle]="{'background-image': 'url(https://media.restaurantetic.com/files/' + producto.imagen + ')'}" class="producto-image-banner">
+  <img mat-card-image [ngStyle]="{'background-image': 'url(https://media.restaurantetic.com/files/' + (producto.imagen || '201903130002.png') + ')'}" class="producto-image-banner">
   <mat-card-content>
     <label class="producto-descripcion-label"><b>Descripción</b></label>
     <perfect-scrollbar class="producto-descripcion">
@@ -23,6 +23,6 @@
   </mat-card-content>
   <mat-card-actions>
       <button mat-raised-button color="primary" (click)="onEdit($event)">EDITAR</button>
-      <button mat-raised-button color="warn" (click)="onEliminar($event)">ELIMINAR</button>
+      <button mat-raised-button color="warn" (click)="onEliminar(producto.codigo)">ELIMINAR</button>
   </mat-card-actions>
 </mat-card>

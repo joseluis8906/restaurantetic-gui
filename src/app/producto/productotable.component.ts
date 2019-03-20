@@ -11,10 +11,12 @@ import { ProductoService } from "src/app/producto/producto.service";
 })
 export class ProductotableComponent implements OnInit {
 
-  newProducto: Producto;
-  productos: Producto[] = [];
+  productos: Producto[];
 
-  constructor(private productoService: ProductoService, public dialog: MatDialog) { }
+  constructor(private productoService: ProductoService, public dialog: MatDialog) {
+    this.productos = new Array<Producto>();
+    this.productoService.productos$.subscribe((_) => this.getProductos());
+  }
 
   ngOnInit() {
     this.getProductos();

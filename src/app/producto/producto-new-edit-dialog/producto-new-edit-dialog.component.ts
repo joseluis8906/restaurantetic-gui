@@ -36,6 +36,9 @@ export class ProductoNewEditDialogComponent implements OnInit {
   }
 
   onConfirmar(evt) {
-    this.productoService.addProducto(this.producto).subscribe((_: any) => this.dialogRef.close());
+    this.productoService.addProducto(this.producto).subscribe((producto_: Producto) => {
+      this.productoService.productosSubject.next(producto_);
+      this.dialogRef.close()
+    });
   }
 }
