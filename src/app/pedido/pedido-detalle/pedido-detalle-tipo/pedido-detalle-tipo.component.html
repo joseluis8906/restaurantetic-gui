@@ -2,10 +2,10 @@
   <div class="row no-gutters">
     <div class="col-sm-12">
       <mat-tab-group class="pedido-detalle-tipo-tabs">
-        <mat-tab label="Caja">
+        <mat-tab label="Caja" *ngIf="tipo === 'caja'">
           <app-pedido-detalle-caja></app-pedido-detalle-caja>
         </mat-tab>
-        <mat-tab label="Mesa">
+        <mat-tab label="Mesa" *ngIf="tipo === 'mesa'">
           <app-pedido-detalle-mesa></app-pedido-detalle-mesa>
         </mat-tab>
       </mat-tab-group>

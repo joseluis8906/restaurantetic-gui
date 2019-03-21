@@ -18,26 +18,9 @@ export class PedidoService {
     this.pedido$ = this.pedidoSubject.asObservable();
   }
 
-  createPedidoCaja(): void {
+  createPedido(mesa: string): void {
     const newPedido: Pedido = new PedidoBuilder()
-      .withCodigo(this.getSigCodigo("CAJA"))
-      .withFecha(Date.now())
-      .withItems([])
-      .withMesa(null)
-      .withSubtotal(0)
-      .withIva(0)
-      .withTotal(0)
-      .withPago(false)
-      .build();
-
-    PEDIDOS.push(newPedido);
-    this.pedido = PEDIDOS[PEDIDOS.length - 1];
-    this.pedidoSubject.next(PEDIDOS[PEDIDOS.length - 1]);
-  }
-
-  createPedidoMesa(mesa: string): void {
-    const newPedido: Pedido = new PedidoBuilder()
-      .withCodigo(this.getSigCodigo("MESA"))
+      .withCodigo(this.getSigCodigo())
       .withFecha(Date.now())
       .withItems([])
       .withMesa(mesa)
@@ -63,22 +46,10 @@ export class PedidoService {
     this.pedidoSubject.next(this.pedido);
   }
 
-  getPedidosMesa(): Observable<Pedido[]> {
+  getPedidos(): Observable<Pedido[]> {
     const pedidos: Pedido[] = [];
     for (const pedido of PEDIDOS) {
-      if (pedido.codigo.startsWith("MESA") && !pedido.pago) {
-        pedidos.push(pedido);
-      }
-    }
-    return of(pedidos);
-  }
-
-  getPedidosCaja(): Observable<Pedido[]> {
-    const pedidos: Pedido[] = [];
-    for (const pedido of PEDIDOS) {
-      if (pedido.codigo.startsWith("CAJA") && !pedido.pago) {
-        pedidos.push(pedido);
-      }
+      pedidos.push(pedido);
     }
     return of(pedidos);
   }
@@ -92,7 +63,7 @@ export class PedidoService {
     return null;
   }
 
-  changePedidoCaja(codigo: string): void {
+  changePedido(codigo: string): void {
     for (const pedido_ of PEDIDOS) {
       if (pedido_.codigo === codigo && !pedido_.pago) {
         this.pedidoSubject.next(pedido_);
@@ -101,20 +72,16 @@ export class PedidoService {
       }
     }
   }
-
-  changePedidoMesa(mesa: string) {
-    let existe: boolean = false;
+  
+  changePedidoFromMesa(mesa: string): void {
     for (const pedido_ of PEDIDOS) {
-      if (pedido_.codigo.startsWith("MESA") && pedido_.mesa === mesa && !pedido_.pago) {
+      if (pedido_.mesa === mesa && !pedido_.pago) {
         this.pedidoSubject.next(pedido_);
         this.pedido = pedido_;
-        existe = true;
-        break;
+        return;
       }
     }
-    if (!existe) {
-      this.createPedidoMesa(mesa);
-    }
+    this.createPedido(mesa);
   }
 
   addItem(item: Item) {
@@ -141,7 +108,7 @@ export class PedidoService {
     this.pedidoSubject.next(this.pedido);
   }
 
-  getSigCodigo(tipo: string): string {
-    return tipo + (PEDIDOS.length + 1).toString().padStart(3, "0");
+  getSigCodigo(): string {
+    return "PED" + (PEDIDOS.length + 1).toString().padStart(3, "0");
   }
 }

@@ -15,8 +15,8 @@ export class PedidoDetalleCajaComponent implements OnInit {
 
   constructor(private pedidoService: PedidoService) {
     this.pedidoService.pedido$.subscribe(() => {
-      this.pedidoService.getPedidosCaja().subscribe((pedidos) => {
-        this.pedidos = pedidos;
+      this.pedidoService.getPedidos().subscribe((pedidos) => {
+        this.getPedidos(); 
       });
     });
   }
@@ -36,17 +36,22 @@ export class PedidoDetalleCajaComponent implements OnInit {
   }
 
   onCreatePedido(): void {
-    this.pedidoService.createPedidoCaja();
+    this.pedidoService.createPedido(null);
   }
 
   onChangePedido(pedido: Pedido) {
-    this.pedidoService.changePedidoCaja(pedido.codigo);
+    this.pedidoService.changePedido(pedido.codigo);
   }
 
   getPedidos() {
-    this.pedidoService.getPedidosCaja()
-      .subscribe((pedidos) => {
-        this.pedidos = pedidos;
-      });
+    this.pedidoService.getPedidos().subscribe((pedidos) => {
+      this.pedidos = [];
+      for (const pedido of pedidos){
+        console.log(pedido);
+        if (!pedido.mesa) {
+          this.pedidos.push(pedido);
+        }
+      }
+    });
   }
 }

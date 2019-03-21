@@ -1,3 +1,4 @@
+@import "~@angular/material/theming";
 @import '~src/variables.scss';
 
 mat-grid-tile {
@@ -12,4 +13,8 @@ mat-grid-tile:hover {
 
 .active {
   background-color: $primary-color;
+}
+
+.actual {
+  background-color: mat-color($mat-amber, 800);
 }

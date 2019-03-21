@@ -2,7 +2,7 @@
   <div class="row justify-content-center no-gutters">
     <perfect-scrollbar [ngStyle]="{'max-height': screenHeight*0.25 + 'px'}">
       <mat-grid-list class="col-sm-12" cols="6" rowHeight="1:1">
-        <mat-grid-tile *ngFor="let mesa of mesas" (click)="onChangeMesa(mesa)" [ngClass]="{'active': mesa.active}">{{mesa.numero}}</mat-grid-tile>
+        <mat-grid-tile *ngFor="let mesa of mesas" (click)="onChangeMesa(mesa)" [ngClass]="{'active': mesa.active, 'actual': mesa.actual}">{{mesa.numero}}</mat-grid-tile>
       </mat-grid-list>
     </perfect-scrollbar>
   </div>
