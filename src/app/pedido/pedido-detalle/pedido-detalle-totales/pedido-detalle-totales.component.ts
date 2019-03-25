@@ -30,7 +30,7 @@ export class PedidoDetalleTotalesComponent implements OnInit {
     for (const item of this.pedido.items) {
       this.pedido.subtotal = this.pedido.subtotal + item.precioTotal;
     }
-    this.pedido.iva = this.pedido.subtotal * 0.19;
+    this.pedido.iva = 0;
     this.pedido.total = this.pedido.subtotal + this.pedido.iva;
   }
 }

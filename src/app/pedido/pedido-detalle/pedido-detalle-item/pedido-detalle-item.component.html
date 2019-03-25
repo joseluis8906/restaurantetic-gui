@@ -1,19 +1,15 @@
 <mat-list-item class="pedido-detalle-item">
   <div class="container-fluid" [ngStyle]="{'padding': '0'}">
     <div class="row no-gutters">
-      <div class="col-sm-3" [ngStyle]="{'font-size': '12px'}">
+      <div class="col-sm-4" [ngStyle]="{'font-size': '12px'}">
         <input class="producto-numero" [value]="item.numero" readonly>). {{item.producto.codigo}}
       </div>
-      <div class="col-sm-4" [ngStyle]="{'text-align': 'right', 'font-size': '12px'}">
-        <input class="producto-cantidad" [(ngModel)]="item.cantidad" (change)="onActualizarCantidad()"> x 
-        <p [ngStyle]="{'width': '45%', 'display': 'inline-block', 'text-align': 'right'}">{{item.precioUnitario | currency: 'USD' : 'symbol' : '1.0'}}</p>
-      </div>
-      <div class="col-sm-2" 
+      <div class="col-sm-4" 
         [ngStyle]="{'text-align': 'right', 'cursor': 'pointer', 'color': 'red'}"
         (click)="deleteItem(item)">
           <mat-icon>delete_forever</mat-icon>
       </div>
-      <div class="col-sm-3" [ngStyle]="{'text-align': 'right', 'font-size': '14px'}">{{item.precioTotal | currency: 'USD' : 'symbol' : '1.0'}}</div>
+      <div class="col-sm-4" [ngStyle]="{'text-align': 'right', 'font-size': '14px'}">{{item.precioTotal | currency: 'USD' : 'symbol' : '1.0'}}</div>
     </div>
   </div>
 </mat-list-item>

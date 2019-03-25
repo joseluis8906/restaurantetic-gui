@@ -21,15 +21,7 @@ export class PedidoViewComponent implements OnInit {
   }
 
   cargarPedidos(): void {
-    this.pedidoService.getPedidosCaja().subscribe((pedidos: Pedido[]) => {
-      for (const pedido of pedidos) {
-        this.pedidos.push(pedido);
-      }
-
-      console.log(this.pedidos);
-    });
-
-    this.pedidoService.getPedidosMesa().subscribe((pedidos: Pedido[]) => {
+    this.pedidoService.getPedidos().subscribe((pedidos: Pedido[]) => {
       for (const pedido of pedidos) {
         this.pedidos.push(pedido);
       }
