@@ -5,8 +5,8 @@ export class Pedido {
   fecha: number;
   mesa: string;
   items: Item[];
-  subtotal: number;
   iva: number;
+  subtotal: number;
   total: number;
   pago: boolean;
 }
