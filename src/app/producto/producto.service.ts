@@ -13,18 +13,20 @@ export class ProductoService {
 
   private host: string;
   private headers: HttpHeaders;
-  public productosSubject: Subject<any>;
-  public productos$: Observable<any>;
+  private producto: Producto;
+  public productosSubject: Subject<Producto>;
+  public productos$: Observable<Producto>;
 
   constructor(private http: HttpClient) {
-    this.productosSubject = new Subject<any>();
-    this.productos$ = this.productosSubject.asObservable();
-
     this.host = "https://api.restaurantetic.com/api/v1";
     this.headers = new HttpHeaders({
       "Content-Type": "application/json",
       "Accept": "application/json",
     });
+
+    this.producto = null;
+    this.productosSubject = new Subject<Producto>();
+    this.productos$ = this.productosSubject.asObservable();
   }
 
   getProductos(): Observable<Producto[]> {

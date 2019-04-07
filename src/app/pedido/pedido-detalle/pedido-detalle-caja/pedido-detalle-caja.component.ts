@@ -40,7 +40,7 @@ export class PedidoDetalleCajaComponent implements OnInit {
   }
 
   onChangePedido(pedido: Pedido) {
-    this.pedidoService.changePedido(pedido.codigo);
+    this.pedidoService.changePedido(pedido);
   }
 
   getPedidos() {

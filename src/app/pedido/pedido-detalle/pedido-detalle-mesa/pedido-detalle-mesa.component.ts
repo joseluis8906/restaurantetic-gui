@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from "@angular/core";
-import { Pedido } from "src/app/pedido/pedido";
+import { Pedido, PedidoBuilder } from "src/app/pedido/pedido";
 import { PedidoService } from "src/app/pedido/pedido.service";
 
 @Component({
@@ -11,7 +11,6 @@ export class PedidoDetalleMesaComponent implements OnInit {
 
   pedido: Pedido;
   screenHeight: number;
-
   mesas: Mesa[] = [
     {numero: "01", active: false, actual: false},
     {numero: "02", active: false, actual: false},
@@ -50,12 +49,20 @@ export class PedidoDetalleMesaComponent implements OnInit {
     this.calcularMesasOcupadas();
   }
 
-  onChangeMesa(mesa: Mesa): void {
-    this.pedidoService.changePedidoFromMesa(mesa.numero);
-    for (const mesa_ of this.mesas) {
-      mesa_.actual = false;
-    }
-    mesa.actual = true;
+  onChangePedido(mesa: Mesa): void {
+    this.pedidoService.getPedidos().subscribe((pedidos: Pedido[]) => {
+      for (const pedido of pedidos) {
+        for (const mesa_ of this.mesas) {
+          mesa_.actual = false;
+          if (pedido.mesa === mesa_.numero) {
+            this.pedidoService.changePedido(pedido);
+            return;
+          }
+        }
+      }
+      mesa.actual = true;
+      this.pedidoService.createPedido(mesa.numero).subscribe((pedido: Pedido) => this.pedido = pedido);
+    });
   }
 
   @HostListener("window:resize", ["$event"])
@@ -69,6 +76,9 @@ export class PedidoDetalleMesaComponent implements OnInit {
 
   calcularMesasOcupadas(): void {
     this.pedidoService.getPedidos().subscribe((pedidos: Pedido[]) => {
+      if (pedidos === null) {
+        return;
+      }
       for (const mesa of this.mesas) {
         mesa.active = false;
         for (const pedido of pedidos) {
@@ -76,7 +86,7 @@ export class PedidoDetalleMesaComponent implements OnInit {
             mesa.active = true;
           }
         }
-        if (this.pedido !== null && this.pedido.mesa === mesa.numero){
+        if (this.pedido !== null && this.pedido.mesa === mesa.numero) {
           mesa.actual = true;
         } else {
           mesa.actual = false;

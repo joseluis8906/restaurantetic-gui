@@ -1,3 +1,5 @@
+import { HttpClient } from "@angular/common/http";
+import { HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of, Subject } from "rxjs";
 import { Item } from "src/app/pedido/item";
@@ -9,106 +11,64 @@ import { Pedido, PedidoBuilder } from "src/app/pedido/pedido";
 })
 export class PedidoService {
 
+  private host: string;
+  private headers: HttpHeaders;
   private pedido: Pedido;
-  private pedidoSubject: Subject<Pedido>;
+  public pedidoSubject: Subject<Pedido>;
   public pedido$: Observable<Pedido>;
 
-  constructor() {
+  constructor(private http: HttpClient) {
+    this.host = "https://api.restaurantetic.com/api/v1";
+    this.headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    });
+
+    this.pedido = null;
     this.pedidoSubject = new Subject<Pedido>();
     this.pedido$ = this.pedidoSubject.asObservable();
   }
 
-  createPedido(mesa: string): void {
-    const newPedido: Pedido = new PedidoBuilder()
-      .withCodigo(this.getSigCodigo())
-      .withFecha(Date.now())
-      .withItems([])
-      .withMesa(mesa)
-      .withSubtotal(0)
-      .withIva(0)
-      .withTotal(0)
-      .withPago(false)
-      .build();
+  createPedido(mesa: string): Observable<Pedido> {
+    return this.getSigCodigo().lift((codigo: string) => {
+      const newPedido: Pedido = new PedidoBuilder()
+        .withCodigo(codigo)
+        .withFecha(Date.now())
+        .withItems([])
+        .withMesa(mesa)
+        .withSubtotal(0)
+        .withIva(0)
+        .withTotal(0)
+        .withPago(false)
+        .build();
 
-    PEDIDOS.push(newPedido);
-    this.pedido = PEDIDOS[PEDIDOS.length - 1];
-    this.pedidoSubject.next(PEDIDOS[PEDIDOS.length - 1]);
+      return this.http.post<Pedido>(`${this.host}/pedidos`, newPedido, { headers: this.headers });
+    });
   }
 
-  deletePedido(): void {
-    for (let i = 0; i < PEDIDOS.length; i++) {
-      if (PEDIDOS[i].codigo === this.pedido.codigo) {
-        PEDIDOS.splice(i, 1);
-        break;
-      }
-    }
-    this.pedido = null;
-    this.pedidoSubject.next(this.pedido);
+  deletePedido(codigo: string): Observable<number> {
+    return this.http.delete<number>(`${this.host}/pedidos/${codigo}`);
   }
 
   getPedidos(): Observable<Pedido[]> {
-    const pedidos: Pedido[] = [];
-    for (const pedido of PEDIDOS) {
-      pedidos.push(pedido);
-    }
-    return of(pedidos);
+    return this.http.get<Pedido[]>(`${this.host}/pedidos?pago=false`);
   }
 
   getPedido(codigo: string): Observable<Pedido> {
-    for (const pedido of PEDIDOS) {
-      if (pedido.codigo === codigo && !pedido.pago) {
-        return of(pedido);
-      }
-    }
-    return null;
+    return this.http.get<Pedido>(`${this.host}/pedidos/${codigo}`);
   }
 
-  changePedido(codigo: string): void {
-    for (const pedido_ of PEDIDOS) {
-      if (pedido_.codigo === codigo && !pedido_.pago) {
-        this.pedidoSubject.next(pedido_);
-        this.pedido = pedido_;
-        break;
-      }
-    }
-  }
-  
-  changePedidoFromMesa(mesa: string): void {
-    for (const pedido_ of PEDIDOS) {
-      if (pedido_.mesa === mesa && !pedido_.pago) {
-        this.pedidoSubject.next(pedido_);
-        this.pedido = pedido_;
-        return;
-      }
-    }
-    this.createPedido(mesa);
+  changePedido(pedido: Pedido): void {
+    this.pedidoSubject.next(pedido);
   }
 
-  addItem(item: Item) {
-    this.pedido.items.push(item);
-    this.pedidoSubject.next(this.pedido);
-  }
+  addItem(item: Item) { }
 
-  deleteItem(item: Item) {
-    for (let i = 0; i < this.pedido.items.length; i++) {
-      if (this.pedido.items[i].numero === item.numero) {
-        this.pedido.items.splice(i, 1);
-        break;
-      }
-    }
-    let numero = 1;
-    for (const item of this.pedido.items) {
-      item.numero = numero;
-      numero++;
-    }
-    this.pedidoSubject.next(this.pedido);
-  }
+  deleteItem(item: Item) { }
 
-  updateTotales() {
-    this.pedidoSubject.next(this.pedido);
-  }
+  updateTotales() { }
 
-  getSigCodigo(): string {
-    return "PED" + (PEDIDOS.length + 1).toString().padStart(3, "0");
+  getSigCodigo(): Observable<string> {
+    return this.http.get<string>(`${this.host}/pedidos/codigo/next`);
   }
 }

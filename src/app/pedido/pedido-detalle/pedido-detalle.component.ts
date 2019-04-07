@@ -25,7 +25,7 @@ export class PedidoDetalleComponent implements OnInit {
     this.screenHeight = window.innerHeight - 54;
   }
 
-  deletePedido() {
-    this.pedidoService.deletePedido();
+  deletePedido(codigo: string) {
+    this.pedidoService.deletePedido(codigo);
   }
 }

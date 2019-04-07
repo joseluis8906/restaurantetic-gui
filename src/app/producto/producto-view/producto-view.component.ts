@@ -28,8 +28,6 @@ export class ProductoViewComponent implements OnInit {
   }
 
   onEliminar(codigo: string) {
-    this.productoService.removeProducto(codigo).subscribe((id: number) => {
-      this.productoService.productosSubject.next(id);
-    });
+    this.productoService.removeProducto(codigo);
   }
 }
