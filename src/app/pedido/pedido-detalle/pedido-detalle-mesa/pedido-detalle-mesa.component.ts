@@ -54,14 +54,17 @@ export class PedidoDetalleMesaComponent implements OnInit {
       for (const pedido of pedidos) {
         for (const mesa_ of this.mesas) {
           mesa_.actual = false;
-          if (pedido.mesa === mesa_.numero) {
+          if (pedido.mesa === mesa.numero) {
             this.pedidoService.changePedido(pedido);
             return;
           }
         }
       }
       mesa.actual = true;
-      this.pedidoService.createPedido(mesa.numero).subscribe((pedido: Pedido) => this.pedido = pedido);
+      this.pedidoService.createPedido(mesa.numero).subscribe((pedido: Pedido) => {
+        this.pedido = pedido;
+        this.calcularMesasOcupadas();
+      });
     });
   }
 

@@ -2,7 +2,7 @@ import { Item } from "./item";
 
 export class Pedido {
   codigo: string;
-  fecha: number;
+  fecha: string;
   mesa: string;
   items: Item[];
   iva: number;
@@ -12,44 +12,53 @@ export class Pedido {
 }
 
 export class PedidoBuilder {
-  pedido: Pedido;
+  private pedido: Pedido;
 
-  constructor () {
+  constructor() {
     this.pedido = new Pedido();
   }
-  withCodigo(codigo:string) :PedidoBuilder {
+
+  public withCodigo(codigo: string): PedidoBuilder {
     this.pedido.codigo = codigo;
     return this;
   }
-  withFecha(fecha:number) :PedidoBuilder {
+
+  public withFecha(fecha: string): PedidoBuilder {
     this.pedido.fecha = fecha;
     return this;
   }
-  withMesa(mesa:string) :PedidoBuilder {
+
+  public withMesa(mesa: string): PedidoBuilder {
     this.pedido.mesa = mesa;
     return this;
   }
-  withItems(items:Item[]) :PedidoBuilder {
+
+  public withItems(items: Item[]): PedidoBuilder {
     this.pedido.items = items;
     return this;
   }
-  withSubtotal(subtotal:number) :PedidoBuilder {
+
+  public withSubtotal(subtotal: number): PedidoBuilder {
     this.pedido.subtotal = subtotal;
     return this;
   }
-  withIva(iva:number) :PedidoBuilder {
+
+  public withIva(iva: number): PedidoBuilder {
     this.pedido.iva = iva;
     return this;
   }
-  withTotal(total:number) :PedidoBuilder {
+
+  public withTotal(total: number): PedidoBuilder {
     this.pedido.total = total;
     return this;
   }
-  withPago(pago:boolean) :PedidoBuilder {
+
+  public withPago(pago: boolean): PedidoBuilder {
     this.pedido.pago = pago;
     return this;
   }
-  build() :Pedido {
+
+  public build(): Pedido {
     return this.pedido;
   }
 }

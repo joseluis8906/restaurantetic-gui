@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of, Subject } from "rxjs";
+import { mergeMap } from "rxjs/operators";
 import { Item } from "src/app/pedido/item";
 import { PEDIDOS } from "src/app/pedido/mockPedidos";
 import { Pedido, PedidoBuilder } from "src/app/pedido/pedido";
@@ -30,10 +31,10 @@ export class PedidoService {
   }
 
   createPedido(mesa: string): Observable<Pedido> {
-    return this.getSigCodigo().lift((codigo: string) => {
+    return this.getSigCodigo().pipe(mergeMap((codigo: string) => {
       const newPedido: Pedido = new PedidoBuilder()
+        .withFecha((new Date(new Date() - (new Date().getTimezoneOffset() * 60 * 1000))).toISOString())
         .withCodigo(codigo)
-        .withFecha(Date.now())
         .withItems([])
         .withMesa(mesa)
         .withSubtotal(0)
@@ -43,7 +44,7 @@ export class PedidoService {
         .build();
 
       return this.http.post<Pedido>(`${this.host}/pedidos`, newPedido, { headers: this.headers });
-    });
+    }));
   }
 
   deletePedido(codigo: string): Observable<number> {
@@ -69,6 +70,8 @@ export class PedidoService {
   updateTotales() { }
 
   getSigCodigo(): Observable<string> {
-    return this.http.get<string>(`${this.host}/pedidos/codigo/next`);
+    return this.http.get<string>(
+      `${this.host}/pedidos/codigo/next`,
+      { headers: new HttpHeaders({"Content-Type": "text/plain",  "Accept": "text/plain"}),  responseType: "text" });
   }
 }
