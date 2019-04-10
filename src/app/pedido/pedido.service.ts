@@ -32,8 +32,9 @@ export class PedidoService {
 
   createPedido(mesa: string): Observable<Pedido> {
     return this.getSigCodigo().pipe(mergeMap((codigo: string) => {
+      const fecha = new Date();
       const newPedido: Pedido = new PedidoBuilder()
-        .withFecha((new Date(new Date() - (new Date().getTimezoneOffset() * 60 * 1000))).toISOString())
+        .withFecha(new Date(Number(fecha) - (fecha.getTimezoneOffset() * 60 * 1000)).toISOString())
         .withCodigo(codigo)
         .withItems([])
         .withMesa(mesa)
