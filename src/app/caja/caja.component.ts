@@ -7,7 +7,15 @@ import { Component, OnInit } from "@angular/core";
 })
 export class CajaComponent implements OnInit {
 
-  constructor() { }
+  data: any[];
+
+  constructor() {
+    this.data = [
+      {name: "in progress", value: 1000},
+      {name: "success", value: 1200},
+      {name: "error", value: 1500},
+    ];
+  }
 
   ngOnInit() {
   }

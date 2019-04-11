@@ -28,6 +28,7 @@
     "@angular/platform-server": "7.0.3",
     "@angular/router": "6.1.0",
     "@nguniversal/module-map-ngfactory-loader": "7.0.2",
+    "@swimlane/ngx-charts": "^10.1.0",
     "@types/paho-mqtt": "1.0.4",
     "angular-font-awesome": "3.1.2",
     "bootstrap": "4.1.3",

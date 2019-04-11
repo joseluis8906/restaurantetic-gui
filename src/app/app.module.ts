@@ -17,6 +17,7 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { AngularFontAwesomeModule } from "angular-font-awesome";
 import { CurrencyMaskModule } from "ng2-currency-mask";
 import { PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule } from "ngx-perfect-scrollbar";
@@ -109,6 +110,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatTabsModule,
     MatToolbarModule,
     PerfectScrollbarModule,
+    NgxChartsModule,
   ],
   entryComponents: [
     ProductoIngredienteDialogComponent,

@@ -73,6 +73,7 @@ export class PedidoService {
   getSigCodigo(): Observable<string> {
     return this.http.get<string>(
       `${this.host}/pedidos/codigo/next`,
-      { headers: new HttpHeaders({"Content-Type": "text/plain",  "Accept": "text/plain"}),  responseType: "text" });
+      { headers: new HttpHeaders({"Content-Type": "text/plain",  "Accept": "text/plain"}),
+        responseType: "text" as "json" });
   }
 }
