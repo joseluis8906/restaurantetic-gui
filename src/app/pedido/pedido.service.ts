@@ -48,8 +48,8 @@ export class PedidoService {
     }));
   }
 
-  deletePedido(codigo: string): Observable<number> {
-    return this.http.delete<number>(`${this.host}/pedidos/${codigo}`);
+  deletePedido(): Observable<number> {
+    return this.http.delete<number>(`${this.host}/pedidos/${this.pedido.codigo}`);
   }
 
   getPedidos(): Observable<Pedido[]> {
