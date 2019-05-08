@@ -1,0 +1,35 @@
+@import "src/variables";
+
+.en-espera {
+  background-color: $deep-orange-color !important;
+  color: white;
+}
+
+.en-espera:hover {
+  background-color: $deep-orange-color !important;
+  color: white;
+}
+
+.en-preparacion {
+  background-color: $amber-color !important;
+  color: white;
+}
+
+.en-preparacion:hover {
+  background-color: $amber-color !important;
+  color: white;
+}
+
+.listo {
+  background-color: $teal-color !important;
+  color: white;
+}
+
+.listo:hover {
+  background-color: $teal-color !important;
+  color: white;
+}
+
+.white {
+  color: white !important;
+}

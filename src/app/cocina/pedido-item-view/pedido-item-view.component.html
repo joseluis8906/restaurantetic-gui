@@ -1,28 +1,32 @@
 <mat-card [ngStyle]="{'max-height': screenHeight + 'px', 'min-height': screenHeight + 'px', 'padding': '0px'}">
   <perfect-scrollbar [ngStyle]="{'max-height': screenHeight + 'px', 'min-height': screenHeight + 'px'}">
     <mat-card>
-      <mat-accordion>  
-        <mat-expansion-panel *ngFor="let producto of productos" (click)="getSinIngredientes(producto)">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              {{ producto.codigo }}
+      <mat-accordion [multi]="true">
+        <mat-expansion-panel *ngFor="let item of items" (click)="getSinIngredientes(item.producto)">
+          <mat-expansion-panel-header [ngClass]="{'en-espera': (item.estado=='en espera'), 'en-preparacion': (item.estado=='en preparacion'), listo: (item.estado=='listo') }">
+            <mat-panel-title [ngClass]="{'white': (item.estado != null) }">
+              {{item.numero}}). {{ item.producto.nombre }}
             </mat-panel-title>
-            <mat-panel-description>
-              {{ producto.nombre }}
+            <mat-panel-description [ngClass]="{'white': (item.estado != null )}">
+              {{ item.producto.codigo }}
             </mat-panel-description>
           </mat-expansion-panel-header>
+          <p>Estado:</p>
+          <mat-button-toggle-group name="estado">
+            <mat-button-toggle [disabled]="['en espera', 'en preparacion', 'listo'].includes(item.estado)" class="en-espera" value="en espera" (click)="onCambiarEstado(item, 'en espera')">En espera</mat-button-toggle>
+            <mat-button-toggle [disabled]="['en preparacion', 'listo'].includes(item.estado)" class="en-preparacion" value="en preparacion" (click)="onCambiarEstado(item, 'en preparacion')">En preparación</mat-button-toggle>
+            <mat-button-toggle [disabled]="['listo'].includes(item.estado)" class="listo" value="listo" (click)="onCambiarEstado(item, 'listo')">Listo</mat-button-toggle>
+          </mat-button-toggle-group>
           <p *ngIf="sinIngredientes.length !== 0">Sin:</p>
           <ul>
             <li *ngFor="let sinIngrediente of sinIngredientes">{{sinIngrediente}}</li>
           </ul>
           <p>Ingredientes:</p>
           <ul>
-            <li *ngFor="let ingrediente of producto.ingredientes.split(',')">{{ingrediente}}</li>
+            <li *ngFor="let ingrediente of item.producto.ingredientes.split(',')">{{ingrediente}}</li>
           </ul>
         </mat-expansion-panel>
       </mat-accordion>
     </mat-card>
   </perfect-scrollbar>
 </mat-card>
-  
-

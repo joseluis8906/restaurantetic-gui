@@ -12,6 +12,8 @@ export class PedidoViewComponent implements OnInit {
 
   pedidos: Pedido[] = [];
   screenHeight: number;
+  active: String = null;
+
 
   constructor(private pedidoService: PedidoService, private cocinaService: CocinaService) { }
 
@@ -25,12 +27,11 @@ export class PedidoViewComponent implements OnInit {
       for (const pedido of pedidos) {
         this.pedidos.push(pedido);
       }
-
-      console.log(this.pedidos);
     });
   }
 
   changePedido(pedido: Pedido): void {
+    this.active = pedido.codigo;
     this.cocinaService.changePedido(pedido);
   }
 

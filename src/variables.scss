@@ -1,3 +1,4 @@
+@import '~@angular/material/theming';
 
 $grid-breakpoints: (
   xs: 0,
@@ -11,6 +12,12 @@ $media-host: 'http://localhost:1337';
 $images: $media-host + '/images';
 $videos: $media-host + '/videos';
 
-$primary-color: #009688;
-$secondary-color: #555;
-$thirt-color: #000;
+$primary-color: mat-color(mat-palette($mat-teal));
+$secondary-color: mat-color(mat-palette($mat-grey));
+$thirt-color: black;
+$warn-color: mat-color(mat-palette($mat-deep-orange));
+
+$teal-color: mat-color(mat-palette($mat-teal));
+$grey-color: mat-color(mat-palette($mat-grey));
+$deep-orange-color: mat-color(mat-palette($mat-deep-orange));
+$amber-color: mat-color(mat-palette($mat-amber));

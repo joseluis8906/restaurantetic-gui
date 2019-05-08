@@ -2,6 +2,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from "@angular/material/card";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from "@angular/material/dialog";
@@ -96,6 +97,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FormsModule,
     HttpClientModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatCardModule,
     MatCheckboxModule,
     MatDialogModule,

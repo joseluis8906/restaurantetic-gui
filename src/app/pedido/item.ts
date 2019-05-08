@@ -6,6 +6,7 @@ export class Item {
   pedido: Pedido;
   producto: Producto;
   precio: number;
+  estado: string;
 }
 
 export class ItemBuilder {

@@ -3,6 +3,7 @@ import { CocinaService } from "src/app/cocina/cocina.service";
 import { Pedido } from "src/app/pedido/pedido";
 import { Producto } from "src/app/producto/producto";
 import { ProductoService } from "src/app/producto/producto.service";
+import { Item } from "src/app/pedido/item";
 
 @Component({
   selector: "app-pedido-item-view",
@@ -11,16 +12,16 @@ import { ProductoService } from "src/app/producto/producto.service";
 })
 export class PedidoItemViewComponent implements OnInit {
 
-  productos: Producto[] = [];
+  items: Item[] = [];
   sinIngredientes: string[] = [];
 
   screenHeight: number;
 
   constructor(private cocinaService: CocinaService, private productoService: ProductoService) {
     this.cocinaService.pedido$.subscribe((pedido: Pedido) => {
-      this.productos = [];
+      this.items = [];
       for (const item of pedido.items) {
-        this.productos.push(item.producto);
+        this.items.push(item);
       }
     });
   }
@@ -42,5 +43,21 @@ export class PedidoItemViewComponent implements OnInit {
   @HostListener("window:resize", ["$event"])
   onResizedDisplay(event?) {
     this.calculateHeight();
+  }
+
+  onCambiarEstado(item: Item, estado: string): void {
+    for (const item_ of this.items) {
+      if (item_.numero === item.numero) {
+        if (estado == "listo") {
+          item_.estado = estado;
+        }
+        if (estado == "en preparacion" && item_.estado !== "listo") {
+          item_.estado = estado;
+        }
+        if (estado == "en espera" && item_.estado !== "en preparacion" && item_.estado !== "listo") {
+          item_.estado = estado;
+        }
+      }
+    }
   }
 }

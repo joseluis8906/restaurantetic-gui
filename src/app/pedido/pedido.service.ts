@@ -46,7 +46,7 @@ export class PedidoService {
         this.pedido = pedido;
         this.pedidoSubject.next(this.pedido);
       });
-    }));
+    });
   }
 
   deletePedido(): void {
