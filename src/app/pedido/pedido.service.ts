@@ -4,8 +4,8 @@ import { Injectable } from "@angular/core";
 import { Observable, of, Subject } from "rxjs";
 import { mergeMap } from "rxjs/operators";
 import { Item } from "src/app/pedido/item";
-import { PEDIDOS } from "src/app/pedido/mockPedidos";
 import { Pedido, PedidoBuilder } from "src/app/pedido/pedido";
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: "root",
@@ -19,7 +19,7 @@ export class PedidoService {
   public pedido$: Observable<Pedido>;
 
   constructor(private http: HttpClient) {
-    this.host = "https://api.restaurantetic.com/api/v1";
+    this.host = environment.API_HOST;
     this.headers = new HttpHeaders({
       "Content-Type": "application/json",
       "Accept": "application/json",
@@ -30,26 +30,31 @@ export class PedidoService {
     this.pedido$ = this.pedidoSubject.asObservable();
   }
 
-  createPedido(mesa: string): Observable<Pedido> {
-    return this.getSigCodigo().pipe(mergeMap((codigo: string) => {
+  createPedido(mesa: string): void {
+    this.getSigCodigo().subscribe((codigo: string) => {
       const fecha = new Date();
       const newPedido: Pedido = new PedidoBuilder()
         .withFecha(new Date(Number(fecha) - (fecha.getTimezoneOffset() * 60 * 1000)).toISOString())
         .withCodigo(codigo)
         .withItems([])
         .withMesa(mesa)
-        .withSubtotal(0)
-        .withIva(0)
         .withTotal(0)
         .withPago(false)
         .build();
 
-      return this.http.post<Pedido>(`${this.host}/pedidos`, newPedido, { headers: this.headers });
+      this.http.post<Pedido>(`${this.host}/pedidos`, newPedido, { headers: this.headers }).subscribe((pedido: Pedido) => {
+        this.pedido = pedido;
+        this.pedidoSubject.next(this.pedido);
+      });
     }));
   }
 
-  deletePedido(): Observable<number> {
-    return this.http.delete<number>(`${this.host}/pedidos/${this.pedido.codigo}`);
+  deletePedido(): void {
+    this.http.delete<void>(`${this.host}/pedidos/${this.pedido.codigo}`).subscribe((_) => {
+      this.pedido = new Pedido();
+      this.pedido.items = [];
+      this.pedidoSubject.next(this.pedido);
+    });
   }
 
   getPedidos(): Observable<Pedido[]> {
@@ -61,14 +66,29 @@ export class PedidoService {
   }
 
   changePedido(pedido: Pedido): void {
-    this.pedidoSubject.next(pedido);
+    this.pedido = pedido;
+    this.pedidoSubject.next(this.pedido);
   }
 
-  addItem(item: Item) { }
+  addItem(item: Item): void{
+    const tmpItem: any = item;
+    tmpItem.pedido = null;
+    this.http.post<Pedido>(
+      `${this.host}/pedidos/${this.pedido.codigo}/items/productos/${item.producto.codigo}`, tmpItem, { headers: this.headers })
+        .subscribe((pedido: Pedido) => {
+          this.pedido.items = pedido.items;
+          this.pedidoSubject.next(this.pedido);
+        });
+  }
 
-  deleteItem(item: Item) { }
+  deleteItem(item: Item): void {
+    this.http.delete<Pedido>(`${this.host}/pedidos/${this.pedido.codigo}/items/${item.numero}`).subscribe((pedido: Pedido) => {
+      this.pedido.items = pedido.items;
+      this.pedidoSubject.next(this.pedido);
+    });
+  }
 
-  updateTotales() { }
+  updateTotales() {  }
 
   getSigCodigo(): Observable<string> {
     return this.http.get<string>(

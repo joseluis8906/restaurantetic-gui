@@ -5,8 +5,6 @@ export class Pedido {
   fecha: string;
   mesa: string;
   items: Item[];
-  iva: number;
-  subtotal: number;
   total: number;
   pago: boolean;
 }
@@ -35,16 +33,6 @@ export class PedidoBuilder {
 
   public withItems(items: Item[]): PedidoBuilder {
     this.pedido.items = items;
-    return this;
-  }
-
-  public withSubtotal(subtotal: number): PedidoBuilder {
-    this.pedido.subtotal = subtotal;
-    return this;
-  }
-
-  public withIva(iva: number): PedidoBuilder {
-    this.pedido.iva = iva;
     return this;
   }
 

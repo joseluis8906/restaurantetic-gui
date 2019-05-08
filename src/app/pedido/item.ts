@@ -1,11 +1,11 @@
 import { Producto } from "src/app/producto/producto";
+import { Pedido } from "./pedido";
 
 export class Item {
   numero: number;
-  cantidad: number;
+  pedido: Pedido;
   producto: Producto;
-  precioUnitario: number;
-  precioTotal: number;
+  precio: number;
 }
 
 export class ItemBuilder {
@@ -20,23 +20,13 @@ export class ItemBuilder {
     return this;
   }
 
-  withCantidad(cantidad: number): ItemBuilder {
-    this.item.cantidad = cantidad;
-    return this;
-  }
-
   withProduto(producto: Producto): ItemBuilder {
     this.item.producto = producto;
     return this;
   }
 
-  withPrecioUnitario(precioUnitario: number): ItemBuilder {
-    this.item.precioUnitario = precioUnitario;
-    return this;
-  }
-
-  withPrecioTotal(precioTotal: number): ItemBuilder {
-    this.item.precioTotal = precioTotal;
+  withPrecio(precio: number): ItemBuilder {
+    this.item.precio = precio;
     return this;
   }
 

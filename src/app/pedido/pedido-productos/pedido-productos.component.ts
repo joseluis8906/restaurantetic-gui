@@ -45,10 +45,8 @@ export class PedidoProductosComponent implements OnInit {
   onAgregarProducto(producto: Producto): void {
     const tmpItem = new ItemBuilder()
       .withNumero(this.pedido.items.length + 1)
-      .withCantidad(1)
       .withProduto(producto)
-      .withPrecioUnitario(producto.precio)
-      .withPrecioTotal(producto.precio * 1)
+      .withPrecio(producto.precio)
       .build();
     this.pedidoService.addItem(tmpItem);
   }

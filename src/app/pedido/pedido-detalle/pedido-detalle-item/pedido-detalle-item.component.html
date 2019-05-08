@@ -9,7 +9,7 @@
         (click)="deleteItem(item)">
           <mat-icon>delete_forever</mat-icon>
       </div>
-      <div class="col-sm-4" [ngStyle]="{'text-align': 'right', 'font-size': '14px'}">{{item.precioTotal | currency: 'USD' : 'symbol' : '1.0'}}</div>
+      <div class="col-sm-4" [ngStyle]="{'text-align': 'right', 'font-size': '14px'}">{{item.precio | currency: 'USD' : 'symbol' : '1.0'}}</div>
     </div>
   </div>
 </mat-list-item>

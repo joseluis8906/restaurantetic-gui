@@ -61,10 +61,7 @@ export class PedidoDetalleMesaComponent implements OnInit {
         }
       }
       mesa.actual = true;
-      this.pedidoService.createPedido(mesa.numero).subscribe((pedido: Pedido) => {
-        this.pedido = pedido;
-        this.calcularMesasOcupadas();
-      });
+      this.pedidoService.createPedido(mesa.numero);
     });
   }
 

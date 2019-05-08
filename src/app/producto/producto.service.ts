@@ -2,9 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of, Subject } from "rxjs";
-import { PRODUCTOS } from "src/app/producto/mock-productos";
 import { Producto } from "src/app/producto/producto";
-import { ConfigService } from "src/app/utils/config.service";
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: "root",
@@ -18,7 +17,7 @@ export class ProductoService {
   public productos$: Observable<Producto>;
 
   constructor(private http: HttpClient) {
-    this.host = "https://api.restaurantetic.com/api/v1";
+    this.host = environment.API_HOST;
     this.headers = new HttpHeaders({
       "Content-Type": "application/json",
       "Accept": "application/json",
