@@ -10,7 +10,7 @@ import { PedidoService } from "src/app/pedido/pedido.service";
 export class PedidoDetalleMesaComponent implements OnInit {
 
   pedido: Pedido;
-  screenHeight: number;
+  height: number;
   mesas: Mesa[] = [
     {numero: "01", active: false, actual: false},
     {numero: "02", active: false, actual: false},
@@ -70,8 +70,24 @@ export class PedidoDetalleMesaComponent implements OnInit {
     this.calculateHeight();
   }
 
+  @HostListener("window:orientationchange", ["$event"])
+  onChangeOrientation(event?) {
+    this.calculateHeight();
+  }
+
   calculateHeight(): void {
-    this.screenHeight = window.innerHeight - 54;
+    const width: number = window.innerWidth;
+    const height: number = window.innerHeight;
+    const orientation: string = width > height ? "landscape" : "portrait";
+    if (orientation === "landscape") {
+      const screenHeight = window.innerHeight;
+      const height: number = screenHeight - (48 + 48 + 54);
+      this.height = height * 0.3;
+    } else {
+      const screenWidth = window.innerWidth;
+      const height: number = screenWidth - (48 + 48 + 54);
+      this.height = height * 0.3;
+    }
   }
 
   calcularMesasOcupadas(): void {

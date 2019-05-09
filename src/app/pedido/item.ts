@@ -31,6 +31,11 @@ export class ItemBuilder {
     return this;
   }
 
+  withEstado(estado: string): ItemBuilder {
+    this.item.estado = estado;
+    return this;
+  }
+
   build(): Item {
     return this.item;
   }

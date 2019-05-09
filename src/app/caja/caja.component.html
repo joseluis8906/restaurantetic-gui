@@ -1,4 +1,31 @@
-<ngx-charts-pie-chart
-    [view]="[150, 150]"
-    [results]="data"
-    [customColors]="[{name: 'in progress', value: 'aqua'}, {name: 'success', value: 'green'}, {name: 'error', value: 'red'}]"></ngx-charts-pie-chart>
+<perfect-scrollbar class="p-2">
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let pedido of pedidos ">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{pedido.codigo}}
+        </mat-panel-title>
+        <mat-panel-description>
+          Mesa: {{pedido.mesa || "No"}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      Items:
+      <table class="table">
+        <thead>
+          <tr>
+            <th>No.</th><th>Item</th><th class="text-right">Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of pedido.items">
+            <td>{{item.numero}}</td><td>{{item.producto.codigo}} - {{item.producto.nombre}}</td><td class="text-right">{{item.precio | currency: 'USD' : 'symbol' : '1.0'}}</td>
+          </tr>
+          <tr><td></td><td class="text-right">Total:</td><td class="text-right">{{pedido.total | currency: 'USD' : 'symbol' : '1.0'}}</td></tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-end">
+        <button mat-raised-button color="primary">PAGAR</button>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</perfect-scrollbar>

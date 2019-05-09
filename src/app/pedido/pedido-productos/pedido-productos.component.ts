@@ -47,6 +47,7 @@ export class PedidoProductosComponent implements OnInit {
       .withNumero(this.pedido.items.length + 1)
       .withProduto(producto)
       .withPrecio(producto.precio)
+      .withEstado("en espera")
       .build();
     this.pedidoService.addItem(tmpItem);
   }

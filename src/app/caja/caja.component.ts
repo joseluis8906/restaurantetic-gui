@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { Pedido } from "src/app/pedido/pedido";
+import { PedidoService } from "src/app/pedido/pedido.service";
 
 @Component({
   selector: "app-caja",
@@ -7,17 +9,15 @@ import { Component, OnInit } from "@angular/core";
 })
 export class CajaComponent implements OnInit {
 
-  data: any[];
+  pedidos: Array<Pedido>;
 
-  constructor() {
-    this.data = [
-      {name: "in progress", value: 1000},
-      {name: "success", value: 1200},
-      {name: "error", value: 1500},
-    ];
+  constructor(private pedidoService: PedidoService) {
+    this.pedidos = [];
+    this.pedidoService.getPedidos().subscribe((pedidos: Array<Pedido>) => {
+      this.pedidos = pedidos;
+    });
   }
 
   ngOnInit() {
   }
-
 }
