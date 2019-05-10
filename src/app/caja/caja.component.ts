@@ -20,4 +20,12 @@ export class CajaComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  onPagar(pedido: Pedido): void {
+    this.pedidoService.pagar(pedido).subscribe((_) => {
+      this.pedidoService.getPedidos().subscribe((pedidos: Array<Pedido>) => {
+        this.pedidos = pedidos;
+      });
+    });
+  }
 }

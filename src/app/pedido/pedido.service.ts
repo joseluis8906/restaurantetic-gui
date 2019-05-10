@@ -96,4 +96,13 @@ export class PedidoService {
       { headers: new HttpHeaders({"Content-Type": "text/plain",  "Accept": "text/plain"}),
         responseType: "text" as "json" });
   }
+
+  pagar(pedido: Pedido): Observable<void> {
+    pedido.pago = true;
+    return this.http.put<void>(`${this.host}/pedidos/${pedido.codigo}`, pedido, { headers: this.headers });
+  }
+
+  cambiarEstadoItem(item: Item): Observable<void> {
+    return this.http.put<void>(`${this.host}/pedidos/${this.pedido.codigo}/items/${item.numero}`, item, {headers: this.headers});
+  }
 }

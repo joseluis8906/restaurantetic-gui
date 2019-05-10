@@ -46,6 +46,7 @@ export class PedidoProductosComponent implements OnInit {
     const tmpItem = new ItemBuilder()
       .withNumero(this.pedido.items.length + 1)
       .withProduto(producto)
+      .withSinIngredientes(producto.ingredientes)
       .withPrecio(producto.precio)
       .withEstado("en espera")
       .build();

@@ -3,8 +3,8 @@ import { Pedido } from "./pedido";
 
 export class Item {
   numero: number;
-  pedido: Pedido;
   producto: Producto;
+  sinIngredientes: string;
   precio: number;
   estado: string;
 }
@@ -23,6 +23,11 @@ export class ItemBuilder {
 
   withProduto(producto: Producto): ItemBuilder {
     this.item.producto = producto;
+    return this;
+  }
+
+  withSinIngredientes(sinIngredientes: string): ItemBuilder {
+    this.item.sinIngredientes = sinIngredientes;
     return this;
   }
 

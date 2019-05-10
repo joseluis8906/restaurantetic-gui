@@ -53,8 +53,8 @@ export class ProductoViewMiniComponent implements OnInit {
       }
       const ingredientesFinales: string[] = [];
       for (const ingrediente of result) {
-        if (ingrediente.activo) {
-          ingredientesFinales.push(ingrediente.nombre);
+        if (!ingrediente.activo) {
+          ingredientesFinales.push(ingrediente.nombre.trim());
         }
       }
       const tmpProducto = Object.assign({}, this.producto);

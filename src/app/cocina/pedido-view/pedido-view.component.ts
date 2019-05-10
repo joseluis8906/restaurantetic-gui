@@ -1,5 +1,4 @@
 import { Component, HostListener, OnInit } from "@angular/core";
-import { CocinaService } from "src/app/cocina/cocina.service";
 import { Pedido } from "src/app/pedido/pedido";
 import { PedidoService } from "src/app/pedido/pedido.service";
 
@@ -15,7 +14,7 @@ export class PedidoViewComponent implements OnInit {
   active: String = null;
 
 
-  constructor(private pedidoService: PedidoService, private cocinaService: CocinaService) { }
+  constructor(private pedidoService: PedidoService) { }
 
   ngOnInit() {
     this.calculateHeight();
@@ -32,7 +31,7 @@ export class PedidoViewComponent implements OnInit {
 
   changePedido(pedido: Pedido): void {
     this.active = pedido.codigo;
-    this.cocinaService.changePedido(pedido);
+    this.pedidoService.changePedido(pedido);
   }
 
   calculateHeight(): void {

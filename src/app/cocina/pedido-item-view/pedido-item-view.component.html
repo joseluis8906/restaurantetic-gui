@@ -1,8 +1,8 @@
 <mat-card [ngStyle]="{'max-height': screenHeight + 'px', 'min-height': screenHeight + 'px', 'padding': '0px'}">
   <perfect-scrollbar [ngStyle]="{'max-height': screenHeight + 'px', 'min-height': screenHeight + 'px'}">
     <mat-card>
-      <mat-accordion [multi]="true">
-        <mat-expansion-panel *ngFor="let item of items" (click)="getSinIngredientes(item.producto)">
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let item of items" (click)="getSinIngredientes(item)">
           <mat-expansion-panel-header [ngClass]="{'en-espera': (item.estado=='en espera'), 'en-preparacion': (item.estado=='en preparacion'), listo: (item.estado=='listo') }">
             <mat-panel-title [ngClass]="{'white': (item.estado != null) }">
               {{item.numero}}). {{ item.producto.nombre }}
