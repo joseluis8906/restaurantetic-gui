@@ -1,5 +1,8 @@
 <perfect-scrollbar class="p-2">
-  <mat-accordion>
+  <mat-card *ngIf="pedidos.length === 0">
+    No hay pedidos
+  </mat-card>
+  <mat-accordion *ngIf="pedidos.length > 0">
     <mat-expansion-panel *ngFor="let pedido of pedidos ">
       <mat-expansion-panel-header>
         <mat-panel-title>

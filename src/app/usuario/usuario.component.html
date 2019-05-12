@@ -1,3 +1,68 @@
-<p>
-  usuario works!
-</p>
+<perfect-scrollbar>
+  <div class="container-fluid">
+    <div class="row no-guters">
+      <div class="col-12 col-xl-4 mx-auto">
+        <mat-card class="my-2">
+          <div class="container-fluid">
+            <div class="row no-gutters">
+              <div class="col-12">
+                <img src="assets/logo-user.png" width=72 [ngStyle]="{display: 'block'}" class="mx-auto" />
+              </div>
+              <div class="col-12">
+                <mat-form-field class="w-100 mt-2">
+                  <input matInput placeholder="Usuario" [formControl]="usuario" required>
+                  <mat-error *ngIf="usuario.invalid">{{getErrorMessages()}}</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-12">
+                <mat-form-field class="w-100">
+                  <input matInput placeholder="Contraseña" type="password" [formControl]="password" required>
+                  <mat-error *ngIf="password.invalid">{{getErrorMessages()}}</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-12">
+                <mat-form-field class="w-100">
+                  <input matInput placeholder="Repetir Contraseña" type="password" [formControl]="password" required>
+                  <mat-error *ngIf="password.invalid">{{getErrorMessages()}}</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-12">
+                <mat-form-field class="w-100">
+                  <input matInput placeholder="Nombre">
+                </mat-form-field>
+              </div>
+              <div class="col-12">
+                <mat-form-field class="w-100">
+                  <input matInput placeholder="Teléfono">
+                </mat-form-field>
+              </div>
+              <div class="col-12">
+                <mat-form-field class="w-100">
+                  <input matInput placeholder="Email">
+                </mat-form-field>
+              </div>
+              <div class="col-12">
+                <button mat-raised-button color="primary" (click)="onPagar(pedido)">GUARDAR</button>
+                <button mat-raised-button color="warn" class="ml-2" (click)="onPagar(pedido)">CANCELAR</button>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+    <div class="row no-gutters" *ngIf="false">
+      <div class="col-12">
+        <mat-card>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Usuario</th><th>Roles</th><th>Nombre</th><th>Teléfono</th><th>Email</th><th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</perfect-scrollbar>
