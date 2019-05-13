@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl, Validators, ValidationErrors, AbstractControl} from '@angular/forms';
+import { FormControl, Validators, ValidationErrors, AbstractControl, ValidatorFn, FormGroup, FormBuilder} from '@angular/forms';
+import { Usuario } from "./Usuario";
 
 @Component({
   selector: "app-usuario",
@@ -8,26 +9,60 @@ import { FormControl, Validators, ValidationErrors, AbstractControl} from '@angu
 })
 export class UsuarioComponent implements OnInit {
 
-  usuario = new FormControl("", [Validators.required, this.userAvailableValidator]);
-  password = new FormControl("", [Validators.required, this.passwordValidator]);
+  formControl: FormGroup;
 
-  constructor() { }
+  roleList: string[] = ['admin', 'cajero', 'cocinero', 'mesero'];
+
+  username: FormControl;
+  password: FormControl;
+  passwordRep: FormControl;
+  roles: FormControl;
+  nombre: FormControl;
+  telefono: FormControl;
+  email: FormControl;
+
+  constructor(fb: FormBuilder) {
+    this.username = new FormControl("", [Validators.required, this.userAlreadyExists]);
+    this.password = new FormControl("", [Validators.required]);
+    this.passwordRep = new FormControl("", [Validators.required, this.passwordsMatch(this.password)]);
+    this.roles = new FormControl("", [Validators.required]);
+    this.nombre = new FormControl("");
+    this.telefono = new FormControl("");
+    this.email = new FormControl("");
+  }
 
   ngOnInit() {
   }
 
-  getErrorMessages() {
-    return this.usuario.hasError("required") ? "You must enter a value" :
-      this.usuario.hasError("email") ? "Not a valid email" :
-      this.usuario.hasError("user-already-exists") ? "El usuario ya existe" : "";
+  getMessageError(field: string): string {
+    switch(field) {
+      case "username":
+        return this.username.hasError("required") ? "El campo es requerido" :
+          this.username.hasError("userAlreadyExists") ? "El usuario ya existe" : "";
+
+      case "password":
+        return this.password.hasError("required") ? "El campo es obligatorio" : "";
+
+      case "passwordRep":
+        return this.passwordRep.hasError("required") ? "El campo es obligatorio" :
+          this.passwordRep.hasError("notPasswdMatch") ? "Las contraseñas no coinciden" : "";
+
+      case "roles":
+        return this.roles.hasError("required") ? "El campo es obligatorio" : "";
+    }
   }
 
-  userAvailableValidator(control: AbstractControl): ValidationErrors {
-    return { "user-already-exists": "Usuario ya existe" };
+  userAlreadyExists(control: AbstractControl): ValidationErrors {
+    return control.value.length > 3 ? { "userAlreadyExists": "Usuario ya existe" } : null;
   }
 
-  passwordValidator(control: AbstractControl): ValidationErrors {
-    return null;
+  passwordsMatch(password: FormControl): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors => {
+      return password.value !== control.value ? { "notPasswdMatch": "Las contraseñas no coinciden" } : null ; 
+    }
   }
 
+  onGuardar(): void {
+    console.log(this.username.value, this.password.value, this.roles.value);
+  }
 }
