@@ -1,11 +1,11 @@
 <perfect-scrollbar>
   <div class="container-fluid">
-    <div class="row no-gutters justify-content-center">
+    <div class="row no-gutters justify-content-center" *ngIf="!nuevoOEditar">
       <div class="d-flex col-12 my-2 align-self-center justify-content-center">
-        <button mat-raised-button color="primary">AGREGAR</button>
+        <button mat-raised-button color="primary" (click)="onAgregar()">AGREGAR</button>
       </div>
     </div>
-    <div class="row no-guters">
+    <div class="row no-guters" *ngIf="nuevoOEditar">
       <div class="col-12 col-xl-4 mx-auto">
         <mat-card class="my-2">
           <div class="container-fluid">
@@ -60,7 +60,7 @@
         </mat-card>
       </div>
     </div>
-    <div class="row no-gutters" *ngIf="true">
+    <div class="row no-gutters" *ngIf="!nuevoOEditar">
       <div class="col-12 my-2">
         <mat-card>
           <table class="table">

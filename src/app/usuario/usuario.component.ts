@@ -18,6 +18,7 @@ export class UsuarioComponent implements OnInit, OnDestroy {
 
   usuarios: Array<Usuario>;
   roleList: string[] = ['admin', 'cajero', 'cocinero', 'mesero'];
+  nuevoOEditar: boolean;
   forUpdate: boolean;
 
   username: FormControl;
@@ -29,6 +30,7 @@ export class UsuarioComponent implements OnInit, OnDestroy {
   email: FormControl;
 
   constructor(private usuarioService: UsuarioService, private fb: FormBuilder, private notificationService: NotificationService) {
+    this.nuevoOEditar = false;
     this.subscriptions = new Subscription();
     this.forUpdate = false;
     this.usuarios = [];
@@ -130,6 +132,7 @@ export class UsuarioComponent implements OnInit, OnDestroy {
         this.username.enable();
         this.password.enable();
         this.passwordRep.enable();
+        this.nuevoOEditar = false;
       }));
     }
   }
@@ -147,6 +150,7 @@ export class UsuarioComponent implements OnInit, OnDestroy {
 
       this.subscriptions.add(this.usuarioService.create(usuario).subscribe((usuario: Usuario) => {
         this.notificationService.showMessage(`Usuario ${usuario.username} creado exitosamente`, MessageType.Success);
+        this.nuevoOEditar = false;
         this.getAll();
       }));
 
@@ -155,8 +159,14 @@ export class UsuarioComponent implements OnInit, OnDestroy {
     }
   }
 
+  onAgregar() {
+    this.nuevoOEditar = true;
+    this.forUpdate = false;
+  }
+
   onEdit(usuario: Usuario): void {
     this.forUpdate = true;
+    this.nuevoOEditar = true;
     this.username.setValue(usuario.username);
     this.username.disable();
 
@@ -167,6 +177,7 @@ export class UsuarioComponent implements OnInit, OnDestroy {
   }
 
   onCancelar(): void {
+    this.nuevoOEditar = false;
     this.forUpdate = false;
     this.username.enable();
     this.formControl.reset();
