@@ -16,7 +16,6 @@ export class PedidoDetalleItemComponent implements OnInit {
   ngOnInit() {  }
 
   onActualizarCantidad(): void {
-    this.item.precioTotal = this.item.precioUnitario * this.item.cantidad;
     this.pedidoService.updateTotales();
   }
 

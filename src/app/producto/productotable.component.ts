@@ -1,47 +1,47 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Producto, ProductoBuilder } from "src/app/producto/producto";
 import { ProductoNewEditDialogComponent } from "src/app/producto/producto-new-edit-dialog/producto-new-edit-dialog.component";
 import { ProductoService } from "src/app/producto/producto.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-productotable",
   templateUrl: "./productotable.component.html",
   styleUrls: ["./productotable.component.scss"],
 })
-export class ProductotableComponent implements OnInit {
+export class ProductotableComponent implements OnInit, OnDestroy {
 
-  newProducto: Producto;
-  productos: Producto[] = [];
+  private subscriptions: Subscription;
+  productos: Producto[];
 
-  constructor(private productoService: ProductoService, public dialog: MatDialog) { }
+  constructor(private productoService: ProductoService, public dialog: MatDialog) {
+    this.subscriptions = new Subscription();
+    this.productos = new Array<Producto>();
+    this.subscriptions.add(this.productoService.productos$.subscribe((_) => this.getProductos()));
+  }
 
   ngOnInit() {
     this.getProductos();
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   public onOpenDialogAgregar(): void {
     const dialogRef = this.dialog.open(
       ProductoNewEditDialogComponent,
-      { width: "320px",
+      {
+        width: "320px",
         height: "480px",
-        data: {producto: this.newProducto}});
+      },
+    );
   }
 
   public getProductos(): void {
-    const tmpProductos: Producto[] = this.productoService.getProductos();
-    for (const tmpProducto of tmpProductos) {
-      const tmp = new ProductoBuilder()
-        .withCodigo(tmpProducto.codigo)
-        .withNombre(tmpProducto.nombre)
-        .withDescripcion(tmpProducto.descripcion)
-        .withIngredientes(tmpProducto.ingredientes)
-        .withPrecio(tmpProducto.precio)
-        .withImageTitle(tmpProducto.imageTitle)
-        .withImageBanner(tmpProducto.imageBanner)
-        .build();
-
-      this.productos.push(tmp);
-    }
+    this.subscriptions.add(this.productoService.getProductos().subscribe((productos: Producto[]) => {
+      this.productos = productos;
+    }));
   }
 }

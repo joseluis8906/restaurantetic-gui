@@ -1,11 +1,12 @@
 import { Producto } from "src/app/producto/producto";
+import { Pedido } from "./pedido";
 
 export class Item {
   numero: number;
-  cantidad: number;
   producto: Producto;
-  precioUnitario: number;
-  precioTotal: number;
+  sinIngredientes: string;
+  precio: number;
+  estado: string;
 }
 
 export class ItemBuilder {
@@ -20,23 +21,23 @@ export class ItemBuilder {
     return this;
   }
 
-  withCantidad(cantidad: number): ItemBuilder {
-    this.item.cantidad = cantidad;
-    return this;
-  }
-
   withProduto(producto: Producto): ItemBuilder {
     this.item.producto = producto;
     return this;
   }
 
-  withPrecioUnitario(precioUnitario: number): ItemBuilder {
-    this.item.precioUnitario = precioUnitario;
+  withSinIngredientes(sinIngredientes: string): ItemBuilder {
+    this.item.sinIngredientes = sinIngredientes;
     return this;
   }
 
-  withPrecioTotal(precioTotal: number): ItemBuilder {
-    this.item.precioTotal = precioTotal;
+  withPrecio(precio: number): ItemBuilder {
+    this.item.precio = precio;
+    return this;
+  }
+
+  withEstado(estado: string): ItemBuilder {
+    this.item.estado = estado;
     return this;
   }
 

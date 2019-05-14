@@ -1,3 +1,94 @@
-<p>
-  usuario works!
-</p>
+<perfect-scrollbar>
+  <div class="container-fluid">
+    <div class="row no-gutters justify-content-center" *ngIf="!nuevoOEditar">
+      <div class="d-flex col-12 my-2 align-self-center justify-content-center">
+        <button mat-raised-button color="primary" (click)="onAgregar()">AGREGAR</button>
+      </div>
+    </div>
+    <div class="row no-guters" *ngIf="nuevoOEditar">
+      <div class="col-12 col-xl-4 mx-auto">
+        <mat-card class="my-2">
+          <div class="container-fluid">
+            <div class="row no-gutters">
+              <div class="col-12">
+                <img src="assets/logo-user.png" width=72 [ngStyle]="{display: 'block'}" class="mx-auto" />
+              </div>
+              <div class="col-12">
+                <form [formGroup]="formControl" (keydown.enter)="$event.preventDefault()" #formDirective="ngForm" (ngSubmit)="resetForm(formControl, formDirective)">
+                  <mat-form-field class="w-100 mt-2">
+                    <input matInput placeholder="Usuario" [formControl]="username">
+                    <mat-error *ngIf="username.invalid">{{getMessageError("username")}}</mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <input matInput placeholder="Contraseña" type="password" [formControl]="password">
+                    <mat-error *ngIf="password.invalid">{{getMessageError("password")}}</mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <input matInput placeholder="Repetir Contraseña" type="password" [formControl]="passwordRep">
+                    <mat-error *ngIf="passwordRep.invalid">{{getMessageError("passwordRep")}}</mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <mat-label>Roles</mat-label>
+                    <mat-select multiple [formControl]="roles">
+                      <mat-option *ngFor="let role of roleList" [value]="role">{{role}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="roles.invalid">{{getMessageError("roles")}}</mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <input matInput placeholder="Nombre" [formControl]="nombre">
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <input matInput placeholder="Teléfono" [formControl]="telefono">
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <input matInput placeholder="Email" [formControl]="email">
+                    <mat-error *ngIf="email.invalid">{{getMessageError("email")}}</mat-error>
+                  </mat-form-field>
+
+                  <button mat-raised-button color="primary" (click)="onGuadarOActualizar()" type="submit">{{forUpdate ? "ACTUALIZAR" : "GUARDAR"}}</button>
+                  <button mat-raised-button color="warn" class="ml-2" (click)="onCancelar()" type="reset">CANCELAR</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+    <div class="row no-gutters" *ngIf="!nuevoOEditar">
+      <div class="col-12 my-2">
+        <mat-card>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Usuario</th><th>Roles</th><th>Nombre</th><th>Teléfono</th><th>Email</th><th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let usuario of usuarios">
+                <td>{{usuario.username}}</td>
+                <td>{{usuario.roles}}</td>
+                <td>{{usuario.nombre}}</td>
+                <td>{{usuario.telefono}}</td>
+                <td>{{usuario.email}}</td>
+                <td>
+                  <button mat-icon-button (click)="onEdit(usuario)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="onDelete(usuario.username)">
+                    <mat-icon>delete_forever</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</perfect-scrollbar>

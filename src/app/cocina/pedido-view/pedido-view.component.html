@@ -1,7 +1,7 @@
 <mat-card class="pedido-view" [ngStyle]="{'max-height': screenHeight + 'px', 'min-height': screenHeight + 'px'}">
   <perfect-scrollbar [ngStyle]="{'max-height': screenHeight + 'px'}">
-    <mat-list>
-      <mat-list-item *ngFor="let pedido of pedidos" (click)="changePedido(pedido)">{{ pedido.codigo }}</mat-list-item>
+    <mat-list [ngStyle]="{'padding.px': 0}">
+      <mat-list-item *ngFor="let pedido of pedidos" (click)="changePedido(pedido)" [ngClass]="{active: active==pedido.codigo}">{{ pedido.codigo }}</mat-list-item>
     </mat-list>
   </perfect-scrollbar>
 </mat-card>

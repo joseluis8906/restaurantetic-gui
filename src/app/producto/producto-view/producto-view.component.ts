@@ -6,6 +6,7 @@ import {
   Output,
   } from "@angular/core";
 import { Producto } from "src/app/producto/producto";
+import { ProductoService } from "src/app/producto/producto.service";
 
 @Component({
   selector: "app-producto-view",
@@ -18,7 +19,7 @@ export class ProductoViewComponent implements OnInit {
 
   @Output() editEvent: EventEmitter<boolean> = new EventEmitter();
 
-  constructor() { }
+  constructor(private productoService: ProductoService) { }
 
   ngOnInit() { }
 
@@ -26,7 +27,7 @@ export class ProductoViewComponent implements OnInit {
     this.editEvent.emit(true);
   }
 
-  onEliminar(event) {
-    console.log("eliminar");
+  onEliminar(codigo: string) {
+    this.productoService.removeProducto(codigo);
   }
 }

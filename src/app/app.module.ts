@@ -1,11 +1,15 @@
+import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from "@angular/material/card";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from "@angular/material/dialog";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatExpansionModule } from "@angular/material/expansion";
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
@@ -16,7 +20,9 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { AngularFontAwesomeModule } from "angular-font-awesome";
+import { CurrencyMaskModule } from "ng2-currency-mask";
 import { PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import { AppRoutingModule } from "src/app/app-routing.module";
 import { AppComponent } from "src/app/app.component";
@@ -24,7 +30,6 @@ import { CajaComponent } from "src/app/caja/caja.component";
 import { CocinaComponent } from "src/app/cocina/cocina.component";
 import { PedidoItemViewComponent } from "src/app/cocina/pedido-item-view/pedido-item-view.component";
 import { PedidoViewComponent } from "src/app/cocina/pedido-view/pedido-view.component";
-import { HomeComponent } from "src/app/home/home.component";
 import { NavbarComponent } from "src/app/navbar/navbar.component";
 import { NavbaritemComponent } from "src/app/navbar/navbaritem.component";
 import { PedidoDetalleCajaItemComponent } from "src/app/pedido/pedido-detalle/pedido-detalle-caja-item/pedido-detalle-caja-item.component";
@@ -47,6 +52,8 @@ import { SidebarComponent } from "src/app/sidebar/sidebar.component";
 import { SidebaritemComponent } from "src/app/sidebar/sidebaritem/sidebaritem.component";
 import { TitlebarComponent } from "src/app/titlebar/titlebar.component";
 import { UsuarioComponent } from "src/app/usuario/usuario.component";
+import { LoginComponent } from './login/login.component';
+import { NotificationComponent } from './notification/notification.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -57,7 +64,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AppComponent,
     CajaComponent,
     CocinaComponent,
-    HomeComponent,
     NavbarComponent,
     NavbaritemComponent,
     PedidoComponent,
@@ -82,6 +88,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SidebaritemComponent,
     TitlebarComponent,
     UsuarioComponent,
+    LoginComponent,
+    NotificationComponent,
   ],
   imports: [
     AngularFontAwesomeModule,
@@ -89,13 +97,18 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     BrowserAnimationsModule,
     BrowserModule,
     BrowserModule.withServerTransition({appId: "my-app"}),
+    CurrencyMaskModule,
     FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatCardModule,
     MatCheckboxModule,
     MatDialogModule,
     MatDividerModule,
     MatExpansionModule,
+    MatFormFieldModule,
     MatGridListModule,
     MatIconModule,
     MatInputModule,
@@ -105,14 +118,16 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatTabsModule,
     MatToolbarModule,
     PerfectScrollbarModule,
+    NgxChartsModule,
+    NgbModule,
   ],
   entryComponents: [
     ProductoIngredienteDialogComponent,
     ProductoNewEditDialogComponent,
   ],
   providers: [
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true,}},
-    {provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG},
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true }},
+    { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
   ],
   bootstrap: [AppComponent],
 })

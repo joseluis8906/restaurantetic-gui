@@ -4,6 +4,9 @@
 
 export const environment = {
   production: false,
+  API_HOST: "http://localhost:9999/api/v1",
+  MEDIA_HOST: "https://media.restaurantetic.com",
+  MQTT_HOST: "restaurantetic.com"
 };
 
 /*

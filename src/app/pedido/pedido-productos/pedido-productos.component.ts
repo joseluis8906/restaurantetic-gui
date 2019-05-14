@@ -1,25 +1,28 @@
-import { Component, HostListener, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit, OnDestroy } from "@angular/core";
 import { ItemBuilder } from "src/app/pedido/item";
 import { Pedido } from "src/app/pedido/pedido";
 import { PedidoService } from "src/app/pedido/pedido.service";
 import { Producto, ProductoBuilder } from "src/app/producto/producto";
 import { ProductoService } from "src/app/producto/producto.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-pedido-productos",
   templateUrl: "./pedido-productos.component.html",
   styleUrls: ["./pedido-productos.component.scss"],
 })
-export class PedidoProductosComponent implements OnInit {
+export class PedidoProductosComponent implements OnInit, OnDestroy {
 
+  private subscriptions: Subscription;
   pedido: Pedido;
   productos: Producto[] = [];
   screenHeight: number = 1024;
 
   constructor(private productoService: ProductoService, private pedidoService: PedidoService) {
-    this.pedidoService.pedido$.subscribe((pedido) => {
+    this.subscriptions = new Subscription();
+    this.subscriptions.add(this.pedidoService.pedido$.subscribe((pedido) => {
       this.pedido = pedido;
-    });
+    }));
   }
 
   ngOnInit() {
@@ -27,21 +30,14 @@ export class PedidoProductosComponent implements OnInit {
     this.calculateHeight();
   }
 
-  getProductos(): void {
-    const tmpProductos: Producto[] = this.productoService.getProductos();
-    for (const tmpProducto of tmpProductos) {
-      const tmp = new ProductoBuilder()
-        .withCodigo(tmpProducto.codigo)
-        .withNombre(tmpProducto.nombre)
-        .withDescripcion(tmpProducto.descripcion)
-        .withIngredientes(tmpProducto.ingredientes)
-        .withPrecio(tmpProducto.precio)
-        .withImageTitle(tmpProducto.imageTitle)
-        .withImageBanner(tmpProducto.imageBanner)
-        .build();
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
 
-      this.productos.push(tmp);
-    }
+  getProductos(): void {
+    this.subscriptions.add(this.productoService.getProductos().subscribe((productos: Producto[]) => {
+      this.productos = productos;
+    }));
   }
 
   calculateHeight(): void {
@@ -56,10 +52,10 @@ export class PedidoProductosComponent implements OnInit {
   onAgregarProducto(producto: Producto): void {
     const tmpItem = new ItemBuilder()
       .withNumero(this.pedido.items.length + 1)
-      .withCantidad(1)
       .withProduto(producto)
-      .withPrecioUnitario(producto.precio)
-      .withPrecioTotal(producto.precio * 1)
+      .withSinIngredientes(producto.ingredientes)
+      .withPrecio(producto.precio)
+      .withEstado("en espera")
       .build();
     this.pedidoService.addItem(tmpItem);
   }

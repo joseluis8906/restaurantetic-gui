@@ -1,8 +1,7 @@
-<mat-card class="pedido-detalle" [ngStyle]="{'max-height': screenHeight + 'px'}">
+<mat-card class="pedido-detalle" [ngStyle]="{'max-height.px': screenHeight}">
   <app-pedido-detalle-tipo></app-pedido-detalle-tipo>
   <mat-card-content>
     <app-pedido-detalle-items></app-pedido-detalle-items>
-    <app-pedido-detalle-totales></app-pedido-detalle-totales>
   </mat-card-content>
   <div class="container">
     <div class="row no-gutters">
@@ -11,8 +10,13 @@
             <mat-icon>delete_forever</mat-icon>
           </button>
       </div>
+      <div class="col-sm-8" [ngStyle]="{'margin': 'auto'}">
+        <div [ngStyle]="{margin: 'auto', display: 'inherit'}">
+          <p [ngStyle]="{margin: '0px', 'text-align': 'right'}">total: {{pedido.total | currency: 'USD' : 'symbol' : '1.0'}}</p>
+        </div>
+      </div>
       <div class="col-sm-8" [ngStyle]="{'text-align': 'right'}">
-        <button mat-raised-button color="primary">COBRAR</button>
+        <button mat-raised-button color="primary" *ngIf="false">COBRAR</button>
       </div>
     </div>
   </div>

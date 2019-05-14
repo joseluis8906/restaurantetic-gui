@@ -7,6 +7,8 @@ import { Component, OnInit } from "@angular/core";
 })
 export class PedidoDetalleTipoComponent implements OnInit {
 
+  tipo: string = "mesa";
+
   constructor() { }
 
   ngOnInit() { }

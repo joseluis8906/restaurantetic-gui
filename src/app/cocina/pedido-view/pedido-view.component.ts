@@ -1,45 +1,45 @@
-import { Component, HostListener, OnInit } from "@angular/core";
-import { CocinaService } from "src/app/cocina/cocina.service";
+import { Component, HostListener, OnInit, OnDestroy } from "@angular/core";
 import { Pedido } from "src/app/pedido/pedido";
 import { PedidoService } from "src/app/pedido/pedido.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-pedido-view",
   templateUrl: "./pedido-view.component.html",
   styleUrls: ["./pedido-view.component.scss"],
 })
-export class PedidoViewComponent implements OnInit {
+export class PedidoViewComponent implements OnInit, OnDestroy {
 
+  private subscriptions: Subscription;
   pedidos: Pedido[] = [];
   screenHeight: number;
+  active: String = null;
 
-  constructor(private pedidoService: PedidoService, private cocinaService: CocinaService) { }
+
+  constructor(private pedidoService: PedidoService) {
+    this.subscriptions = new Subscription();
+  }
 
   ngOnInit() {
     this.calculateHeight();
     this.cargarPedidos();
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   cargarPedidos(): void {
-    this.pedidoService.getPedidosCaja().subscribe((pedidos: Pedido[]) => {
+    this.subscriptions.add(this.pedidoService.getPedidos().subscribe((pedidos: Pedido[]) => {
       for (const pedido of pedidos) {
         this.pedidos.push(pedido);
       }
-
-      console.log(this.pedidos);
-    });
-
-    this.pedidoService.getPedidosMesa().subscribe((pedidos: Pedido[]) => {
-      for (const pedido of pedidos) {
-        this.pedidos.push(pedido);
-      }
-
-      console.log(this.pedidos);
-    });
+    }));
   }
 
   changePedido(pedido: Pedido): void {
-    this.cocinaService.changePedido(pedido);
+    this.active = pedido.codigo;
+    this.pedidoService.changePedido(pedido);
   }
 
   calculateHeight(): void {

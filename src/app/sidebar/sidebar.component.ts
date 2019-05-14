@@ -10,7 +10,7 @@ import { SideBarItem } from "src/app/sidebar/sidebaritem/SideBarItem";
 export class SidebarComponent implements OnInit {
 
   items: SideBarItem[] = [
-    {active: false, href: "/home", icon: "home"},
+    {active: false, href: "/login", icon: "home"},
     {active: false, href: "/usuarios", icon: "people"},
     {active: false, href: "/productos", icon: "restaurant_menu"},
     {active: false, href: "/pedidos", icon: "shopping_cart"},

@@ -1,11 +1,10 @@
 export class Producto {
     codigo: string;
     nombre: string;
+    imagen: string;
+    ingredientes: string;
     descripcion: string;
-    ingredientes: string[];
     precio: number;
-    imageTitle: string;
-    imageBanner: string;
 }
 
 export class ProductoBuilder {
@@ -25,28 +24,23 @@ export class ProductoBuilder {
         return this;
     }
 
+    withImagen(imagen: string): ProductoBuilder {
+        this.producto.imagen = `url(${imagen})`;
+        return this;
+    }
+
     withDescripcion(descripcion: string): ProductoBuilder {
         this.producto.descripcion = descripcion;
         return this;
     }
 
-    withIngredientes(ingredientes: string[]): ProductoBuilder {
+    withIngredientes(ingredientes: string): ProductoBuilder {
         this.producto.ingredientes = ingredientes;
         return this;
     }
 
     withPrecio(precio: number): ProductoBuilder {
         this.producto.precio = precio;
-        return this;
-    }
-
-    withImageTitle(imageTitle: string): ProductoBuilder {
-        this.producto.imageTitle = `url(${imageTitle})`;
-        return this;
-    }
-
-    withImageBanner(imageBanner: string): ProductoBuilder {
-        this.producto.imageBanner = `url(${imageBanner})`;
         return this;
     }
 
