@@ -1,14 +1,16 @@
-import { Component, HostListener, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit, OnDestroy } from "@angular/core";
 import { Pedido, PedidoBuilder } from "src/app/pedido/pedido";
 import { PedidoService } from "src/app/pedido/pedido.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-pedido-detalle-mesa",
   templateUrl: "./pedido-detalle-mesa.component.html",
   styleUrls: ["./pedido-detalle-mesa.component.scss"],
 })
-export class PedidoDetalleMesaComponent implements OnInit {
+export class PedidoDetalleMesaComponent implements OnInit, OnDestroy {
 
+  private subscriptions: Subscription;
   pedido: Pedido;
   height: number;
   mesas: Mesa[] = [
@@ -33,15 +35,16 @@ export class PedidoDetalleMesaComponent implements OnInit {
   ];
 
   constructor(private pedidoService: PedidoService) {
+    this.subscriptions = new Subscription();
     this.pedido = new Pedido();
-    this.pedidoService.pedido$.subscribe((pedido) => {
+    this.subscriptions.add(this.pedidoService.pedido$.subscribe((pedido) => {
       if (pedido === null) {
         this.pedido = new Pedido();
       } else {
         this.pedido = pedido;
       }
       this.calcularMesasOcupadas();
-    });
+    }));
   }
 
   ngOnInit() {
@@ -49,8 +52,12 @@ export class PedidoDetalleMesaComponent implements OnInit {
     this.calcularMesasOcupadas();
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   onChangePedido(mesa: Mesa): void {
-    this.pedidoService.getPedidos().subscribe((pedidos: Pedido[]) => {
+    this.subscriptions.add(this.pedidoService.getPedidos().subscribe((pedidos: Pedido[]) => {
       for (const pedido of pedidos) {
         for (const mesa_ of this.mesas) {
           mesa_.actual = false;
@@ -62,7 +69,7 @@ export class PedidoDetalleMesaComponent implements OnInit {
       }
       mesa.actual = true;
       this.pedidoService.createPedido(mesa.numero);
-    });
+    }));
   }
 
   @HostListener("window:resize", ["$event"])
@@ -91,7 +98,7 @@ export class PedidoDetalleMesaComponent implements OnInit {
   }
 
   calcularMesasOcupadas(): void {
-    this.pedidoService.getPedidos().subscribe((pedidos: Pedido[]) => {
+    this.subscriptions.add(this.pedidoService.getPedidos().subscribe((pedidos: Pedido[]) => {
       if (pedidos === null) {
         return;
       }
@@ -108,7 +115,7 @@ export class PedidoDetalleMesaComponent implements OnInit {
           mesa.actual = false;
         }
       }
-    });
+    }));
   }
 }
 

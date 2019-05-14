@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable, of, Subject } from "rxjs";
+import { Injectable, OnDestroy } from "@angular/core";
+import { Observable, of, Subject, Subscription } from "rxjs";
 import { mergeMap } from "rxjs/operators";
 import { Item } from "src/app/pedido/item";
 import { Pedido, PedidoBuilder } from "src/app/pedido/pedido";
@@ -9,8 +9,9 @@ import { environment } from "src/environments/environment";
 @Injectable({
   providedIn: "root",
 })
-export class PedidoService {
+export class PedidoService implements OnDestroy {
 
+  private subscriptions: Subscription;
   private endpoint: string;
   private headers: HttpHeaders;
   private pedido: Pedido;
@@ -18,6 +19,7 @@ export class PedidoService {
   public pedido$: Observable<Pedido>;
 
   constructor(private http: HttpClient) {
+    this.subscriptions = new Subscription();
     this.endpoint = `${environment.API_HOST}/pedidos`;
     this.headers = new HttpHeaders({
       "Content-Type": "application/json",
@@ -29,8 +31,12 @@ export class PedidoService {
     this.pedido$ = this.pedidoSubject.asObservable();
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   createPedido(mesa: string): void {
-    this.getSigCodigo().subscribe((codigo: string) => {
+    this.subscriptions.add(this.getSigCodigo().subscribe((codigo: string) => {
       const fecha = new Date();
       const newPedido: Pedido = new PedidoBuilder()
         .withFecha(new Date(Number(fecha) - (fecha.getTimezoneOffset() * 60 * 1000)).toISOString())
@@ -45,15 +51,15 @@ export class PedidoService {
         this.pedido = pedido;
         this.pedidoSubject.next(this.pedido);
       });
-    });
+    }));
   }
 
   deletePedido(): void {
-    this.http.delete<void>(`${this.endpoint}/${this.pedido.codigo}`).subscribe((_) => {
+    this.subscriptions.add(this.http.delete<void>(`${this.endpoint}/${this.pedido.codigo}`).subscribe((_) => {
       this.pedido = new Pedido();
       this.pedido.items = [];
       this.pedidoSubject.next(this.pedido);
-    });
+    }));
   }
 
   getPedidos(): Observable<Pedido[]> {
@@ -72,12 +78,12 @@ export class PedidoService {
   addItem(item: Item): void{
     const tmpItem: any = item;
     tmpItem.pedido = null;
-    this.http.post<Pedido>(
+    this.subscriptions.add(this.http.post<Pedido>(
       `${this.endpoint}/${this.pedido.codigo}/items/productos/${item.producto.codigo}`, tmpItem, { headers: this.headers })
         .subscribe((pedido: Pedido) => {
           this.pedido.items = pedido.items;
           this.pedidoSubject.next(this.pedido);
-        });
+        }));
   }
 
   deleteItem(item: Item): void {

@@ -31,6 +31,9 @@ export class MqttService implements OnDestroy {
   }
 
   public ngOnDestroy() {
+    this.subscribedTopics.forEach((topic: string) => {
+      this.mqttClient.unsubscribe(topic);
+    });
     this.mqttClient.disconnect();
   }
 

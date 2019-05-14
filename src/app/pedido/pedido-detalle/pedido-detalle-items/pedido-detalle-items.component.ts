@@ -1,27 +1,35 @@
-import { Component, HostListener, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit, OnDestroy } from "@angular/core";
 import { Item } from "src/app/pedido/item";
 import { Pedido, PedidoBuilder } from "src/app/pedido/pedido";
 import { PedidoService } from "src/app/pedido/pedido.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-pedido-detalle-items",
   templateUrl: "./pedido-detalle-items.component.html",
   styleUrls: ["./pedido-detalle-items.component.scss"],
 })
-export class PedidoDetalleItemsComponent implements OnInit {
+export class PedidoDetalleItemsComponent implements OnInit, OnDestroy {
 
+  private subscriptions: Subscription;
   pedido: Pedido;
   height: number;
 
-  constructor(private pedidoService: PedidoService) { }
+  constructor(private pedidoService: PedidoService) {
+    this.subscriptions = new Subscription();
+  }
 
   ngOnInit() {
     this.pedido = new PedidoBuilder().build();
     this.pedido.items = new Array<Item>();
-    this.pedidoService.pedido$.subscribe((pedido) => {
+    this.subscriptions.add(this.pedidoService.pedido$.subscribe((pedido) => {
       this.pedido = pedido ? pedido : new PedidoBuilder().withItems([]).build();
-    });
+    }));
     this.calculateHeight();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   @HostListener("window:orientationchange", ["$event"])

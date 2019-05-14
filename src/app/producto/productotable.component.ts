@@ -1,25 +1,32 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Producto, ProductoBuilder } from "src/app/producto/producto";
 import { ProductoNewEditDialogComponent } from "src/app/producto/producto-new-edit-dialog/producto-new-edit-dialog.component";
 import { ProductoService } from "src/app/producto/producto.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-productotable",
   templateUrl: "./productotable.component.html",
   styleUrls: ["./productotable.component.scss"],
 })
-export class ProductotableComponent implements OnInit {
+export class ProductotableComponent implements OnInit, OnDestroy {
 
+  private subscriptions: Subscription;
   productos: Producto[];
 
   constructor(private productoService: ProductoService, public dialog: MatDialog) {
+    this.subscriptions = new Subscription();
     this.productos = new Array<Producto>();
-    this.productoService.productos$.subscribe((_) => this.getProductos());
+    this.subscriptions.add(this.productoService.productos$.subscribe((_) => this.getProductos()));
   }
 
   ngOnInit() {
     this.getProductos();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   public onOpenDialogAgregar(): void {
@@ -33,8 +40,8 @@ export class ProductotableComponent implements OnInit {
   }
 
   public getProductos(): void {
-    this.productoService.getProductos().subscribe((productos: Producto[]) => {
+    this.subscriptions.add(this.productoService.getProductos().subscribe((productos: Producto[]) => {
       this.productos = productos;
-    });
+    }));
   }
 }
