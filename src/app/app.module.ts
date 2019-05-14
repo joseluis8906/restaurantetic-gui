@@ -1,5 +1,6 @@
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -52,6 +53,7 @@ import { SidebaritemComponent } from "src/app/sidebar/sidebaritem/sidebaritem.co
 import { TitlebarComponent } from "src/app/titlebar/titlebar.component";
 import { UsuarioComponent } from "src/app/usuario/usuario.component";
 import { LoginComponent } from './login/login.component';
+import { NotificationComponent } from './notification/notification.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -87,6 +89,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TitlebarComponent,
     UsuarioComponent,
     LoginComponent,
+    NotificationComponent,
   ],
   imports: [
     AngularFontAwesomeModule,
@@ -116,6 +119,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatToolbarModule,
     PerfectScrollbarModule,
     NgxChartsModule,
+    NgbModule,
   ],
   entryComponents: [
     ProductoIngredienteDialogComponent,

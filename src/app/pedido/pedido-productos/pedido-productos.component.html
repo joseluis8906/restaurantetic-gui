@@ -1,13 +1,11 @@
 <perfect-scrollbar class="pedido-productos" [ngStyle]="{height: screenHeight +'px'}">
   <div class="container">
     <div class="row no-gutters justify-content-beetwen">
-      <div 
-        class="col-sm-12 col-md-6 col-lg-4 col-xl-3" 
+      <div
+        class="col-sm-12 col-md-6 col-lg-4 col-xl-3"
         *ngFor="let producto of productos">
         <app-producto-view-mini [producto]="producto" (addProducto)="onAgregarProducto($event)"></app-producto-view-mini>
-      </div>  
+      </div>
     </div>
-  </div>      
+  </div>
 </perfect-scrollbar>
-
-  
