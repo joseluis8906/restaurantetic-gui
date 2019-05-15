@@ -47,15 +47,15 @@ export class PedidoService implements OnDestroy {
         .withPago(false)
         .build();
 
-      this.http.post<Pedido>(`${this.endpoint}`, newPedido, { headers: this.headers }).subscribe((pedido: Pedido) => {
+      this.subscriptions.add(this.http.post<Pedido>(`${this.endpoint}`, newPedido, { headers: this.headers }).subscribe((pedido: Pedido) => {
         this.pedido = pedido;
         this.pedidoSubject.next(this.pedido);
-      });
+      }));
     }));
   }
 
   deletePedido(): void {
-    this.subscriptions.add(this.http.delete<void>(`${this.endpoint}/${this.pedido.codigo}`).subscribe((_) => {
+    this.subscriptions.add(this.http.delete<void>(`${this.endpoint}/${this.pedido.codigo}/${this.pedido.fecha}`).subscribe((_) => {
       this.pedido = new Pedido();
       this.pedido.items = [];
       this.pedidoSubject.next(this.pedido);
@@ -66,8 +66,8 @@ export class PedidoService implements OnDestroy {
     return this.http.get<Pedido[]>(`${this.endpoint}?pago=false`);
   }
 
-  getPedido(codigo: string): Observable<Pedido> {
-    return this.http.get<Pedido>(`${this.endpoint}/${codigo}`);
+  getPedido(codigo: string, fecha: string): Observable<Pedido> {
+    return this.http.get<Pedido>(`${this.endpoint}/${codigo}/${fecha}`);
   }
 
   changePedido(pedido: Pedido): void {
@@ -78,8 +78,9 @@ export class PedidoService implements OnDestroy {
   addItem(item: Item): void{
     const tmpItem: any = item;
     tmpItem.pedido = null;
+    console.log(this.pedido);
     this.subscriptions.add(this.http.post<Pedido>(
-      `${this.endpoint}/${this.pedido.codigo}/items/productos/${item.producto.codigo}`, tmpItem, { headers: this.headers })
+      `${this.endpoint}/${this.pedido.codigo}/${this.pedido.fecha}/items/productos/${item.producto.codigo}`, tmpItem, { headers: this.headers })
         .subscribe((pedido: Pedido) => {
           this.pedido.items = pedido.items;
           this.pedidoSubject.next(this.pedido);
@@ -87,7 +88,7 @@ export class PedidoService implements OnDestroy {
   }
 
   deleteItem(item: Item): void {
-    this.http.delete<Pedido>(`${this.endpoint}/${this.pedido.codigo}/items/${item.numero}`).subscribe((pedido: Pedido) => {
+    this.http.delete<Pedido>(`${this.endpoint}/${this.pedido.codigo}/${this.pedido.fecha}/items/${item.numero}`).subscribe((pedido: Pedido) => {
       this.pedido.items = pedido.items;
       this.pedidoSubject.next(this.pedido);
     });
@@ -104,10 +105,10 @@ export class PedidoService implements OnDestroy {
 
   pagar(pedido: Pedido): Observable<void> {
     pedido.pago = true;
-    return this.http.put<void>(`${this.endpoint}/${pedido.codigo}`, pedido, { headers: this.headers });
+    return this.http.put<void>(`${this.endpoint}/${pedido.codigo}/${pedido.fecha}`, pedido, { headers: this.headers });
   }
 
   cambiarEstadoItem(item: Item): Observable<void> {
-    return this.http.put<void>(`${this.endpoint}/${this.pedido.codigo}/items/${item.numero}`, item, {headers: this.headers});
+    return this.http.put<void>(`${this.endpoint}/${this.pedido.codigo}/${this.pedido.fecha}/items/${item.numero}`, item, {headers: this.headers});
   }
 }

@@ -16,7 +16,6 @@ import { ProductoService } from "src/app/producto/producto.service";
 export class ProductoViewComponent implements OnInit {
 
   @Input() producto: Producto;
-
   @Output() editEvent: EventEmitter<boolean> = new EventEmitter();
 
   constructor(private productoService: ProductoService) { }
