@@ -49,6 +49,7 @@ export class PedidoService implements OnDestroy {
 
       this.subscriptions.add(this.http.post<Pedido>(`${this.endpoint}`, newPedido, { headers: this.headers }).subscribe((pedido: Pedido) => {
         this.pedido = pedido;
+        this.pedido.fecha = this.pedido.fecha.split(".")[0];
         this.pedidoSubject.next(this.pedido);
       }));
     }));
@@ -76,15 +77,11 @@ export class PedidoService implements OnDestroy {
   }
 
   addItem(item: Item): void{
-    const tmpItem: any = item;
-    tmpItem.pedido = null;
-    console.log(this.pedido);
-    this.subscriptions.add(this.http.post<Pedido>(
-      `${this.endpoint}/${this.pedido.codigo}/${this.pedido.fecha}/items/productos/${item.producto.codigo}`, tmpItem, { headers: this.headers })
-        .subscribe((pedido: Pedido) => {
-          this.pedido.items = pedido.items;
-          this.pedidoSubject.next(this.pedido);
-        }));
+    this.subscriptions.add(this.http.post<Pedido>(`${this.endpoint}/${this.pedido.codigo}/${this.pedido.fecha}/items/productos/${item.producto.codigo}`, item, { headers: this.headers }).subscribe((pedido: Pedido) => {
+      console.log(pedido);
+      this.pedido.items = pedido.items;
+      this.pedidoSubject.next(this.pedido);
+    }));
   }
 
   deleteItem(item: Item): void {

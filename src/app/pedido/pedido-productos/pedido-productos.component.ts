@@ -20,7 +20,7 @@ export class PedidoProductosComponent implements OnInit, OnDestroy {
 
   constructor(private productoService: ProductoService, private pedidoService: PedidoService) {
     this.subscriptions = new Subscription();
-    this.subscriptions.add(this.pedidoService.pedido$.subscribe((pedido) => {
+    this.subscriptions.add(this.pedidoService.pedido$.subscribe((pedido: Pedido) => {
       this.pedido = pedido;
     }));
   }
