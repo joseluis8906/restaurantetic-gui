@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { SessionService } from "src/app/utils/session.service";
+import { SessionService, SessionStatus } from "src/app/utils/session.service";
 import { Subscription } from 'rxjs';
 import { NotificationService, MessageType } from '../notification/notification.service';
 
@@ -28,10 +28,12 @@ export class LoginComponent implements OnInit, OnDestroy {
       "password": this.password,
     });
 
-    this.subscriptions.add(this.sessionService.status$.subscribe((status: boolean) => {
-      if (status === true) {
+    this.subscriptions.add(this.sessionService.status$.subscribe((status: SessionStatus) => {
+      if (status === SessionStatus.Logged) {
         this.notificationService.showMessage("Login exitoso", MessageType.Success);
-      } else {
+
+      }
+      if (status === SessionStatus.Failed) {
         this.notificationService.showMessage("Login fallido", MessageType.Error);
       }
     }));
