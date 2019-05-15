@@ -54,6 +54,7 @@ import { TitlebarComponent } from "src/app/titlebar/titlebar.component";
 import { UsuarioComponent } from "src/app/usuario/usuario.component";
 import { LoginComponent } from './login/login.component';
 import { NotificationComponent } from './notification/notification.component';
+import { AngularWebStorageModule } from 'angular-web-storage';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -93,6 +94,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   ],
   imports: [
     AngularFontAwesomeModule,
+    AngularWebStorageModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,

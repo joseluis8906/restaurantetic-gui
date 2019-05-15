@@ -14,7 +14,7 @@ export class NotificationService {
 
   constructor() {
     this.messageType = MessageType.Info;
-    this.timeout = 10000;
+    this.timeout = 5000;
     this.messageSubject = new Subject<string>();
     this.message$ = this.messageSubject.asObservable();
   }

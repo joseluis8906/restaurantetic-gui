@@ -1,11 +1,13 @@
 <div class="sidebar">
   <nav>
-    <app-sidebaritem 
-      *ngFor="let item of items" 
-      [active]="item.active" 
-      [href]="item.href"
-      [icon]="item.icon"
-      (click)="changeActive(item)"></app-sidebaritem>
+    <div *ngFor="let item of items" class="w-100 h-auto">
+      <app-sidebaritem
+        *ngIf="item.visible"
+        [active]="item.active"
+        [href]="item.href"
+        [icon]="item.icon"
+        (click)="changeActive(item)"></app-sidebaritem>
+    </div>
   </nav>
-</div>  
+</div>
 
