@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from "src/environments/environment";
 import { Subscription, Observable, Subject } from 'rxjs';
 import { UsuarioService } from '../usuario/usuario.service';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +18,19 @@ export class SessionService implements OnDestroy {
   public statusSubject: Subject<SessionStatus>;
   public status$: Observable<SessionStatus>;
 
-  constructor(private sessionStorageService: SessionStorageService, private http: HttpClient, private usuarioService: UsuarioService) {
+  constructor(private router: Router, private sessionStorageService: SessionStorageService, private http: HttpClient, private usuarioService: UsuarioService) {
     this.usuario = null;
     this.subscriptions = new Subscription();
     this.statusSubject = new Subject<SessionStatus>();
     this.status$ = this.statusSubject.asObservable();
+
+    this.subscriptions.add(this.router.events.subscribe((evt: any) => {
+      if (evt instanceof NavigationEnd) {
+        if (evt.urlAfterRedirects !== "/login" && this.usuario === null) {
+          this.router.navigateByUrl("/login");
+        }
+      }
+    }));
   }
 
   ngOnDestroy() {
@@ -52,6 +61,10 @@ export class SessionService implements OnDestroy {
 
   public getUsuario() {
     return this.usuario;
+  }
+
+  public puedeSeguir?(): boolean {
+    return false;
   }
 }
 

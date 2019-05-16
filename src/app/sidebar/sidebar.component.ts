@@ -5,6 +5,7 @@ import { SessionService, SessionStatus } from "../utils/session.service";
 import { Subscription } from "rxjs";
 import { Usuario } from "../usuario/Usuario";
 import { SessionStorageService } from "angular-web-storage";
+import { ConfigService, App, Apps } from "../utils/config.service";
 
 @Component({
   selector: "app-sidebar",
@@ -14,17 +15,18 @@ import { SessionStorageService } from "angular-web-storage";
 export class SidebarComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription;
+  items: Array<SideBarItem>;
 
-  items: SideBarItem[] = [
-    {active: false, href: "/login", icon: "home", visible: true, roles: ["none"]},
-    {active: false, href: "/usuarios", icon: "people", visible: false, roles: ["admin"]},
-    {active: false, href: "/productos", icon: "restaurant_menu", visible: false, roles: ["admin"]},
-    {active: false, href: "/pedidos", icon: "shopping_cart", visible:  false, roles: ["mesero", "cajero"]},
-    {active: false, href: "/cocina", icon: "kitchen", visible: false, roles: ["cocinero"]},
-    {active: false, href: "/caja", icon: "monetization_on", visible: false, roles: ["cajero"]}
-  ];
-
-  constructor(private router: Router, private sessionService: SessionService, private sessionStorageService: SessionStorageService) {
+  constructor(private router: Router, private sessionService: SessionService, private sessionStorageService: SessionStorageService, private configService: ConfigService) {
+    const apps: Map<string, App> = this.configService.getApps();
+    this.items = [
+      {active: false, href: apps.get(Apps.Login).path, icon: "home", visible: true, roles: apps.get(Apps.Login).roles},
+      {active: false, href: apps.get(Apps.Usuarios).path, icon: "people", visible: false, roles: apps.get(Apps.Usuarios).roles},
+      {active: false, href: apps.get(Apps.Productos).path, icon: "restaurant_menu", visible: false, roles: apps.get(Apps.Productos).roles},
+      {active: false, href: apps.get(Apps.Pedidos).path, icon: "shopping_cart", visible:  false, roles: apps.get(Apps.Pedidos).roles},
+      {active: false, href: apps.get(Apps.Cocina).path, icon: "kitchen", visible: false, roles: apps.get(Apps.Cocina).roles},
+      {active: false, href: apps.get(Apps.Caja).path, icon: "monetization_on", visible: false, roles: apps.get(Apps.Caja).roles}
+    ];
     this.subscriptions = new Subscription();
     this.subscriptions.add(this.sessionService.status$.subscribe((status: SessionStatus) => {
       if (status === SessionStatus.Logged) {
@@ -32,8 +34,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
         const roles = usuario.roles.split(",");
         let firstPath: string = null;
         this.items.forEach((item: SideBarItem) => {
-          item.roles.forEach((role: string, index: number) => {
-            if (roles.includes(role)) {
+          roles.forEach((role: string) => {
+            if (item.roles.includes(role)) {
               firstPath = firstPath === null ? item.href : firstPath;
               item.visible = true;
             } else {
