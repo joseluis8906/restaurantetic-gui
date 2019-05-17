@@ -26,6 +26,10 @@ export class SessionService implements OnDestroy {
 
     this.subscriptions.add(this.router.events.subscribe((evt: any) => {
       if (evt instanceof NavigationEnd) {
+        if (this.usuario === null && this.sessionStorageService.get("user")) {
+          this.usuario = JSON.parse(this.sessionStorageService.get("user"));
+          this.statusSubject.next(SessionStatus.Logged);
+        }
         if (evt.urlAfterRedirects !== "/login" && this.usuario === null) {
           this.router.navigateByUrl("/login");
         }
