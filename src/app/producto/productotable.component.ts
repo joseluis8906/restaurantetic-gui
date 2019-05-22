@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { Producto, ProductoBuilder } from "src/app/producto/producto";
-import { ProductoNewEditDialogComponent } from "src/app/producto/producto-new-edit-dialog/producto-new-edit-dialog.component";
+import { Producto } from "src/app/producto/producto";
 import { ProductoService } from "src/app/producto/producto.service";
 import { Subscription } from "rxjs";
 
@@ -29,15 +28,7 @@ export class ProductotableComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  public onOpenDialogAgregar(): void {
-    const dialogRef = this.dialog.open(
-      ProductoNewEditDialogComponent,
-      {
-        width: "320px",
-        height: "480px",
-      },
-    );
-  }
+  public onOpenAgregar(): void { }
 
   public getProductos(): void {
     this.subscriptions.add(this.productoService.getProductos().subscribe((productos: Producto[]) => {

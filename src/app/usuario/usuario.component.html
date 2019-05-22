@@ -70,7 +70,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let usuario of usuarios">
+              <tr *ngFor="let usuario of usuarios" [ngStyle]="{display: (usuario.username === 'root' ? 'none' : 'table-row')}">
                 <td>{{usuario.username}}</td>
                 <td>{{usuario.roles}}</td>
                 <td>{{usuario.nombre}}</td>

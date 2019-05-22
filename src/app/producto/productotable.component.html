@@ -5,6 +5,11 @@
             <button mat-raised-button color="primary" (click)="onOpenDialogAgregar()">AGREGAR</button>
         </div>
     </div>
+    <div class="row no-gutters justify-content-center">
+      <div class="col-12 col-lg-5 col-xl-4">
+        <app-producto-new-edit></app-producto-new-edit>
+      </div>
+    </div>
     <div class="row no-gutters justify-content-beetwen">
       <div class="col-sm-4 col-md-3 justify-content-center" *ngFor="let producto of productos">
         <app-producto-item [producto]="producto" ></app-producto-item>
