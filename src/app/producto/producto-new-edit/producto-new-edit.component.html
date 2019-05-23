@@ -1,6 +1,6 @@
 <mat-card>
   <img src="assets/logo-productos.png" width=72 [ngStyle]="{display: 'block'}" class="mx-auto" />
-  <form [formGroup]="formGroup">
+  <form [formGroup]="formGroup" (keydown.enter)="$event.preventDefault()" #formDirective="ngForm" (ngSubmit)="resetForm(formGroup, formDirective)">
     <mat-form-field class="w-100">
       <input matInput placeholder="Nombre" [formControl]="nombre">
       <mat-error *ngIf="nombre.invalid">{{getErrorMessage("nombre")}}</mat-error>
@@ -30,7 +30,7 @@
       <mat-error *ngIf="precio.invalid">{{getErrorMessage("precio")}}</mat-error>
     </mat-form-field>
   
-    <button mat-raised-button color="primary" cdkFocusInitial (click)="onGuardarOEditar()" [disabled]="!formGroup.valid">{{editar ? 'Actualizar' : 'Guardar'}}</button>
-    <button mat-raised-button color="warn" class="ml-2" (click)="onCancelar()">Cancelar</button>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="onGuardarOActualizar()" [disabled]="!formGroup.valid" type="submit">{{editar ? 'Actualizar' : 'Guardar'}}</button>
+    <button mat-raised-button color="warn" class="ml-2" (click)="onCancelar()" type="reset">Cancelar</button>
   </form>
 </mat-card>

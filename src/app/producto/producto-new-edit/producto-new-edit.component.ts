@@ -3,7 +3,7 @@ import { Producto } from "src/app/producto/producto";
 import { ProductoService } from "src/app/producto/producto.service";
 import { MediaService } from "src/app/utils/media.service";
 import { Subscription, Observable } from "rxjs";
-import { FormGroup, FormControl, Validators, FormBuilder, ValidationErrors, AsyncValidatorFn, AbstractControl } from "@angular/forms";
+import { FormGroup, FormControl, Validators, FormBuilder, ValidationErrors, AsyncValidatorFn, AbstractControl, FormGroupDirective } from "@angular/forms";
 import { map } from "rxjs/operators";
 import { NotificationService, MessageType } from "src/app/notification/notification.service";
 
@@ -94,7 +94,13 @@ export class ProductoNewEditComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  onCancelar(): void { }
+  onCancelar(): void {
+    this.editar = false;
+    this.nombre.enable();
+    this.codigo.enable();
+    this.ingredientes.enable();
+    this.formGroup.reset();
+  }
 
   onUploadPicture(file: File) {
     this.subscriptions.add(this.mediaService.upload(file).subscribe((imageName: string) => {
@@ -103,7 +109,7 @@ export class ProductoNewEditComponent implements OnInit, OnDestroy {
     }));
   }
 
-  onGuardarOEditar(): void {
+  onGuardarOActualizar(): void {
     if (this.formGroup.valid) {
       this.producto = {
         nombre: this.nombre.value,
@@ -113,11 +119,28 @@ export class ProductoNewEditComponent implements OnInit, OnDestroy {
         descripcion: this.descripcion.value,
         precio: this.precio.value
       };
-      this.subscriptions.add(this.productoService.addProducto(this.producto).subscribe((producto_: Producto) => {
-        this.productoService.productosSubject.next(producto_);
-        this.notificationService.showMessage("Producto creado exitosamente.", MessageType.Success);
-      }));
+
+      if (!this.editar) {
+        this.guardar()
+      } else {
+        this.actualizar();
+      }
     }
+  }
+
+  guardar(): void {
+    this.subscriptions.add(this.productoService.addProducto(this.producto).subscribe((producto_: Producto) => {
+      this.productoService.productosSubject.next(producto_);
+      this.notificationService.showMessage("Producto creado exitosamente.", MessageType.Success);
+    }));
+  }
+
+  actualizar(): void {
+    this.subscriptions.add(this.productoService.updateProducto(this.producto).subscribe((_) => {
+      this.productoService.productosSubject.next(null);
+      this.notificationService.showMessage("Producto actualizado exitosamente.", MessageType.Success);
+      this.onCancelar();
+    }));
   }
 
   onEditar(): void {
@@ -131,5 +154,12 @@ export class ProductoNewEditComponent implements OnInit, OnDestroy {
     this.nombre.disable();
     this.codigo.disable();
     this.ingredientes.disable();
+  }
+
+  resetForm(fData: any, formDirective: FormGroupDirective): void {
+    if (this.formGroup.valid) {
+      formDirective.resetForm();
+      this.formGroup.reset();
+    }
   }
 }
