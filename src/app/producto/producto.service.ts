@@ -40,6 +40,10 @@ export class ProductoService {
     return this.http.get<Producto>(`${this.host}/productos/${codigo}`);
   }
 
+  updateProducto(producto: Producto): Observable<void> {
+    return this.http.put<void>(`${this.host}/productos`, producto, { headers: this.headers });
+  }
+
   removeProducto(codigo: string): Observable<number> {
     return this.http.delete<number>(`${this.host}/productos/${codigo}`);
   }

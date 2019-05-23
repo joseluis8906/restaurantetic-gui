@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { SessionService } from "src/app/utils/session.service";
 
 @Component({
   selector: "app-pedido-detalle-tipo",
@@ -7,9 +8,15 @@ import { Component, OnInit } from "@angular/core";
 })
 export class PedidoDetalleTipoComponent implements OnInit {
 
-  tipo: string = "mesa";
+  tipo: string = "caja";
 
-  constructor() { }
+  constructor(private sessionService: SessionService) { 
+    if (this.sessionService.getUsuario().roles.includes("cajero")) {
+      this.tipo = "caja";
+    } else {
+      this.tipo = "mesa";
+    }
+  }
 
   ngOnInit() { }
 }

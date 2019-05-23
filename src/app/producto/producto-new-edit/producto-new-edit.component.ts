@@ -5,6 +5,7 @@ import { MediaService } from "src/app/utils/media.service";
 import { Subscription, Observable } from "rxjs";
 import { FormGroup, FormControl, Validators, FormBuilder, ValidationErrors, AsyncValidatorFn, AbstractControl } from "@angular/forms";
 import { map } from "rxjs/operators";
+import { NotificationService, MessageType } from "src/app/notification/notification.service";
 
 @Component({
   selector: "app-producto-new-edit",
@@ -23,14 +24,16 @@ export class ProductoNewEditComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription;
   producto: Producto;
+  editar: Boolean;
 
-  constructor(private formBuilder: FormBuilder, private mediaService: MediaService, private productoService: ProductoService) {
+  constructor(private formBuilder: FormBuilder, private mediaService: MediaService, private productoService: ProductoService, private notificationService: NotificationService) {
     this.subscriptions = new Subscription();
     this.producto = new Producto();
+    this.editar = false;
 
     this.nombre = new FormControl(null, [Validators.required]);
     this.codigo = new FormControl(null, [Validators.required], [this.validateCodigo.bind(this)()]);
-    this.imagen = new FormControl(null, [Validators.required]);
+    this.imagen = new FormControl(null);
     this.ingredientes = new FormControl(null, [Validators.required]);
     this.descripcion = new FormControl(null, [Validators.required]);
     this.precio = new FormControl(null, [Validators.required])
@@ -43,6 +46,14 @@ export class ProductoNewEditComponent implements OnInit, OnDestroy {
       descripcion: this.descripcion,
       precio: this.precio
     });
+
+    this.subscriptions.add(this.productoService.productos$.subscribe((producto: Producto) => {
+      if (producto !== null) {
+        this.producto = producto;
+        this.editar = true;
+        this.onEditar();
+      }
+    }));
   }
 
   ngOnInit() { }
@@ -66,7 +77,7 @@ export class ProductoNewEditComponent implements OnInit, OnDestroy {
 
       case "codigo":
         return this.codigo.hasError("required") ? "El campo es obligatorio" : 
-          this.codigo.hasError("productoAlreadyExitsts") ? "El código no está disponible" : "";
+          this.codigo.hasError("productoAlreadyExists") ? "El código no está disponible" : "";
 
       case "imagen":
         return this.imagen.hasError("required") ? "El campo es obligatorio" : "";
@@ -87,14 +98,38 @@ export class ProductoNewEditComponent implements OnInit, OnDestroy {
 
   onUploadPicture(file: File) {
     this.subscriptions.add(this.mediaService.upload(file).subscribe((imageName: string) => {
-      this.producto.imagen = imageName;
+      this.imagen.setValue(imageName);
       console.log(this.producto);
     }));
   }
 
-  onConfirmar(evt) {
-    this.subscriptions.add(this.productoService.addProducto(this.producto).subscribe((producto_: Producto) => {
-      this.productoService.productosSubject.next(producto_);
-    }));
+  onGuardarOEditar(): void {
+    if (this.formGroup.valid) {
+      this.producto = {
+        nombre: this.nombre.value,
+        codigo: this.codigo.value,
+        imagen: this.imagen.value,
+        ingredientes: this.ingredientes.value,
+        descripcion: this.descripcion.value,
+        precio: this.precio.value
+      };
+      this.subscriptions.add(this.productoService.addProducto(this.producto).subscribe((producto_: Producto) => {
+        this.productoService.productosSubject.next(producto_);
+        this.notificationService.showMessage("Producto creado exitosamente.", MessageType.Success);
+      }));
+    }
+  }
+
+  onEditar(): void {
+    this.nombre.setValue(this.producto.nombre);
+    this.codigo.setValue(this.producto.codigo);
+    this.imagen.setValue(this.producto.imagen);
+    this.ingredientes.setValue(this.producto.ingredientes);
+    this.descripcion.setValue(this.producto.descripcion);
+    this.precio.setValue(this.producto.precio);
+
+    this.nombre.disable();
+    this.codigo.disable();
+    this.ingredientes.disable();
   }
 }

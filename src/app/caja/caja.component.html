@@ -9,7 +9,7 @@
           {{pedido.codigo}}
         </mat-panel-title>
         <mat-panel-description>
-          Mesa: {{pedido.mesa || "No"}}
+          {{pedido.mesa ? "Mesa: " + pedido.mesa : ""}}
         </mat-panel-description>
       </mat-expansion-panel-header>
       Items:

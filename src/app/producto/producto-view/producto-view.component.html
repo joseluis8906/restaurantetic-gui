@@ -22,7 +22,7 @@
     <label class="producto-precio"><b>Precio:</b>{{producto.precio | currency: 'USD' : 'symbol' : '1.0'}}</label>
   </mat-card-content>
   <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="onEdit($event)">EDITAR</button>
+      <button mat-raised-button color="primary" (click)="onEditar(producto)">EDITAR</button>
       <button mat-raised-button color="warn" (click)="onEliminar(producto.codigo)">ELIMINAR</button>
   </mat-card-actions>
 </mat-card>
