@@ -1,7 +1,7 @@
-import { Component, HostListener, OnInit, OnDestroy } from "@angular/core";
+import { Component, HostListener, OnDestroy, OnInit } from "@angular/core";
+import { Subscription } from "rxjs";
 import { Pedido } from "src/app/pedido/pedido";
 import { PedidoService } from "src/app/pedido/pedido.service";
-import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-pedido-detalle-caja",
@@ -12,17 +12,12 @@ export class PedidoDetalleCajaComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription;
   pedidos: Pedido[] = [];
+  pedido: Pedido;
 
   screenHeight: number;
 
   constructor(private pedidoService: PedidoService) {
     this.subscriptions = new Subscription();
-
-    this.subscriptions.add(this.pedidoService.pedido$.subscribe(() => {
-      this.pedidoService.getPedidos().subscribe((pedidos) => {
-        this.getPedidos();
-      });
-    }));
   }
 
   ngOnInit() {
@@ -49,13 +44,13 @@ export class PedidoDetalleCajaComponent implements OnInit, OnDestroy {
 
   onChangePedido(pedido: Pedido) {
     this.pedidoService.changePedido(pedido);
+    this.pedido = pedido;
   }
 
   getPedidos() {
-    this.subscriptions.add(this.pedidoService.getPedidos().subscribe((pedidos) => {
+    this.subscriptions.add(this.pedidoService.getPedidos().subscribe((pedidos: Array<Pedido>) => {
       this.pedidos = [];
-      for (const pedido of pedidos){
-        console.log(pedido);
+      for (const pedido of pedidos) {
         if (!pedido.mesa) {
           this.pedidos.push(pedido);
         }

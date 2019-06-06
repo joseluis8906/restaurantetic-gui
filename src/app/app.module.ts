@@ -32,7 +32,6 @@ import { PedidoItemViewComponent } from "src/app/cocina/pedido-item-view/pedido-
 import { PedidoViewComponent } from "src/app/cocina/pedido-view/pedido-view.component";
 import { NavbarComponent } from "src/app/navbar/navbar.component";
 import { NavbaritemComponent } from "src/app/navbar/navbaritem.component";
-import { PedidoDetalleCajaItemComponent } from "src/app/pedido/pedido-detalle/pedido-detalle-caja-item/pedido-detalle-caja-item.component";
 import { PedidoDetalleCajaComponent } from "src/app/pedido/pedido-detalle/pedido-detalle-caja/pedido-detalle-caja.component";
 import { PedidoDetalleItemComponent } from "src/app/pedido/pedido-detalle/pedido-detalle-item/pedido-detalle-item.component";
 import { PedidoDetalleItemsComponent } from "src/app/pedido/pedido-detalle/pedido-detalle-items/pedido-detalle-items.component";
@@ -69,7 +68,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NavbaritemComponent,
     PedidoComponent,
     PedidoDetalleCajaComponent,
-    PedidoDetalleCajaItemComponent,
     PedidoDetalleComponent,
     PedidoDetalleItemComponent,
     PedidoDetalleItemsComponent,

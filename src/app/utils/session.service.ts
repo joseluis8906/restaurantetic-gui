@@ -1,14 +1,20 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Usuario } from "../usuario/Usuario";
+import { UsuarioService } from "../usuario/usuario.service";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable, OnDestroy } from "@angular/core";
+import { NavigationEnd, Router } from "@angular/router";
 import { SessionStorageService } from "angular-web-storage";
-import { Usuario } from '../usuario/Usuario';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, Subject, Subscription } from "rxjs";
 import { environment } from "src/environments/environment";
-import { Subscription, Observable, Subject } from 'rxjs';
-import { UsuarioService } from '../usuario/usuario.service';
-import { Router, NavigationEnd } from '@angular/router';
+
+export enum SessionStatus {
+  Logged = 1,
+  Failed = 2,
+  Logout = 3,
+}
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class SessionService implements OnDestroy {
 
@@ -72,8 +78,3 @@ export class SessionService implements OnDestroy {
   }
 }
 
-export enum SessionStatus {
-  Logged = 1,
-  Failed = 2,
-  Logout = 3,
-}

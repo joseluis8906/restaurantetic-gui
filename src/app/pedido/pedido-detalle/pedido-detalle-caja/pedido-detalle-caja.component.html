@@ -10,8 +10,8 @@
         <perfect-scrollbar 
           [ngStyle]="{'min-height': screenHeight*0.2 + 'px', 'max-height': screenHeight*0.2 + 'px'}">
           <mat-list>
-            <div *ngFor="let pedido of pedidos">
-              <app-pedido-detalle-caja-item (click)="onChangePedido(pedido)" [pedido]="pedido"></app-pedido-detalle-caja-item>
+            <div *ngFor="let localPedido of pedidos">
+              <mat-list-item class="pedido-detalle-caja-item" (click)="onChangePedido(localPedido)" [ngClass]="{'active': localPedido === pedido}">{{localPedido.codigo}}</mat-list-item>
             </div>
           </mat-list>
         </perfect-scrollbar>

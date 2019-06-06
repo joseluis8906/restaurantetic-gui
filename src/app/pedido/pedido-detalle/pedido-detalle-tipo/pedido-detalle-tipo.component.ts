@@ -10,7 +10,7 @@ export class PedidoDetalleTipoComponent implements OnInit {
 
   tipo: string = "caja";
 
-  constructor(private sessionService: SessionService) { 
+  constructor(private sessionService: SessionService) {
     if (this.sessionService.getUsuario().roles.includes("cajero")) {
       this.tipo = "caja";
     } else {
