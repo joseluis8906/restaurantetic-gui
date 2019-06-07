@@ -1,5 +1,4 @@
-<div class="container-fluid" 
-  [ngStyle]="{'min-height': screenHeight*0.25 + 'px'}">
+<div class="container-fluid" [ngStyle]="{'max-height.px': height, 'min-height.px': height}">
   <div class="row no-gutters justify-content-center">
     <div class="d-flex col-sm-12 align-self-center justify-content-center">
       <button mat-raised-button color="primary" 
@@ -7,8 +6,7 @@
         (click)="onCreatePedido()">NUEVO</button>
     </div>
     <div class="col-sm-12">
-        <perfect-scrollbar 
-          [ngStyle]="{'min-height': screenHeight*0.2 + 'px', 'max-height': screenHeight*0.2 + 'px'}">
+        <perfect-scrollbar [ngStyle]="{'max-height.px': height, 'min-height.px': height}">
           <mat-list>
             <div *ngFor="let localPedido of pedidos">
               <mat-list-item class="pedido-detalle-caja-item" (click)="onChangePedido(localPedido)" [ngClass]="{'active': localPedido === pedido}">{{localPedido.codigo}}</mat-list-item>

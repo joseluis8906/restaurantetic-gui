@@ -14,7 +14,7 @@ export class PedidoDetalleCajaComponent implements OnInit, OnDestroy {
   pedidos: Pedido[] = [];
   pedido: Pedido;
 
-  screenHeight: number;
+  height: number;
 
   constructor(private pedidoService: PedidoService) {
     this.subscriptions = new Subscription();
@@ -34,8 +34,24 @@ export class PedidoDetalleCajaComponent implements OnInit, OnDestroy {
     this.calculateHeight();
   }
 
+  @HostListener("window:orientationchange", ["$event"])
+  onChangeOrientation(event?) {
+    this.calculateHeight();
+  }
+
   calculateHeight(): void {
-    this.screenHeight = window.innerHeight - 54;
+    const width: number = window.innerWidth;
+    const height: number = window.innerHeight;
+    const orientation: string = width > height ? "landscape" : "portrait";
+    if (orientation === "landscape") {
+      const screenHeight = window.innerHeight;
+      const height: number = screenHeight - (48 + 48 + 54);
+      this.height = height * 0.3;
+    } else {
+      const screenWidth = window.innerWidth;
+      const height: number = screenWidth - (48 + 48 + 54);
+      this.height = height * 0.3;
+    }
   }
 
   onCreatePedido(): void {
