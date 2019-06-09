@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy } from "@angular/core";
+import { Component, Inject, OnInit, OnDestroy, Input } from "@angular/core";
 import { Producto } from "src/app/producto/producto";
 import { ProductoService } from "src/app/producto/producto.service";
 import { MediaService } from "src/app/utils/media.service";
@@ -14,6 +14,8 @@ import { NotificationService, MessageType } from "src/app/notification/notificat
 })
 export class ProductoNewEditComponent implements OnInit, OnDestroy {
 
+  @Input() producto: Producto;
+  @Input() editarAgregar: string;
   formGroup: FormGroup;
   nombre: FormControl;
   codigo: FormControl;
@@ -23,13 +25,9 @@ export class ProductoNewEditComponent implements OnInit, OnDestroy {
   precio: FormControl;
 
   private subscriptions: Subscription;
-  producto: Producto;
-  editar: Boolean;
 
   constructor(private formBuilder: FormBuilder, private mediaService: MediaService, private productoService: ProductoService, private notificationService: NotificationService) {
     this.subscriptions = new Subscription();
-    this.producto = new Producto();
-    this.editar = false;
 
     this.nombre = new FormControl(null, [Validators.required]);
     this.codigo = new FormControl(null, [Validators.required], [this.validateCodigo.bind(this)()]);
@@ -44,19 +42,15 @@ export class ProductoNewEditComponent implements OnInit, OnDestroy {
       imagen: this.imagen,
       ingredientes: this.ingredientes,
       descripcion: this.descripcion,
-      precio: this.precio
+      precio: this.precio,
     });
-
-    this.subscriptions.add(this.productoService.productos$.subscribe((producto: Producto) => {
-      if (producto !== null) {
-        this.producto = producto;
-        this.editar = true;
-        this.onEditar();
-      }
-    }));
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (this.editarAgregar === "editar") {
+      this.onEditar();
+    }
+  }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
@@ -95,17 +89,17 @@ export class ProductoNewEditComponent implements OnInit, OnDestroy {
   }
 
   onCancelar(): void {
-    this.editar = false;
+    this.editarAgregar = "none";
     this.nombre.enable();
     this.codigo.enable();
     this.ingredientes.enable();
     this.formGroup.reset();
+    this.productoService.editarAgregarSubject.next("none");
   }
 
   onUploadPicture(file: File) {
     this.subscriptions.add(this.mediaService.upload(file).subscribe((imageName: string) => {
       this.imagen.setValue(imageName);
-      console.log(this.producto);
     }));
   }
 
@@ -117,11 +111,11 @@ export class ProductoNewEditComponent implements OnInit, OnDestroy {
         imagen: this.imagen.value,
         ingredientes: this.ingredientes.value,
         descripcion: this.descripcion.value,
-        precio: this.precio.value
+        precio: this.precio.value,
       };
 
-      if (!this.editar) {
-        this.guardar()
+      if (this.editarAgregar === "agregar") {
+        this.guardar();
       } else {
         this.actualizar();
       }

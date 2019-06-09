@@ -2,14 +2,14 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
-  OnDestroy,
   } from "@angular/core";
+import { Subscription } from "rxjs";
+import { MessageType, NotificationService } from "src/app/notification/notification.service";
 import { Producto } from "src/app/producto/producto";
 import { ProductoService } from "src/app/producto/producto.service";
-import { Subscription } from "rxjs";
-import { NotificationService, MessageType } from "src/app/notification/notification.service";
 
 @Component({
   selector: "app-producto-view",
@@ -19,7 +19,7 @@ import { NotificationService, MessageType } from "src/app/notification/notificat
 export class ProductoViewComponent implements OnInit, OnDestroy {
 
   @Input() producto: Producto;
-  @Output() editEvent: EventEmitter<boolean> = new EventEmitter();
+  @Output() editEvent: EventEmitter<Producto> = new EventEmitter();
 
   private subscriptions: Subscription;
 
@@ -34,7 +34,8 @@ export class ProductoViewComponent implements OnInit, OnDestroy {
   }
 
   onEditar(producto: Producto) {
-    this.productoService.productosSubject.next(producto);
+    this.editEvent.emit(producto);
+    this.productoService.editarAgregarSubject.next("editar");
   }
 
   onEliminar(codigo: string) {

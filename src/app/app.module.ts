@@ -42,7 +42,6 @@ import { PedidoDetalleComponent } from "src/app/pedido/pedido-detalle/pedido-det
 import { PedidoProductosComponent } from "src/app/pedido/pedido-productos/pedido-productos.component";
 import { PedidoComponent } from "src/app/pedido/pedido.component";
 import { ProductoIngredienteDialogComponent } from "src/app/producto/producto-ingrediente-dialog/producto-ingrediente-dialog.component";
-import { ProductoItemComponent } from "src/app/producto/producto-item/producto-item.component";
 import { ProductoNewEditComponent } from "src/app/producto/producto-new-edit/producto-new-edit.component";
 import { ProductoViewMiniComponent } from "src/app/producto/producto-view-mini/producto-view-mini.component";
 import { ProductoViewComponent } from "src/app/producto/producto-view/producto-view.component";
@@ -78,7 +77,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PedidoProductosComponent,
     PedidoViewComponent,
     ProductoIngredienteDialogComponent,
-    ProductoItemComponent,
     ProductoNewEditComponent,
     ProductotableComponent,
     ProductoViewComponent,

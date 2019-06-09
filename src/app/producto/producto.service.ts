@@ -12,9 +12,11 @@ export class ProductoService {
 
   private host: string;
   private headers: HttpHeaders;
-  private producto: Producto;
+
   public productosSubject: Subject<Producto>;
   public productos$: Observable<Producto>;
+  public editarAgregarSubject: Subject<string>;
+  public editarAgregar$: Observable<string>;
 
   constructor(private http: HttpClient) {
     this.host = environment.API_HOST;
@@ -23,9 +25,11 @@ export class ProductoService {
       "Accept": "application/json",
     });
 
-    this.producto = null;
     this.productosSubject = new Subject<Producto>();
     this.productos$ = this.productosSubject.asObservable();
+
+    this.editarAgregarSubject = new Subject<string>();
+    this.editarAgregar$ = this.editarAgregarSubject.asObservable();
   }
 
   getProductos(): Observable<Producto[]> {

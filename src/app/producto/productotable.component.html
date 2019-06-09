@@ -1,20 +1,19 @@
 <perfect-scrollbar>
   <div class="container-fluid">
-    <div class="row no-gutters justify-content-center">
+    <div class="row no-gutters justify-content-center" *ngIf="editarAgregar === 'none'">
         <div class="d-flex col-sm-12 col-md-6 align-self-center justify-content-center">
-            <button mat-raised-button color="primary" (click)="onOpenAgregar()">AGREGAR</button>
+            <button mat-raised-button color="primary" (click)="onOpenAgregar()" >AGREGAR</button>
         </div>
     </div>
-    <div class="row no-gutters justify-content-center">
+    <div class="row no-gutters justify-content-center" *ngIf="editarAgregar === 'agregar' || editarAgregar === 'editar'">
       <div class="col-12 col-lg-5 col-xl-4">
-        <app-producto-new-edit></app-producto-new-edit>
+        <app-producto-new-edit [producto]="producto" [editarAgregar]="editarAgregar"></app-producto-new-edit>
       </div>
     </div>
-    <div class="row no-gutters justify-content-beetwen">
+    <div class="row no-gutters justify-content-beetwen" *ngIf="editarAgregar === 'none'">
       <div class="col-sm-4 col-md-3 justify-content-center" *ngFor="let producto of productos">
-        <app-producto-item [producto]="producto" ></app-producto-item>
+        <app-producto-view [producto]="producto" (editEvent)="onEditar(producto)"></app-producto-view>
       </div>
     </div>
   </div>
 </perfect-scrollbar>
-
