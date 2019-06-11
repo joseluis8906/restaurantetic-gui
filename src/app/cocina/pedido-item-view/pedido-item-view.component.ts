@@ -2,7 +2,7 @@ import { Component, HostListener, OnInit, OnDestroy } from "@angular/core";
 import { Pedido } from "src/app/pedido/pedido";
 import { Producto } from "src/app/producto/producto";
 import { ProductoService } from "src/app/producto/producto.service";
-import { Item } from "src/app/pedido/item";
+import { Item, ItemEstados } from "src/app/pedido/item";
 import { PedidoService } from "src/app/pedido/pedido.service";
 import { Subscription } from "rxjs";
 
@@ -57,17 +57,17 @@ export class PedidoItemViewComponent implements OnInit, OnDestroy {
   onCambiarEstado(item: Item, estado: string): void {
     for (const item_ of this.items) {
       if (item_.numero === item.numero) {
-        if (estado == "listo" && item_.estado !== "listo") {
+        if (estado === ItemEstados.Listo && item_.estado !== ItemEstados.Listo) {
           item_.estado = estado;
-          this.subscriptions.add(this.pedidoService.cambiarEstadoItem(item_).subscribe(() => {console.log("actualizado")}));
+          this.subscriptions.add(this.pedidoService.cambiarEstadoItem(item_).subscribe(() => console.log("actualizado")));
         }
-        if (estado == "en preparacion" && item_.estado !== "listo") {
+        if (estado === ItemEstados.EnPreparacion && item_.estado !== ItemEstados.Listo) {
           item_.estado = estado;
-          this.subscriptions.add(this.pedidoService.cambiarEstadoItem(item_).subscribe(() => {console.log("actualizado")}));
+          this.subscriptions.add(this.pedidoService.cambiarEstadoItem(item_).subscribe(() => console.log("actualizado")));
         }
-        if (estado == "en espera" && item_.estado !== "en preparacion" && item_.estado !== "listo") {
+        if (estado === ItemEstados.EnEspera && item_.estado !== ItemEstados.EnPreparacion && item_.estado !== ItemEstados.Listo) {
           item_.estado = estado;
-          this.subscriptions.add(this.pedidoService.cambiarEstadoItem(item_).subscribe(() => {console.log("actualizado")}));
+          this.subscriptions.add(this.pedidoService.cambiarEstadoItem(item_).subscribe(() => console.log("actualizado")));
         }
       }
     }

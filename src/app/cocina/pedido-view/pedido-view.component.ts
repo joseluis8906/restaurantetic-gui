@@ -15,7 +15,6 @@ export class PedidoViewComponent implements OnInit, OnDestroy {
   screenHeight: number;
   active: String = null;
 
-
   constructor(private pedidoService: PedidoService) {
     this.subscriptions = new Subscription();
   }

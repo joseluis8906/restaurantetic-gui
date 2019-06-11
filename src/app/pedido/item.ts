@@ -1,5 +1,4 @@
 import { Producto } from "src/app/producto/producto";
-import { Pedido } from "./pedido";
 
 export class Item {
   numero: number;
@@ -44,4 +43,10 @@ export class ItemBuilder {
   build(): Item {
     return this.item;
   }
+}
+
+export enum ItemEstados {
+  EnEspera = "en espera",
+  EnPreparacion = "en preparacion",
+  Listo = "listo",
 }

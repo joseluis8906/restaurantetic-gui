@@ -78,15 +78,14 @@ export class PedidoService implements OnDestroy {
 
   addItem(item: Item): void{
     this.subscriptions.add(this.http.post<Pedido>(`${this.endpoint}/${this.pedido.codigo}/${this.pedido.fecha}/items/productos/${item.producto.codigo}`, item, { headers: this.headers }).subscribe((pedido: Pedido) => {
-      console.log(pedido);
-      this.pedido.items = pedido.items;
+      this.pedido = pedido;
       this.pedidoSubject.next(this.pedido);
     }));
   }
 
   deleteItem(item: Item): void {
     this.http.delete<Pedido>(`${this.endpoint}/${this.pedido.codigo}/${this.pedido.fecha}/items/${item.numero}`).subscribe((pedido: Pedido) => {
-      this.pedido.items = pedido.items;
+      this.pedido = pedido;
       this.pedidoSubject.next(this.pedido);
     });
   }

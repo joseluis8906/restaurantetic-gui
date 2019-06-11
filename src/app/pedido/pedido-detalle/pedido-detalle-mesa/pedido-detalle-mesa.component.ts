@@ -37,7 +37,7 @@ export class PedidoDetalleMesaComponent implements OnInit, OnDestroy {
   constructor(private pedidoService: PedidoService) {
     this.subscriptions = new Subscription();
     this.pedido = new Pedido();
-    this.subscriptions.add(this.pedidoService.pedido$.subscribe((pedido) => {
+    this.subscriptions.add(this.pedidoService.pedido$.subscribe((pedido: Pedido) => {
       if (pedido === null) {
         this.pedido = new Pedido();
       } else {

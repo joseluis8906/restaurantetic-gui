@@ -5,7 +5,8 @@
         <input class="producto-numero" [value]="item.numero" readonly> {{item.producto.codigo}}
       </div>
       <div class="col-sm-4" [ngStyle]="{'text-align': 'right', 'cursor': 'pointer', 'color': 'red'}" >
-        <mat-icon (click)="deleteItem(item)">delete_forever</mat-icon>
+        <mat-icon (click)="deleteItem(item)" *ngIf="item.estado === 'en espera'">delete_forever</mat-icon>
+        <mat-icon [ngStyle]="{'color': 'gray'}" *ngIf="item.estado !== 'en espera'">delete_forever</mat-icon>
       </div>
       <div class="col-sm-4" [ngStyle]="{'text-align': 'right', 'font-size': '14px'}">{{item.precio | currency: 'USD' : 'symbol' : '1.0'}}</div>
     </div>

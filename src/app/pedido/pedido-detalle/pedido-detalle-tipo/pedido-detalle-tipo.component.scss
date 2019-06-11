@@ -1,3 +1,8 @@
 .pedido-detalle-tipo-tabs::ng-deep .mat-tab-labels{
   justify-content: center;
 }
+
+.pedido-detalle-tipo-tabs::ng-deep * {
+  overflow: hidden !important;
+  overflow-y: hidden !important;
+}

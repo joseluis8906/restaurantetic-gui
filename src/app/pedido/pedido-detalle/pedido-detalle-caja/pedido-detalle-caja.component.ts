@@ -17,7 +17,11 @@ export class PedidoDetalleCajaComponent implements OnInit, OnDestroy {
   height: number;
 
   constructor(private pedidoService: PedidoService) {
+    this.pedidos = [];
     this.subscriptions = new Subscription();
+    this.subscriptions.add(this.pedidoService.pedido$.subscribe((pedido: Pedido) => {
+      this.getPedidos();
+    }));
   }
 
   ngOnInit() {

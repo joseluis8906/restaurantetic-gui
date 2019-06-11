@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Pedido } from "src/app/pedido/pedido";
 import { PedidoService } from "src/app/pedido/pedido.service";
 import { Subscription } from "rxjs";
+import { ItemEstados } from "../pedido/item";
 
 @Component({
   selector: "app-caja",
@@ -34,5 +35,15 @@ export class CajaComponent implements OnInit, OnDestroy {
         this.pedidos = pedidos;
       });
     }));
+  }
+
+  calcularDeshabilitado(pedido: Pedido): boolean {
+    for (const item of pedido.items) {
+      if (item.estado !== ItemEstados.Listo) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

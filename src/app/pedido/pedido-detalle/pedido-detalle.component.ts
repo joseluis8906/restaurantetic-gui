@@ -1,8 +1,14 @@
-import { Component, HostListener, OnInit, OnDestroy } from "@angular/core";
-import { PedidoService } from "src/app/pedido/pedido.service";
-import { Pedido, PedidoBuilder } from "src/app/pedido/pedido";
-import { Item } from "src/app/pedido/item";
+import {
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  } from "@angular/core";
 import { Subscription } from "rxjs";
+import { Item, ItemEstados } from "src/app/pedido/item";
+import { Pedido, PedidoBuilder } from "src/app/pedido/pedido";
+import { PedidoService } from "src/app/pedido/pedido.service";
+import { NotificationService, MessageType } from "src/app/notification/notification.service";
 
 @Component({
   selector: "app-pedido-detalle",
@@ -15,7 +21,7 @@ export class PedidoDetalleComponent implements OnInit, OnDestroy {
   screenHeight: number;
   pedido: Pedido;
 
-  constructor(private pedidoService: PedidoService) {
+  constructor(private pedidoService: PedidoService, private notificationService: NotificationService) {
     this.subscriptions = new Subscription();
     this.pedido = new PedidoBuilder().build();
     this.pedido.items = new Array<Item>();
@@ -42,6 +48,16 @@ export class PedidoDetalleComponent implements OnInit, OnDestroy {
   }
 
   deletePedido() {
-    this.pedidoService.deletePedido();
+    let canEliminar = true;
+    for (const item_ of this.pedido.items) {
+      if (item_.estado !== ItemEstados.EnEspera) {
+        canEliminar = false;
+      }
+    }
+    if (canEliminar) {
+      this.pedidoService.deletePedido();
+    } else {
+      this.notificationService.showMessage("Pedido en proceso", MessageType.Error);
+    }
   }
 }

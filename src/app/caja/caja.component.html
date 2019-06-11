@@ -16,18 +16,18 @@
       <table class="table">
         <thead>
           <tr>
-            <th>No.</th><th>Item</th><th class="text-right">Precio</th>
+            <th>No.</th><th>Item</th><th>Estado</th><th class="text-right">Precio</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of pedido.items">
-            <td>{{item.numero}}</td><td>{{item.producto.codigo}} - {{item.producto.nombre}}</td><td class="text-right">{{item.precio | currency: 'USD' : 'symbol' : '1.0'}}</td>
+            <td>{{item.numero}}</td><td>{{item.producto.codigo}} - {{item.producto.nombre}}</td><td>{{item.estado}}</td><td class="text-right">{{item.precio | currency: 'USD' : 'symbol' : '1.0'}}</td>
           </tr>
           <tr><td></td><td class="text-right">Total:</td><td class="text-right">{{pedido.total | currency: 'USD' : 'symbol' : '1.0'}}</td></tr>
         </tbody>
       </table>
       <div class="d-flex justify-content-end">
-        <button mat-raised-button color="primary" (click)="onPagar(pedido)">PAGAR</button>
+        <button mat-raised-button color="primary" (click)="onPagar(pedido)" [disabled]="calcularDeshabilitado(pedido)">PAGAR</button>
       </div>
     </mat-expansion-panel>
   </mat-accordion>

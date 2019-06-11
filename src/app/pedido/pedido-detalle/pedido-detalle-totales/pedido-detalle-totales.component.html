@@ -3,7 +3,7 @@
     <div class="container-fluid" [ngStyle]="{'padding': 0}">
       <div class="row no-gutters" [ngStyle]="{'font-size': '14px'}">
         <div class="col-sm-12" [ngStyle]="{'text-align': 'right'}">
-            <p>total: {{pedido.total | currency: 'USD' : 'symbol' : '1.0'}}</p>
+            <p>total: {{pedido.total | currency: 'USD' : 'symbol' : '1.0' | async}}</p>
           </div>
       </div>
     </div>
