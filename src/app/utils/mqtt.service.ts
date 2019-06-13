@@ -3,9 +3,7 @@ import * as Paho from "paho-mqtt";
 import { Observable, Subject } from "rxjs";
 
 export enum Topic {
-  Cocina = "/cocina",
-  Servicio = "/servicio",
-  Caja = "/caja",
+  Servicio = "restaurantetic/servicio",
 }
 
 @Injectable({
@@ -38,7 +36,7 @@ export class MqttService implements OnDestroy {
   }
 
   public publish(topic: Topic, message: string): void {
-    this.mqttClient.send(topic, message, 2, true);
+    this.mqttClient.send(topic, message, 2, false);
   }
 
   public subscribe(topic: Topic) {

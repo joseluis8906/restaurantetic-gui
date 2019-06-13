@@ -15,11 +15,7 @@ export class PedidoDetalleItemComponent implements OnInit {
 
   ngOnInit() {  }
 
-  onActualizarCantidad(): void {
-    this.pedidoService.updateTotales();
-  }
-
-  deleteItem(item) {
+  deleteItem(item: Item) {
     this.pedidoService.deleteItem(item);
   }
 }

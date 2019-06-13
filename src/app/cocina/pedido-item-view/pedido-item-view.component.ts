@@ -1,6 +1,5 @@
 import { Component, HostListener, OnInit, OnDestroy } from "@angular/core";
 import { Pedido } from "src/app/pedido/pedido";
-import { Producto } from "src/app/producto/producto";
 import { ProductoService } from "src/app/producto/producto.service";
 import { Item, ItemEstados } from "src/app/pedido/item";
 import { PedidoService } from "src/app/pedido/pedido.service";
@@ -59,15 +58,15 @@ export class PedidoItemViewComponent implements OnInit, OnDestroy {
       if (item_.numero === item.numero) {
         if (estado === ItemEstados.Listo && item_.estado !== ItemEstados.Listo) {
           item_.estado = estado;
-          this.subscriptions.add(this.pedidoService.cambiarEstadoItem(item_).subscribe(() => console.log("actualizado")));
+          this.pedidoService.cambiarEstadoItem(item_);
         }
         if (estado === ItemEstados.EnPreparacion && item_.estado !== ItemEstados.Listo) {
           item_.estado = estado;
-          this.subscriptions.add(this.pedidoService.cambiarEstadoItem(item_).subscribe(() => console.log("actualizado")));
+          this.pedidoService.cambiarEstadoItem(item_);
         }
         if (estado === ItemEstados.EnEspera && item_.estado !== ItemEstados.EnPreparacion && item_.estado !== ItemEstados.Listo) {
           item_.estado = estado;
-          this.subscriptions.add(this.pedidoService.cambiarEstadoItem(item_).subscribe(() => console.log("actualizado")));
+          this.pedidoService.cambiarEstadoItem(item_);
         }
       }
     }

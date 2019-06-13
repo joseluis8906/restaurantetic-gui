@@ -5,6 +5,8 @@ import { mergeMap } from "rxjs/operators";
 import { Item } from "src/app/pedido/item";
 import { Pedido, PedidoBuilder } from "src/app/pedido/pedido";
 import { environment } from "src/environments/environment";
+import { MqttService, Topic } from "../utils/mqtt.service";
+import { Message } from "paho-mqtt";
 
 @Injectable({
   providedIn: "root",
@@ -18,7 +20,7 @@ export class PedidoService implements OnDestroy {
   public pedidoSubject: Subject<Pedido>;
   public pedido$: Observable<Pedido>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private mqttService: MqttService) {
     this.subscriptions = new Subscription();
     this.endpoint = `${environment.API_HOST}/pedidos`;
     this.headers = new HttpHeaders({
@@ -29,6 +31,9 @@ export class PedidoService implements OnDestroy {
     this.pedido = null;
     this.pedidoSubject = new Subject<Pedido>();
     this.pedido$ = this.pedidoSubject.asObservable();
+
+    this.mqttService.subscribe(Topic.Servicio);
+    this.subscriptions.add(this.mqttService.message$.subscribe((msg: Message) => this.handleMessage(msg)));
   }
 
   ngOnDestroy() {
@@ -80,6 +85,7 @@ export class PedidoService implements OnDestroy {
     this.subscriptions.add(this.http.post<Pedido>(`${this.endpoint}/${this.pedido.codigo}/${this.pedido.fecha}/items/productos/${item.producto.codigo}`, item, { headers: this.headers }).subscribe((pedido: Pedido) => {
       this.pedido = pedido;
       this.pedidoSubject.next(this.pedido);
+      this.mqttService.publish(Topic.Servicio, JSON.stringify({method: PedidoServiceActions.AddItem, pedido: this.pedido.codigo, fecha: this.pedido.fecha}));
     }));
   }
 
@@ -87,10 +93,9 @@ export class PedidoService implements OnDestroy {
     this.http.delete<Pedido>(`${this.endpoint}/${this.pedido.codigo}/${this.pedido.fecha}/items/${item.numero}`).subscribe((pedido: Pedido) => {
       this.pedido = pedido;
       this.pedidoSubject.next(this.pedido);
+      this.mqttService.publish(Topic.Servicio, JSON.stringify({method: PedidoServiceActions.DeleteItem, pedido: this.pedido.codigo, fecha: this.pedido.fecha}));
     });
   }
-
-  updateTotales() {  }
 
   getSigCodigo(): Observable<string> {
     return this.http.get<string>(
@@ -104,7 +109,19 @@ export class PedidoService implements OnDestroy {
     return this.http.put<void>(`${this.endpoint}/${pedido.codigo}/${pedido.fecha}`, pedido, { headers: this.headers });
   }
 
-  cambiarEstadoItem(item: Item): Observable<void> {
-    return this.http.put<void>(`${this.endpoint}/${this.pedido.codigo}/${this.pedido.fecha}/items/${item.numero}`, item, {headers: this.headers});
+  cambiarEstadoItem(item: Item): void {
+    this.subscriptions.add(this.http.put<void>(`${this.endpoint}/${this.pedido.codigo}/${this.pedido.fecha}/items/${item.numero}`, item, {headers: this.headers}).subscribe((_) => {
+      this.mqttService.publish(Topic.Servicio, JSON.stringify({method: PedidoServiceActions.ChangeItemState, pedido: this.pedido.codigo, fecha: this.pedido.fecha}));
+    }));
+  }
+
+  handleMessage(msg: Message): void {
+    
   }
 }
+
+export enum PedidoServiceActions {
+  AddItem = 0,
+  DeleteItem = 1,
+  ChangeItemState = 2,
+};
