@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit, OnDestroy } from "@angular/core";
-import { Pedido } from "src/app/pedido/pedido";
+import { Pedido, PedidoBuilder } from "src/app/pedido/pedido";
 import { PedidoService, PedidoServiceActions } from "src/app/pedido/pedido.service";
 import { Subscription } from "rxjs";
 import { MqttService, Topic } from "src/app/utils/mqtt.service";
@@ -57,14 +57,36 @@ export class PedidoViewComponent implements OnInit, OnDestroy {
 
   handleMessage(msg: Message): void {
     const msg_: any = JSON.parse(msg.payloadString);
-    console.log(msg_);
-    if (msg_.method === PedidoServiceActions.ChangeItemState) {
-      return;
+    switch (msg_.method) {
+      case PedidoServiceActions.AddItem:
+        console.log("addItem");
+        this.handleAddAndDeleteItem(msg_);
+        break;
+      case PedidoServiceActions.DeleteItem:
+          console.log("delteItem");
+          this.handleAddAndDeleteItem(msg_);
+          break;
+      case PedidoServiceActions.AddPedido:
+        console.log("addPedido");
+        this.handleAddPedido(msg_);
+        break;
+      case PedidoServiceActions.DeletePedido:
+        console.log("deletePedido");
+        this.handleDeletePedido(msg_);
+        break;
+      case PedidoServiceActions.PayPedido:
+        console.log("payPedido");
+        this.handleDeletePedido(msg_);
+      default:
+        break;
     }
+  }
+
+  handleAddAndDeleteItem(msg: any): void {
     let pedido: Pedido = null;
     this.subscriptions.add(this.pedidoService.getPedidos().subscribe((pedidos: Array<Pedido>) => {
       pedidos.forEach((it: Pedido) => {
-        if (it.codigo === msg_.pedido) {
+        if (it.codigo === msg.pedido) {
           pedido = it;
           return;
         }
@@ -81,5 +103,23 @@ export class PedidoViewComponent implements OnInit, OnDestroy {
         this.pedidoService.changePedido(pedido);
       }
     }));
+  }
+
+  handleAddPedido(msg: any): void {
+    this.subscriptions.add(this.pedidoService.getPedido(msg.pedido, msg.fecha).subscribe((pedido: Pedido) => {
+      this.pedidos.push(pedido);
+    }));
+  }
+
+  handleDeletePedido(msg: any): void {
+    this.pedidos.forEach((it: Pedido, index: number) => {
+      if (it.codigo === msg.pedido) {
+        this.pedidos.splice(index, 1);
+      }
+
+      if (this.active == msg.pedido) {
+        this.pedidoService.changePedido(new PedidoBuilder().withItems([]).build());
+      }
+    });
   }
 }

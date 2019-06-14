@@ -2,8 +2,10 @@ import { Component, HostListener, OnInit, OnDestroy } from "@angular/core";
 import { Pedido } from "src/app/pedido/pedido";
 import { ProductoService } from "src/app/producto/producto.service";
 import { Item, ItemEstados } from "src/app/pedido/item";
-import { PedidoService } from "src/app/pedido/pedido.service";
+import { PedidoService, PedidoServiceActions } from "src/app/pedido/pedido.service";
 import { Subscription } from "rxjs";
+import { MqttService, Topic } from "src/app/utils/mqtt.service";
+import { Message } from "paho-mqtt";
 
 @Component({
   selector: "app-pedido-item-view",
@@ -18,7 +20,7 @@ export class PedidoItemViewComponent implements OnInit, OnDestroy {
 
   screenHeight: number;
 
-  constructor(private pedidoService: PedidoService, private productoService: ProductoService) {
+  constructor(private pedidoService: PedidoService, private mqttService: MqttService) {
     this.subscriptions = new Subscription();
 
     this.subscriptions.add(this.pedidoService.pedido$.subscribe((pedido: Pedido) => {

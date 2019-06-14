@@ -23,7 +23,7 @@
           <tr *ngFor="let item of pedido.items">
             <td>{{item.numero}}</td><td>{{item.producto.codigo}} - {{item.producto.nombre}}</td><td>{{item.estado}}</td><td class="text-right">{{item.precio | currency: 'USD' : 'symbol' : '1.0'}}</td>
           </tr>
-          <tr><td></td><td class="text-right">Total:</td><td class="text-right">{{pedido.total | currency: 'USD' : 'symbol' : '1.0'}}</td></tr>
+          <tr><td></td><td></td><td class="text-right">Total:</td><td class="text-right">{{pedido.total | currency: 'USD' : 'symbol' : '1.0'}}</td></tr>
         </tbody>
       </table>
       <div class="d-flex justify-content-end">

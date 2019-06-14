@@ -16,9 +16,13 @@ export class PedidoService implements OnDestroy {
   private subscriptions: Subscription;
   private endpoint: string;
   private headers: HttpHeaders;
+  
   private pedido: Pedido;
   public pedidoSubject: Subject<Pedido>;
   public pedido$: Observable<Pedido>;
+
+  private pedidosSubject: Subject<Array<Pedido>>;
+  public pedidos$: Observable<Array<Pedido>>;
 
   constructor(private http: HttpClient, private mqttService: MqttService) {
     this.subscriptions = new Subscription();
@@ -32,8 +36,8 @@ export class PedidoService implements OnDestroy {
     this.pedidoSubject = new Subject<Pedido>();
     this.pedido$ = this.pedidoSubject.asObservable();
 
-    this.mqttService.subscribe(Topic.Servicio);
-    this.subscriptions.add(this.mqttService.message$.subscribe((msg: Message) => this.handleMessage(msg)));
+    this.pedidosSubject = new Subject<Array<Pedido>>();
+    this.pedidos$ = this.pedidosSubject.asObservable();
   }
 
   ngOnDestroy() {
@@ -56,20 +60,30 @@ export class PedidoService implements OnDestroy {
         this.pedido = pedido;
         this.pedido.fecha = this.pedido.fecha.split(".")[0];
         this.pedidoSubject.next(this.pedido);
+        this.mqttService.publish(Topic.Servicio, JSON.stringify({method: PedidoServiceActions.AddPedido, pedido: this.pedido.codigo, fecha: this.pedido.fecha}));
       }));
     }));
   }
 
   deletePedido(): void {
+    const tmpPedido: string = this.pedido.codigo;
+    const tmpFecha: string = this.pedido.fecha;
     this.subscriptions.add(this.http.delete<void>(`${this.endpoint}/${this.pedido.codigo}/${this.pedido.fecha}`).subscribe((_) => {
       this.pedido = new Pedido();
       this.pedido.items = [];
       this.pedidoSubject.next(this.pedido);
+      this.mqttService.publish(Topic.Servicio, JSON.stringify({method: PedidoServiceActions.DeletePedido, pedido: tmpPedido, fecha: tmpFecha}));
     }));
   }
 
   getPedidos(): Observable<Pedido[]> {
     return this.http.get<Pedido[]>(`${this.endpoint}?pago=false`);
+  }
+
+  fetchPedidos(): void {
+    this.subscriptions.add(this.http.get<Pedido[]>(`${this.endpoint}?pago=false`).subscribe((pedidos: Array<Pedido>) => {
+      this.pedidosSubject.next(pedidos);
+    }));
   }
 
   getPedido(codigo: string, fecha: string): Observable<Pedido> {
@@ -104,24 +118,26 @@ export class PedidoService implements OnDestroy {
         responseType: "text" as "json" });
   }
 
-  pagar(pedido: Pedido): Observable<void> {
+  pagar(pedido: Pedido): void {
     pedido.pago = true;
-    return this.http.put<void>(`${this.endpoint}/${pedido.codigo}/${pedido.fecha}`, pedido, { headers: this.headers });
+    this.subscriptions.add(this.http.put<void>(`${this.endpoint}/${pedido.codigo}/${pedido.fecha}`, pedido, { headers: this.headers }).subscribe((_) => {
+      this.fetchPedidos();
+      this.mqttService.publish(Topic.Servicio, JSON.stringify({method: PedidoServiceActions.PayPedido, pedido: pedido.codigo, fecha: pedido.fecha}));
+    }));
   }
 
   cambiarEstadoItem(item: Item): void {
     this.subscriptions.add(this.http.put<void>(`${this.endpoint}/${this.pedido.codigo}/${this.pedido.fecha}/items/${item.numero}`, item, {headers: this.headers}).subscribe((_) => {
-      this.mqttService.publish(Topic.Servicio, JSON.stringify({method: PedidoServiceActions.ChangeItemState, pedido: this.pedido.codigo, fecha: this.pedido.fecha}));
+      this.mqttService.publish(Topic.Servicio, JSON.stringify({method: PedidoServiceActions.ChangeItemState, pedido: this.pedido.codigo, fecha: this.pedido.fecha, item}));
     }));
-  }
-
-  handleMessage(msg: Message): void {
-    
   }
 }
 
 export enum PedidoServiceActions {
   AddItem = 0,
-  DeleteItem = 1,
-  ChangeItemState = 2,
+  DeleteItem,
+  ChangeItemState,
+  AddPedido,
+  DeletePedido,
+  PayPedido
 };

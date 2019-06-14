@@ -2,6 +2,7 @@ import { Component, HostListener, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { Pedido } from "src/app/pedido/pedido";
 import { PedidoService } from "src/app/pedido/pedido.service";
+import { MqttService } from "src/app/utils/mqtt.service";
 
 @Component({
   selector: "app-pedido-detalle-caja",
