@@ -13,6 +13,7 @@ import { Ingrediente } from "src/app/producto/ingrediente";
 import { Producto } from "src/app/producto/producto";
 import { ProductoIngredienteDialogComponent } from "src/app/producto/producto-ingrediente-dialog/producto-ingrediente-dialog.component";
 import { Subscription } from "rxjs";
+import { ItemBuilder } from "src/app/pedido/item";
 
 @Component({
   selector: "app-producto-view-mini",
@@ -28,9 +29,9 @@ export class ProductoViewMiniComponent implements OnInit, OnDestroy {
 
   constructor(public dialog: MatDialog, public pedidoService: PedidoService) {
     this.subscriptions = new Subscription();
-    this.pedidoService.pedido$.subscribe((pedido) => {
+    this.subscriptions.add(this.pedidoService.pedido$.subscribe((pedido) => {
       this.pedido = pedido;
-    });
+    }));
   }
 
   ngOnInit() { }
@@ -67,7 +68,14 @@ export class ProductoViewMiniComponent implements OnInit, OnDestroy {
       }
       const tmpProducto = Object.assign({}, this.producto);
       tmpProducto.ingredientes = ingredientesFinales.join(",");
-      this.addProducto.emit(tmpProducto);
+      const tmpItem = new ItemBuilder()
+      .withNumero(this.pedido.items.length + 1)
+      .withProduto(this.producto)
+      .withSinIngredientes(tmpProducto.ingredientes)
+      .withPrecio(this.producto.precio)
+      .withEstado("en espera")
+      .build();
+      this.pedidoService.addItem(tmpItem);
     }));
   }
 }

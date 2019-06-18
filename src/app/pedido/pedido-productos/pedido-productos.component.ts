@@ -48,15 +48,4 @@ export class PedidoProductosComponent implements OnInit, OnDestroy {
   onResizedDisplay(event?) {
     this.calculateHeight();
   }
-
-  onAgregarProducto(producto: Producto): void {
-    const tmpItem = new ItemBuilder()
-      .withNumero(this.pedido.items.length + 1)
-      .withProduto(producto)
-      .withSinIngredientes(producto.ingredientes)
-      .withPrecio(producto.precio)
-      .withEstado("en espera")
-      .build();
-    this.pedidoService.addItem(tmpItem);
-  }
 }
